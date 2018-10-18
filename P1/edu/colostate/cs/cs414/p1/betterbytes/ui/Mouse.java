@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import edu.colostate.cs.cs414.p1.betterbytes.utilities.Tools;
+
 public class Mouse implements MouseListener, MouseMotionListener {
 
 	private Point mouseLocation = new Point(-1, -1);
@@ -49,6 +51,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 						c.setSelected(false);
 					} else {
 						c.setSelected(true);
+						Tools.log("Selected: " + c.getX() + "," + c.getY() + "," + c.hasPiece());
 					}
 					break;
 				} else {

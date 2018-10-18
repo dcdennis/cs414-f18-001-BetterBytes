@@ -42,6 +42,7 @@ public class Piece {
 	}
 
 	public void setTypeFromString(String type) {
+		Tools.log(type);
 		switch (type) {
 		case "KING":
 			this.setType(PieceType.KING);

@@ -16,7 +16,6 @@ import edu.colostate.cs.cs414.p1.betterbytes.utilities.Tools;
 public class Grid {
 
 	private int baseX = 15, baseY = 15;
-	private int cellSize = 75;
 
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
 	private ArrayList<Cell> backup = new ArrayList<Cell>();
@@ -40,7 +39,7 @@ public class Grid {
 		this.setBaseY(baseY);
 		for (int x = 1; x <= 11; x++) {
 			for (int y = 1; y <= 11; y++) {
-				cells.add(new Cell(x, y, this.getCellSize(), this));
+				cells.add(new Cell(x, y, this));
 			}
 		}
 	}
@@ -113,47 +112,44 @@ public class Grid {
 	public void paintCells(Graphics g) {
 		for (Cell c : cells) {
 
-			// CELL FILL
 			g.setColor(Color.GRAY);
 			if (c.isWhiteCell()) {
 				g.setColor(new Color(81, 100, 114));
 			}
 
 			// CELL ICON
-			g.fillRect(baseX + (c.getX() * this.getCellSize()), baseY + (c.getY() * this.getCellSize()),
-					this.getCellSize(), this.getCellSize());
+			g.fillRect(baseX + (c.getX() * c.getSize()), baseY + (c.getY() * c.getSize()), c.getSize(), c.getSize());
 			if (c.getIcon() != null) {
 				g.drawImage(c.getIcon(), c.getRealX() + 1, c.getRealY() + 1, null);
 			}
 
 			// OUTLINE
 			g.setColor(new Color(0, 0, 0, 200));
-			g.drawRect(baseX + (c.getX() * this.getCellSize()), baseY + (c.getY() * this.getCellSize()),
-					this.getCellSize(), this.getCellSize());
-			g.drawRect(baseX + (c.getX() * this.getCellSize()) + 1, baseY + (c.getY() * this.getCellSize()) + 1,
-					this.getCellSize(), this.getCellSize());
+			g.drawRect(baseX + (c.getX() * c.getSize()), baseY + (c.getY() * c.getSize()), c.getSize(), c.getSize());
+			g.drawRect(baseX + (c.getX() * c.getSize()) + 1, baseY + (c.getY() * c.getSize()) + 1, c.getSize(),
+					c.getSize());
 
 			// SELECTION
 			if (c.isSelected()) {
 				g.setColor(new Color(83, 183, 25, 85));
-				g.fillRect(baseX + (c.getX() * this.getCellSize()) + 1, baseY + (c.getY() * this.getCellSize()) + 1,
-						this.getCellSize() - 1, this.getCellSize() - 1);
+				g.fillRect(baseX + (c.getX() * c.getSize()) + 1, baseY + (c.getY() * c.getSize()) + 1, c.getSize() - 1,
+						c.getSize() - 1);
 				g.setColor(new Color(255, 255, 255, 200));
-				g.drawRect(baseX + (c.getX() * this.getCellSize()) + 1, baseY + (c.getY() * this.getCellSize()) + 1,
-						this.getCellSize() - 2, this.getCellSize() - 2);
+				g.drawRect(baseX + (c.getX() * c.getSize()) + 1, baseY + (c.getY() * c.getSize()) + 1, c.getSize() - 2,
+						c.getSize() - 2);
 			}
 
 			if (this.isCellSelected()) {
 				Cell selected = this.getSelectedCell();
-				if (this.canMove(selected, c.getX(), c.getY())) {
+				if (game.canMove(selected, c.getX(), c.getY())) {
 					g.setColor(new Color(0, 255, 55, 55));
-					g.fillRect(baseX + (c.getX() * this.getCellSize()), baseY + (c.getY() * this.getCellSize()),
-							this.getCellSize(), this.getCellSize());
+					g.fillRect(baseX + (c.getX() * c.getSize()), baseY + (c.getY() * c.getSize()), c.getSize(),
+							c.getSize());
 					g.setColor(new Color(0, 0, 0, 200));
-					g.drawRect(baseX + (c.getX() * this.getCellSize()), baseY + (c.getY() * this.getCellSize()),
-							this.getCellSize(), this.getCellSize());
-					g.drawRect(baseX + (c.getX() * this.getCellSize()) + 1, baseY + (c.getY() * this.getCellSize()) + 1,
-							this.getCellSize(), this.getCellSize());
+					g.drawRect(baseX + (c.getX() * c.getSize()), baseY + (c.getY() * c.getSize()), c.getSize(),
+							c.getSize());
+					g.drawRect(baseX + (c.getX() * c.getSize()) + 1, baseY + (c.getY() * c.getSize()) + 1, c.getSize(),
+							c.getSize());
 				}
 			}
 		}
@@ -177,7 +173,7 @@ public class Grid {
 
 	/**
 	 * 
-	 * @return The seleced Cell on the board, null if none are selected
+	 * @return The selected Cell on the board, null if none are selected
 	 */
 	public Cell getSelectedCell() {
 		for (Cell c : this.getCells())
@@ -200,14 +196,6 @@ public class Grid {
 		for (Cell c : this.getCells())
 			if (c.isSelected())
 				c.setSelected(false);
-	}
-
-	public int getCellSize() {
-		return cellSize;
-	}
-
-	public void setCellSize(int cellSize) {
-		this.cellSize = cellSize;
 	}
 
 	/**
@@ -248,7 +236,7 @@ public class Grid {
 		if (p != null && old != null && nu != null && game.isOurTurn()) {
 			backup.clear();
 			for (Cell c : cells) {
-				Cell nc = new Cell(c.getX(), c.getY(), c.getSize(), this);
+				Cell nc = new Cell(c.getX(), c.getY(), this);
 				nc.setPiece(c.getPiece());
 				backup.add(nc);
 			}
@@ -270,28 +258,36 @@ public class Grid {
 	 * @return whether it was successful or not
 	 */
 	public boolean setBoardFromString(String data) {
-		ArrayList<Cell> newCells = new ArrayList<Cell>();
+		// ArrayList<Cell> newCells = new ArrayList<Cell>();
+		game.clearBoard();
 		for (String s : data.split("~")) {
 			if (s != null) {
 				String[] info = s.split(":");
-				if (info != null && info.length == 5) {
-					Cell c = new Cell(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Integer.parseInt(info[2]),
-							this);
+				if (info != null && info.length == 4) {
+					int x = Integer.parseInt(info[0]);
+					int y = Integer.parseInt(info[1]);
+
+					// Cell c = new Cell(Integer.parseInt(info[0]),
+					// Integer.parseInt(info[1]),
+					// this);
 					Piece p = new Piece(null, false);
-					p.setTypeFromString(info[3]);
-					p.setIsWhite(Boolean.parseBoolean(info[4]));
-					c.setPiece(p);
-					newCells.add(c);
+					p.setTypeFromString(info[2]);
+					p.setIsWhite(Boolean.parseBoolean(info[3]));
+
+					game.getCell(x, y).setPiece(p);
+
+					// c.setPiece(p);
+					// newCells.add(c);
 				} else {
-					// Tools.log("Second split failed");
+					Tools.log("Second split failed");
 				}
 			} else {
-				// Tools.log("First split failed");
+				Tools.log("First split failed");
 			}
 		}
-		if (newCells.size() == cells.size())
-			return this.setBoard(newCells);
-		return false;
+		// if (newCells.size() == cells.size())
+		// return this.setBoard(newCells);
+		return true;
 	}
 
 	/**
@@ -304,68 +300,12 @@ public class Grid {
 		String data = "";
 		for (Cell c : cells) {
 			if (c.getPiece() != null) {
-				data += "~" + c.getX() + ":" + c.getY() + ":" + c.getSize() + ":" + c.getPiece().getType() + ":"
-						+ c.getPiece().isWhite();
+				data += "~" + c.getX() + ":" + c.getY() + ":" + c.getPiece().getType() + ":" + c.getPiece().isWhite();
 			} else {
-				data += "~" + c.getX() + ":" + c.getY() + ":" + c.getSize() + ":" + "null" + ":" + "false";
+				data += "~" + c.getX() + ":" + c.getY() + ":" + "null" + ":" + "false";
 			}
 		}
 		return data;
-	}
-
-	/**
-	 * This method returns whether the piece of Cell c can move to the x y
-	 * given.
-	 * 
-	 * @param c
-	 *            Cell that contains the piece to move
-	 * @param x
-	 *            destination x
-	 * @param y
-	 *            destination y
-	 * @return whether the piece can move to destination
-	 */
-	public boolean canMove(Cell c, int x, int y) {
-		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getCellSize(), this))))
-			return false;
-		if (c.getPiece() != null) {
-			if (((x == c.getX() && y != c.getY()) || (y == c.getY() && x != c.getX()))
-					&& !this.getCell(x, y).hasPiece()) {
-				if (y == c.getY()) {
-					if (x < c.getX()) {
-						for (int xx = c.getX(); xx > x; xx--) {
-							if (xx != c.getX() && this.getCell(xx, y).hasPiece()) {
-								return false;
-							}
-						}
-					} else {
-						for (int xx = c.getX(); xx < x; xx++) {
-							if (xx != c.getX() && this.getCell(xx, y).hasPiece()) {
-								return false;
-							}
-						}
-					}
-				} else {
-					if (y < c.getY()) {
-						for (int yy = c.getY(); yy > y; yy--) {
-							if (yy != c.getY() && this.getCell(x, yy).hasPiece()) {
-								return false;
-							}
-						}
-					} else {
-						for (int yy = c.getY(); yy < y; yy++) {
-							if (yy != c.getY() && this.getCell(x, yy).hasPiece()) {
-								return false;
-							}
-						}
-					}
-				}
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false;
 	}
 
 }

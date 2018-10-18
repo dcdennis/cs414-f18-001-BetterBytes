@@ -13,7 +13,8 @@ import edu.colostate.cs.cs414.p1.betterbytes.utilities.Tools;
  */
 public class Cell {
 
-	private int x, y, size;
+	private int x, y;
+	private int size = 75;
 	private Piece holding = null;
 	private Grid grid = null;
 	private boolean selected = false;
@@ -31,10 +32,9 @@ public class Cell {
 	 * @param grid
 	 *            reference to grid class
 	 */
-	public Cell(int x, int y, int size, Grid grid) {
+	public Cell(int x, int y, Grid grid) {
 		this.setX(x);
 		this.setY(y);
-		this.setSize(size);
 		this.grid = grid;
 	}
 
@@ -91,7 +91,7 @@ public class Cell {
 	}
 
 	public boolean hasPiece() {
-		return this.getPiece() != null;
+		return this.getPiece() != null && this.getPiece().getIcon() != null;
 	}
 
 	public boolean isWhiteCell() {
@@ -102,14 +102,14 @@ public class Cell {
 	 * @return the y coordinate in which the cell is being painted
 	 */
 	public int getRealY() {
-		return grid.getBaseY() + (this.getY() * grid.getCellSize());
+		return grid.getBaseY() + (this.getY() * this.getSize());
 	}
 
 	/**
 	 * @return the x coordinate in which the cell is being painted
 	 */
 	public int getRealX() {
-		return grid.getBaseX() + (this.getX() * grid.getCellSize());
+		return grid.getBaseX() + (this.getX() * this.getSize());
 	}
 
 	public Rectangle getBounds() {

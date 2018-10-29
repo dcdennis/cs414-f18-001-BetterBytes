@@ -53,12 +53,17 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	
 	/**
 	 * Creates new form UI
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
-	public UI(ClientConnection connection) {
+	public UI(ClientConnection connection) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		initComponents();
 		this.setTitle("Tafl Control Panel    |    Profile: ");
 		this.refreshData();
 		this.connection = connection;
+		start();
 	}
 
 	/**

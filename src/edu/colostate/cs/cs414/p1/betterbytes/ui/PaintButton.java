@@ -115,6 +115,7 @@ public class PaintButton {
 				Tools.log("Sending Move");
 				game.setSecondCheck(false);
 				game.setStatus("Move Sent!");
+				Tools.log(game.getGrid().saveToString());
 			} else {
 				game.setStatus("Are you sure?");
 				game.setSecondCheck(true);

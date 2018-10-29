@@ -29,7 +29,7 @@ public class Game extends JFrame {
 	private boolean secondCheck = false;
 	private int width = 886;
 	private int height = 935;
-
+ 
 	/**
 	 * This starts a new game.
 	 */

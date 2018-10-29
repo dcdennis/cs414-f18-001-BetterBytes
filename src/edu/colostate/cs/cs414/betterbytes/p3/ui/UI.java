@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
@@ -48,15 +49,16 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
 
 	
-	private static ClientConnection connection = ClientConnection.getInstance();
+	private static ClientConnection connection; 
 	
 	/**
 	 * Creates new form UI
 	 */
-	public UI() {
+	public UI(ClientConnection connection) {
 		initComponents();
 		this.setTitle("Tafl Control Panel    |    Profile: ");
 		this.refreshData();
+		this.connection = connection;
 	}
 
 	/**
@@ -245,21 +247,6 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		 * html
 		 */
 		try {
-			/* set up client connection to server */
-			System.out.println("Getting client connection");
-			//ClientConnection connection = ClientConnection.getInstance();
-			System.out.println("Setting up connection");
-			connection.setUp(InetAddress.getLocalHost().getHostName(), 8080);
-			System.out.println("starting connetion");
-			connection.start();
-			//Unfortunatly, I think theres a race condition where if the client trys to send something to soon after starting, 
-			// the message gets lost. I dont think this will present an issue in application, but for this basic test I'm leaving this
-			// sleep in. 
-			TimeUnit.SECONDS.sleep(1);
-			System.out.println("sending registration");
-			connection.send(new UserRegistration("USERNAME","PASSWORDHASH"));
-			System.out.println("done");
-			
 			
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -279,11 +266,11 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		// </editor-fold>
 
 		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		/*java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new UI().setVisible(true);
 			}
-		});
+		});*/
 	}
 
 	public void refreshData() {
@@ -364,6 +351,16 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			this.sendInviteTo(email);
 			break;
 		}
+	}
+	
+	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+			if ("Nimbus".equals(info.getName())) {
+				javax.swing.UIManager.setLookAndFeel(info.getClassName());
+				break;
+			}
+		}
+		
 	}
 
 }

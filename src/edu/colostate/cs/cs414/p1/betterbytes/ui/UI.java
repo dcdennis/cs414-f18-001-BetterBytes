@@ -2,7 +2,10 @@ package edu.colostate.cs.cs414.p1.betterbytes.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
@@ -10,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import edu.colostate.cs.cs414.p1.betterbytes.utilities.Tools;
+import Client.ClientConnection;
+import WireForms.UserRegistration;
 
 /**
  *
@@ -38,6 +43,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private DefaultListModel invitesListModel = new DefaultListModel();
 	private ArrayList<String> loadedGames = new ArrayList<String>();
 
+	
+	private static ClientConnection connection = ClientConnection.getInstance();
+	
 	/**
 	 * Creates new form UI
 	 */
@@ -213,8 +221,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	/**
 	 * @param args
 	 *            the command line arguments
+	 * @throws UnknownHostException 
+	 * @throws InterruptedException 
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[]) throws UnknownHostException, InterruptedException {
 		/* Set the Nimbus look and feel */
 		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting
 		// code (optional) ">
@@ -225,6 +235,22 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		 * html
 		 */
 		try {
+			/* set up client connection to server */
+			System.out.println("Getting client connection");
+			//ClientConnection connection = ClientConnection.getInstance();
+			System.out.println("Setting up connection");
+			connection.setUp(InetAddress.getLocalHost().getHostName(), 8080);
+			System.out.println("starting connetion");
+			connection.start();
+			//Unfortunatly, I think theres a race condition where if the client trys to send something to soon after starting, 
+			// the message gets lost. I dont think this will present an issue in application, but for this basic test I'm leaving this
+			// sleep in. 
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println("sending registration");
+			connection.send(new UserRegistration("USERNAME","PASSWORDHASH"));
+			System.out.println("done");
+			
+			
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -292,6 +318,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		Tools.log(e.getActionCommand());
 		switch (e.getActionCommand()) {
 		case "Login":
+			System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
+			connection.send(new UserRegistration(USERNAME.getText(),PASSWORD.getText()));
 			break;
 		case "Refresh":
 			this.refreshData();

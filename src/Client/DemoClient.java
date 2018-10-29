@@ -4,12 +4,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
+import edu.colostate.cs.cs414.p1.betterbytes.ui.*;
 import WireForms.UserRegistration;
 
 public class DemoClient {
 	public static void main(String[] args)
 	{
 			try {
+				//UI.main(null); // start up UI
 				System.out.println("Getting client connection");
 				ClientConnection connection = ClientConnection.getInstance();
 				System.out.println("Setting up connection");

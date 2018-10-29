@@ -2,14 +2,17 @@ package edu.colostate.cs.cs414.p1.betterbytes.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import edu.colostate.cs.cs414.p1.betterbytes.utilities.Tools;
@@ -42,6 +45,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private DefaultListModel gamesListModel = new DefaultListModel();
 	private DefaultListModel invitesListModel = new DefaultListModel();
 	private ArrayList<String> loadedGames = new ArrayList<String>();
+	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
 
 	
 	private static ClientConnection connection = ClientConnection.getInstance();
@@ -52,6 +56,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public UI() {
 		initComponents();
 		this.setTitle("Tafl Control Panel    |    Profile: ");
+		this.refreshData();
 	}
 
 	/**
@@ -89,6 +94,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		QUITGAMEBUTTON.addActionListener(this);
 		VIEWGAMEMANUALBUTTON.addActionListener(this);
 		PROFILESTATSBUTTON.addActionListener(this);
+		SENDINVITEBUTTON.addActionListener(this);
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,8 +154,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(
-						javax.swing.GroupLayout.Alignment.LEADING, false)
-						.addGroup(layout
+						javax.swing.GroupLayout.Alignment.LEADING, false).addGroup(layout
 								.createSequentialGroup().addGroup(layout
 										.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
 										.addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,11 +166,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 												.addComponent(QUITGAMEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 										.addComponent(jScrollPane1))
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(layout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-												jLabel2)
-										.addGroup(layout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(jLabel2).addGroup(layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING, false)
 												.addGroup(layout.createSequentialGroup()
 														.addComponent(ACCEPTBUTTON,
 																javax.swing.GroupLayout.PREFERRED_SIZE, 95,
@@ -180,13 +184,17 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 						.addComponent(REFRESHBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-								.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(VIEWGAMEMANUALBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(PROFILESTATSBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(
+								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+										.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(VIEWGAMEMANUALBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(SENDINVITEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(PROFILESTATSBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+
 						.addContainerGap()));
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout
@@ -207,6 +215,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(VIEWGAMEMANUALBUTTON)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(SENDINVITEBUTTON)
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(PROFILESTATSBUTTON)))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -277,7 +287,14 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	}
 
 	public void refreshData() {
-
+		String absPath = System.getProperty("user.dir") + "/src/";
+		this.gamesListModel.clear();
+		for (File f : new File(absPath + "edu/colostate/cs/cs414/p1/betterbytes/data/games").listFiles()) {
+			Tools.log(f.getName());
+			this.gamesListModel.addElement(f.getName());
+			CURRENTGAMESLIST.setModel(gamesListModel);
+			this.loadedGames.add(Tools.getFileData(f));
+		}
 	}
 
 	public void login() {
@@ -313,6 +330,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		return "Profile stats!";
 	}
 
+	public void sendInviteTo(String email) {
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Tools.log(e.getActionCommand());
@@ -327,7 +348,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		case "Resume":
 			if (CURRENTGAMESLIST.getSelectedValue() != null) {
 				// resume game
-				new Game(this.loadedGames.get(CURRENTGAMESLIST.getSelectedIndex()));
+				if (CURRENTGAMESLIST.getSelectedValue() != null)
+					new Game(this.loadedGames.get(CURRENTGAMESLIST.getSelectedIndex()));
 			}
 			break;
 		case "View Game Manual":
@@ -335,6 +357,11 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			break;
 		case "Profile Stats":
 			this.profileStats();
+			break;
+		case "Invite a friend...":
+			String email = JOptionPane.showInputDialog(this, "Enter email: ", "Invitation",
+					JOptionPane.WARNING_MESSAGE);
+			this.sendInviteTo(email);
 			break;
 		}
 	}

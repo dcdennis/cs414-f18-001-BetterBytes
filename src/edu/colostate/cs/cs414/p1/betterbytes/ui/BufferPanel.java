@@ -16,11 +16,12 @@ public class BufferPanel extends JPanel implements Runnable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	private String absPath = System.getProperty("user.dir") + "/src/";
 	private Image img = null;
 	private Mouse mouse = new Mouse(this);
 	private Game game = null;
-	private Image background = Tools.getLocalImg("edu/colostate/cs/cs414/p1/betterbytes/data/background.png");
+	private Image background = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/p1/betterbytes/data/background.png");
 	private ArrayList<PaintButton> buttons = new ArrayList<PaintButton>();
 
 	public BufferPanel(Game game) {
@@ -58,38 +59,40 @@ public class BufferPanel extends JPanel implements Runnable {
 			}
 
 			// CELL ICON
-			g.fillRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()), this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(), c.getSize());
+			g.fillRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()),
+					this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(), c.getSize());
 			if (c.getIcon() != null) {
 				g.drawImage(c.getIcon(), c.getRealX() + 1, c.getRealY() + 1, null);
 			}
 
 			// OUTLINE
 			g.setColor(new Color(0, 0, 0, 200));
-			g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()), this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(), c.getSize());
-			g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1, this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize(),
-					c.getSize());
+			g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()),
+					this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(), c.getSize());
+			g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1,
+					this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize(), c.getSize());
 
 			// SELECTION
 			if (c.isSelected()) {
 				g.setColor(new Color(83, 183, 25, 85));
-				g.fillRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1, this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize() - 1,
-						c.getSize() - 1);
+				g.fillRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1,
+						this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize() - 1, c.getSize() - 1);
 				g.setColor(new Color(255, 255, 255, 200));
-				g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1, this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize() - 2,
-						c.getSize() - 2);
+				g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1,
+						this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize() - 2, c.getSize() - 2);
 			}
 
 			if (this.getGrid().isCellSelected()) {
 				Cell selected = this.getGrid().getSelectedCell();
 				if (game.canMove(selected, c.getX(), c.getY())) {
 					g.setColor(new Color(0, 255, 55, 55));
-					g.fillRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()), this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(),
-							c.getSize());
+					g.fillRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()),
+							this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(), c.getSize());
 					g.setColor(new Color(0, 0, 0, 200));
-					g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()), this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(),
-							c.getSize());
-					g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1, this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize(),
-							c.getSize());
+					g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()),
+							this.getGrid().getBaseY() + (c.getY() * c.getSize()), c.getSize(), c.getSize());
+					g.drawRect(this.getGrid().getBaseX() + (c.getX() * c.getSize()) + 1,
+							this.getGrid().getBaseY() + (c.getY() * c.getSize()) + 1, c.getSize(), c.getSize());
 				}
 			}
 		}
@@ -110,7 +113,7 @@ public class BufferPanel extends JPanel implements Runnable {
 			}
 		}
 	}
-	
+
 	public void paintStatus(Graphics g) {
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 		g.setColor(Color.RED);
@@ -137,8 +140,10 @@ public class BufferPanel extends JPanel implements Runnable {
 		while (true) {
 			if (this.getParent() != null) {
 				this.img = this.createImage(super.getWidth(), super.getHeight());
-				this.paint(this.img.getGraphics());
-				this.getGraphics().drawImage(img, 0, 0, null);
+				if (this.img != null && this.img.getGraphics() != null)
+					this.paint(this.img.getGraphics());
+				if (this.getGraphics() != null && img != null)
+					this.getGraphics().drawImage(img, 0, 0, null);
 			}
 		}
 	}

@@ -13,12 +13,13 @@ import edu.colostate.cs.cs414.p1.betterbytes.utilities.Tools;
  */
 public class Cell {
 
+	private String absPath = System.getProperty("user.dir") + "/src/";
 	private int x, y;
 	private int size = 75;
 	private Piece holding = null;
 	private Grid grid = null;
 	private boolean selected = false;
-	private Image icon = Tools.getLocalImg("edu/colostate/cs/cs414/p1/betterbytes/data/corner.png");
+	private Image icon = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/p1/betterbytes/data/corner.png");
 
 	/**
 	 * Constructor for Cell

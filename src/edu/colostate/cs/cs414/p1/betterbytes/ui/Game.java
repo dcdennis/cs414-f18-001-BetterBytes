@@ -65,7 +65,7 @@ public class Game extends JFrame {
 	 */
 	public void setup() {
 		this.setSize(886, 935);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(width, height);
 		this.back = new BufferPanel(this);
 		this.add(back, BorderLayout.CENTER);
@@ -186,7 +186,7 @@ public class Game extends JFrame {
 		return null;
 	}
 
-	public boolean sendMoveToServer() {
+	public boolean sendMoveToServer() {		
 		return getGrid().sendMoveToServer();
 	}
 

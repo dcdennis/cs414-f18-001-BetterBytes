@@ -20,15 +20,7 @@ public class DemoClient {
 				System.out.println("Setting up connection");
 				connection.setUp(InetAddress.getLocalHost().getHostName(), 8080);
 				connection.start();
-				System.out.println("connection started");
-				//Unfortunatly, I think theres a race condition where if the client trys to send something to soon after starting, 
-				// the message gets lost. I dont think this will present an issue in application, but for this basic test I'm leaving this
-				// sleep in. 
-				//TimeUnit.SECONDS.sleep(5);
-				//System.out.println("sending registration");
-				//connection.send(new UserRegistration("USERNAME","PASSWORDHASH"));
-				//System.out.println("done");
-				
+				System.out.println("connection started");		
 				
 				java.awt.EventQueue.invokeLater(new Runnable() {
 					public void run() {

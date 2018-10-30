@@ -21,7 +21,7 @@ public class BufferPanel extends JPanel implements Runnable {
 	private Image img = null;
 	private Mouse mouse = new Mouse(this);
 	private Game game = null;
-	private Image background = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/p1/betterbytes/data/background.png");
+	private Image background = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/background.png");
 	private ArrayList<PaintButton> buttons = new ArrayList<PaintButton>();
 
 	public BufferPanel(Game game) {

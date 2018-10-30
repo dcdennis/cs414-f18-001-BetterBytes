@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.betterbytes.p3.client;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +11,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.ui.*;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistration;
 
 public class DemoClient {
-	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException
 	{
 			try {
 				//UI.main(null); // start up UI

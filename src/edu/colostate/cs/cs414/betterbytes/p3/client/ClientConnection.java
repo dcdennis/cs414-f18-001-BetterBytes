@@ -68,13 +68,18 @@ public class ClientConnection extends Thread
 			{
 				  	//get the key and remove it from iterator set
 				  	SelectionKey key = keyIterator.next();
-				  	keyIterator.remove();
+				  	
 				  	
 				  	//Complete Connection
 					if(key.isConnectable())
 					{
 						connect(key);
 					}
+					 if(key.isReadable()){
+	                    read(key);
+	                }
+	                
+					 keyIterator.remove();
 			  }			
 			}
 		}
@@ -123,6 +128,7 @@ public class ClientConnection extends Thread
 		}
 		//Set key to ready to write
 		key.interestOps(SelectionKey.OP_WRITE);
+		System.out.println("Recieved response: " + new String(message));
 		return message;
 	}
 	
@@ -146,14 +152,14 @@ public class ClientConnection extends Thread
 			serverKey.interestOps(SelectionKey.OP_READ);
 		
 			//wait for response
-			while(response == null)
+			/*while(response == null)
 			{
 				if(serverKey.isReadable())
 				{
 					response = read(serverKey);
 					System.out.println("Recieved response: " + new String(response));
 				}
-			}
+			}*/
 		}
 		return response;
 	}
@@ -162,4 +168,6 @@ public class ClientConnection extends Thread
 		// TODO Auto-generated method stub
 		
 	}
+	
+
 }

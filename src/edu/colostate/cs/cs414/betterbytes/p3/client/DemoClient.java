@@ -24,7 +24,14 @@ public class DemoClient {
 				
 				java.awt.EventQueue.invokeLater(new Runnable() {
 					public void run() {
-						try {
+						try {							
+								for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+									if ("Nimbus".equals(info.getName())) {
+										javax.swing.UIManager.setLookAndFeel(info.getClassName());
+										break;
+									}
+								}				
+							
 							new UI(connection).setVisible(true);
 						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 								| UnsupportedLookAndFeelException e) {

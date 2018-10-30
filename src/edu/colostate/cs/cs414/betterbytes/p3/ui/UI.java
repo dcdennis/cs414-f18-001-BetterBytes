@@ -64,6 +64,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		this.refreshData();
 		this.connection = connection;
 		start();
+		this.setVisible(true);
 	}
 
 	/**

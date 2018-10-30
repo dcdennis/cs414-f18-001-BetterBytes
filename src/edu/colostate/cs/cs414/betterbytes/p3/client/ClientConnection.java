@@ -151,15 +151,6 @@ public class ClientConnection extends Thread
 		
 			serverKey.interestOps(SelectionKey.OP_READ);
 		
-			//wait for response
-			/*while(response == null)
-			{
-				if(serverKey.isReadable())
-				{
-					response = read(serverKey);
-					System.out.println("Recieved response: " + new String(response));
-				}
-			}*/
 		}
 		return response;
 	}

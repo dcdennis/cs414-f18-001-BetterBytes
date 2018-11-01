@@ -26,4 +26,14 @@ public class UserLogon implements Protocol, Message {
 		
 	public String getUsername() {return username;}
 	public String getPasswordHash() {return passwordHash;}
+	
+	public boolean equals(Object O)
+	{
+		if(O instanceof UserLogon)
+		{
+			UserLogon m = (UserLogon) O;
+			return this.username.equals(m.getUsername()) && this.passwordHash.equals(m.getPasswordHash());
+		}
+		return false;
+	}
 }

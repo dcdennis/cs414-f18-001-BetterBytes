@@ -2,8 +2,8 @@ package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
 public class UserRegistrationResponse implements Protocol , Message{
 
-	public String status;
-	public String message;
+	private String status;
+	private String message;
 	
 	public UserRegistrationResponse(String status, String message)
 	{
@@ -26,5 +26,15 @@ public class UserRegistrationResponse implements Protocol , Message{
 	
 	public String getStatus() {return status;}
 	public String getMessage() {return message;}
+	
+	public boolean equals(Object O)
+	{
+		if(O instanceof UserRegistrationResponse)
+		{
+			UserRegistrationResponse m = (UserRegistrationResponse) O;
+			return this.status.equals(m.getStatus())&&this.message.equals(m.getMessage());
+		}
+		return false;
+	}
 
 }

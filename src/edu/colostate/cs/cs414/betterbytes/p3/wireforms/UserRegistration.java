@@ -34,5 +34,15 @@ public class UserRegistration implements Protocol, Message
 	public String getUsername() {return username;}
 	public String getPasswordHash() {return passwordHash;}
 	//public String getPasswordSalt() {return passwordSalt;}
+	
+	public boolean equals(Object O)
+	{
+		if(O instanceof UserRegistration)
+		{
+			UserRegistration m = (UserRegistration) O;
+			return this.username.equals(m.getUsername()) && this.passwordHash.equals(m.getPasswordHash());
+		}
+		return false;
+	}
 
 }

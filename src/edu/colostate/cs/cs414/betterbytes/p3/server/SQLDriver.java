@@ -34,8 +34,54 @@ public class SQLDriver {
             System.err.printf("Unable to Open Connection: ");
             System.err.println(e.getMessage());
         }
-    }
+    }	
 	
+	// Checks if a user already exists
+	// if they do not then we add them to the database
+	// needs work to determine if name already exists.
+	// will work with GUI team to determine return values
+	public boolean addUser(String username, String password)
+	{
+		String result [] = loginQuery(username,password);
+		if(result[0] != null)
+		{
+			return false;
+		}
+		else
+		{
+			String query = "INSERT INTO test.database (username, password) VALUES ('" + username + "' , '" + password + "' );";
+			runQuery(query);
+			return true;
+		}		
+	}//End Methods
+	
+	public boolean deleteUser(String username, String password)
+	{
+			String query = "DELETE FROM test.database WHERE `username` LIKE '" + username + "' and `password` LIKE '" + password + "';";
+			runQuery(query);
+			
+			String result [] = loginQuery(username,password);
+			
+			if(result[0] == null)
+				return true;				
+			else
+				return false;
+	}//End Method
+	
+	private void runQuery(String query)
+	{
+        try {
+            Statement st = database.createStatement();
+            try {
+                st.executeUpdate(query);        
+                } finally {
+                st.close();
+            }
+        } catch (Exception e) {
+            System.err.printf("Exception: ");
+            System.err.println(e.getMessage());            
+        }	
+	}
 
 	public boolean checkLogin(String username,String password)
 	{
@@ -68,8 +114,7 @@ public class SQLDriver {
         } catch (Exception e) {
             System.err.printf("Exception: ");
             System.err.println(e.getMessage());            
-        }	
- 
+        }	 
         return results;
     }	
     

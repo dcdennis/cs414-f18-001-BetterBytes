@@ -112,7 +112,24 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 
 						break;
 					}
+					case (RECORDS_REQUEST):
+					{
+						break;
 					}
+					case (CREATE_INVITATION):
+					{
+						break;
+					}
+					case (RESPOND_TO_INVITATION):
+					{
+						break;
+					}
+					case (SUBMIT_MOVE):
+					{
+						break;
+					}
+					}
+					
 					buffer.flip();
 					buffer.clear();
 

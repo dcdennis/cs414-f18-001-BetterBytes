@@ -5,12 +5,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 
 public class ThreadPoolManager {
-	/**
-	 * Complete a partial implementation of the Thread Pool Manager. This should
-	 * allocate a given number of threads, maintain a queue of pending tasks, and
-	 * assign tasks to be handled by the threads. This component can be created and
-	 * tested in isolation from the rest of the system.
-	 */
 
 	private ThreadPool threadPool;
 	private TaskQueue taskQueue;

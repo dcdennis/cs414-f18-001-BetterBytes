@@ -1,8 +1,18 @@
 package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
-public class UserLogonResponse implements Protocol, Message {
+import java.io.Serializable;
+
+public class UserLogonResponse implements Message, Protocol, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6406520340033670090L;
+	/**
+	 * 
+	 */
 	private String status;
 	private String message;
+	private final String type = Protocol.USER_LOGON_RESPONSE;
 	
 	public UserLogonResponse(String status, String message)
 	{
@@ -34,5 +44,9 @@ public class UserLogonResponse implements Protocol, Message {
 			return this.status.equals(m.getStatus()) && this.message.equals(m.getMessage());
 		}
 		return false;
+	}
+
+	public String getType() {
+		return type;
 	}
 }

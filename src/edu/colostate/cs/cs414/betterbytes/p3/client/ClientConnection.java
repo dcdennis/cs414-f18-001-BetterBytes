@@ -10,6 +10,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.MessageSerializer;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 
 
@@ -126,23 +127,23 @@ public class ClientConnection extends Thread
 			key.cancel();
 			running = false;
 		}
-		//Set key to ready to write
+		//Set key to ready to writes
 		key.interestOps(SelectionKey.OP_WRITE);
 		System.out.println("Recieved response: " + new String(message));
 		return message;
 	}
 	
-	public synchronized byte[] send(Message message)
+	public synchronized Message send(Message message)
 	{
-		byte[] response = null;
+		Message response = null;
 		if(serverKey != null)
 		{
 			try
 			{
 				//Wrap bytes of the string representation of the message in buffer and send
 				SocketChannel channel = (SocketChannel) serverKey.channel();
-				ByteBuffer buffer = ByteBuffer.wrap(message.getStringRepresentation().getBytes());
-				System.out.println("Sending Message: " + message.getStringRepresentation());
+				ByteBuffer buffer = ByteBuffer.wrap(MessageSerializer.serializeMessage(message));
+				System.out.println("Sending Message: " + message.toString());
 				channel.write(buffer);
 				buffer.flip();
 				buffer.clear();

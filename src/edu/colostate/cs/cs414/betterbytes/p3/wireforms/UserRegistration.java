@@ -3,12 +3,24 @@
  */
 package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
-public class UserRegistration implements Protocol, Message
+import java.io.Serializable;
+
+public class UserRegistration implements Message, Protocol, Serializable 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2896709563621328730L;
 	private String username;
 	private String passwordHash;
+	private final String type = Protocol.USER_REGISTRATION;
 	//private String passwordSalt;
 	
+	@Override
+	public String toString() {
+		return "UserRegistration [username=" + username + ", passwordHash=" + passwordHash + ", type=" + type + "]";
+	}
+
 	public UserRegistration(String username, String passwordHash)
 	{
 		this.username = username;
@@ -43,6 +55,10 @@ public class UserRegistration implements Protocol, Message
 			return this.username.equals(m.getUsername()) && this.passwordHash.equals(m.getPasswordHash());
 		}
 		return false;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 }

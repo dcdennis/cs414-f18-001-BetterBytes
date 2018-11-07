@@ -1,10 +1,23 @@
 package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
-public class UserRegistrationResponse implements Protocol , Message{
+import java.io.Serializable;
 
+public class UserRegistrationResponse implements Message, Protocol, Serializable 
+{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5558123529677680766L;
 	private String status;
 	private String message;
+	private final String type = Protocol.USER_REGISTRATION_RESPONSE;
 	
+	@Override
+	public String toString() {
+		return "UserRegistrationResponse [status=" + status + ", message=" + message + ", type=" + type + "]";
+	}
+
 	public UserRegistrationResponse(String status, String message)
 	{
 		this.status = status;
@@ -35,6 +48,10 @@ public class UserRegistrationResponse implements Protocol , Message{
 			return this.status.equals(m.getStatus())&&this.message.equals(m.getMessage());
 		}
 		return false;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 }

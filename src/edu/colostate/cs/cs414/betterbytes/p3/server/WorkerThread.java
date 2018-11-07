@@ -114,6 +114,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 					}
 					case (RECORDS_REQUEST):
 					{
+						//get newest updated account object
 						break;
 					}
 					case (CREATE_INVITATION):

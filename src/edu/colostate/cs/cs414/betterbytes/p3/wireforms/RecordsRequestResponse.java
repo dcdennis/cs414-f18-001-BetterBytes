@@ -2,6 +2,8 @@ package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
 import java.io.Serializable;
 
+import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
+
 public class RecordsRequestResponse implements Message, Protocol, Serializable {
 	
 	
@@ -13,15 +15,18 @@ public class RecordsRequestResponse implements Message, Protocol, Serializable {
 	
 	private String status;
 	private String message;
+	private Account account;
 	
-	public RecordsRequestResponse(String status, String message)
+	public RecordsRequestResponse(String status, String message, Account account)
 	{
 		this.status = status;
 		this.message = message;
+		this.account = account;
 	}
 	
 	public String getStatus() {return status;}
 	public String getMessage() {return message;}
+	public Account getAccount() {return account;}
 	@Override
 	public String getType() {
 		return type;

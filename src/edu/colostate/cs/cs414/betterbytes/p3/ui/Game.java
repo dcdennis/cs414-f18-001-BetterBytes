@@ -228,6 +228,10 @@ public class Game extends JFrame {
 		}
 	}
 
+	public ArrayList<Cell> getBoard() {
+		return this.getGrid().getCells();
+	}
+	
 	/**
 	 * This method returns whether the piece of Cell c can move to the x y
 	 * given.

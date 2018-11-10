@@ -1,5 +1,8 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
 
 public class Game {
@@ -10,6 +13,7 @@ public class Game {
 	private Player turn; // Player that needs to make a move
 	private Player attacker;
 	private Player defender;
+	private ArrayList<Move> moves;
 	
 	// CONSTRUCTOR
 	public Game() {}
@@ -18,6 +22,7 @@ public class Game {
 		this.attacker = attacker;
 		this.defender = defender;
 		this.startTime = startTime;
+		this.moves = new ArrayList<Move>();
 	}
 	
 	// SETTERS
@@ -48,6 +53,14 @@ public class Game {
 	}
 	public Player getDefender() {
 		return this.defender;
+	}
+	public Cell getCell(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public List<Move> getMoves()
+	{
+		return moves;
 	}
 	
 }

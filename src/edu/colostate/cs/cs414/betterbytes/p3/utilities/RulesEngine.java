@@ -45,7 +45,7 @@ public class RulesEngine {
 		if(moveHistory.size() > 12)
 		{
 			List<Move> movePattern = moveHistory.subList(moveHistory.size() - 3, moveHistory.size());
-			if(moveHistory.subList(moveHistory.size() - 7, moveHistory.size() - 4).equals(movePattern) && moveHistory.get(moveHistory.size() - 11, moveHistory.size() - 8).equals(movePattern))
+			if(moveHistory.subList(moveHistory.size() - 7, moveHistory.size() - 4).equals(movePattern) && moveHistory.subList(moveHistory.size() - 11, moveHistory.size() - 8).equals(movePattern))
 	            return GameResult.DRAW;
 		}
 		return GameResult.CONTINUE;		

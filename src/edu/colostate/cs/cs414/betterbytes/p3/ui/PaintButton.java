@@ -114,8 +114,12 @@ public class PaintButton {
 			if (game.isSecondCheck()) {
 				Tools.log("Sending Move");
 				game.setSecondCheck(false);
-				game.setStatus("Move Sent!");
-				Tools.log(game.getGrid().saveToString());
+				// Tools.log(game.getGrid().saveToString());
+				if (game.sendMoveToServer()) {
+					game.setStatus("Move Sent!");
+				} else {
+					game.setStatus("Connection failed, Try again!");
+				}
 			} else {
 				game.setStatus("Are you sure?");
 				game.setSecondCheck(true);

@@ -138,15 +138,7 @@ public class Grid {
 				return c;
 		return null;
 	}
-
-	/**
-	 * Incomplete, this will send the move to the server
-	 * 
-	 * @return successful
-	 */
-	public boolean sendMoveToServer() {
-		return false;
-	}
+	
 
 	/**
 	 * This method will move Piece p from Cell old to Cell nu

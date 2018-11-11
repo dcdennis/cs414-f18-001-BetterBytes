@@ -18,6 +18,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequestResponse;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistration;
 
 /**
@@ -282,6 +286,13 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void refreshData() {
 		String absPath = System.getProperty("user.dir") + "/src/";
 		this.gamesListModel.clear();
+		Message reply = ClientConnection.getInstance().send(new RecordsRequest("Dan"));
+		if(reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {		
+			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
+			if(rr != null) {
+				
+			}
+		}
 		for (File f : new File(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
 			Tools.log(f.getName());
 			this.gamesListModel.addElement(f.getName());

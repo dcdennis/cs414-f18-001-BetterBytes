@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 
+import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 
 /**
@@ -29,6 +30,7 @@ public class GameFrame extends JFrame {
 	private boolean secondCheck = false;
 	private int width = 886;
 	private int height = 935;
+	private Game game = null;
  
 	/**
 	 * This starts a new game.
@@ -186,10 +188,6 @@ public class GameFrame extends JFrame {
 		return null;
 	}
 
-	public boolean sendMoveToServer() {		
-		return getGrid().sendMoveToServer();
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -283,6 +281,21 @@ public class GameFrame extends JFrame {
 			} else {
 				return false;
 			}
+		}
+		return false;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
+	public boolean sendMoveToServer() {
+		if(this.getGame() != null) {
+			this.getGame().sendGameToServer();
 		}
 		return false;
 	}

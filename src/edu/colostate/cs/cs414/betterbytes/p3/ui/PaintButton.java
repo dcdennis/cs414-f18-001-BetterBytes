@@ -20,7 +20,7 @@ public class PaintButton {
 	private int width = 70;
 	private int height = 35;
 	private boolean mo = false;
-	private Game game = null;
+	private GameFrame game = null;
 
 	/**
 	 * Constructor for button
@@ -34,7 +34,7 @@ public class PaintButton {
 	 * @param Game
 	 *            class reference needed for executing actions
 	 */
-	public PaintButton(String text, int x, int y, Game game) {
+	public PaintButton(String text, int x, int y, GameFrame game) {
 		this.setText(text);
 		this.setX(x);
 		this.setY(y);

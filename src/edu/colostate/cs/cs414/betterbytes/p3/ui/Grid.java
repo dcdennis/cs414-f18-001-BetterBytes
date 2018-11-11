@@ -20,7 +20,7 @@ public class Grid {
 	private ArrayList<Cell> cells = new ArrayList<Cell>();
 	private ArrayList<Cell> backup = new ArrayList<Cell>();
 
-	private Game game = null;
+	private GameFrame game = null;
 
 	/**
 	 * Constructor for Grid, the object that holds the Cells and Pieces of the
@@ -33,7 +33,7 @@ public class Grid {
 	 * @param game
 	 *            reference to the Game object
 	 */
-	public Grid(int baseX, int baseY, Game game) {
+	public Grid(int baseX, int baseY, GameFrame game) {
 		this.game = game;
 		this.setBaseX(baseX);
 		this.setBaseY(baseY);

@@ -20,11 +20,11 @@ public class BufferPanel extends JPanel implements Runnable {
 	private String absPath = System.getProperty("user.dir") + "/src/";
 	private Image img = null;
 	private Mouse mouse = new Mouse(this);
-	private Game game = null;
+	private GameFrame game = null;
 	private Image background = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/background.png");
 	private ArrayList<PaintButton> buttons = new ArrayList<PaintButton>();
 
-	public BufferPanel(Game game) {
+	public BufferPanel(GameFrame game) {
 		this.game = game;
 		buttons.add(new PaintButton("Send Move", 25, 855, game));
 		buttons.add(new PaintButton("Revert", 104, 855, game));
@@ -160,7 +160,7 @@ public class BufferPanel extends JPanel implements Runnable {
 		return this.buttons;
 	}
 
-	public Game getGame() {
+	public GameFrame getGame() {
 		return this.game;
 	}
 

@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.betterbytes.p3.user;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Account {
 	
@@ -8,7 +9,7 @@ public class Account {
 	private String username;
 	private String email;
 	private String password;
-	private Invitation invite;
+	private List<Invitation> invites;
 	private ArrayList<Player> players; 
 	private Stats stats;
 	
@@ -59,5 +60,13 @@ public class Account {
 	
 	public Stats getStats() {
 		return this.stats;
+	}
+
+	public List<Invitation> getInvites() {
+		return invites;
+	}
+
+	public void setInvites(List<Invitation> invites) {
+		this.invites = invites;
 	}
 }

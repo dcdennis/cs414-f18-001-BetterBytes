@@ -11,16 +11,16 @@ public class RecordsRequest implements Message, Protocol, Serializable {
 	 */
 	private static final long serialVersionUID = -4473108516408911278L;
 	private final String type = Protocol.RECORDS_REQUEST;
-	private Account requester;
+	private String username;
 	
-	public RecordsRequest(Account account)
+	public RecordsRequest(String username)
 	{
-		this.requester = account;
+		this.username = username;
 	}
 	
-	public Account getAccount()
+	public String getUsername()
 	{
-		return requester;
+		return username;
 	}
 	
 	public String getType() {

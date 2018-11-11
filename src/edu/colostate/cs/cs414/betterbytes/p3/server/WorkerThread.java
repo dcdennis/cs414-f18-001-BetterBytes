@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayList;
+import java.util.List;
 
+import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.MessageSerializer;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.*;
 
@@ -62,9 +67,6 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 					 */
 					case (USER_REGISTRATION): {
 						UserRegistration registrationMessage = (UserRegistration) message;
-						// This is where calls to the database, rules engine, and other parts goes,
-						// before building the response
-
 						String username = registrationMessage.getUsername();
 						String password = registrationMessage.getPasswordHash();
 
@@ -77,13 +79,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							outgoing = new UserRegistrationResponse("false",
 									"Most likely a duplicated username, could also be a failed SQL connection");
 						}
-						if (debug)
-							System.out.println(
-									"Worker Thread " + threadID + " sending new message: " + outgoing.toString());
-						buffer = ByteBuffer.wrap(MessageSerializer.serializeMessage(outgoing));
-						channel.write(buffer);
-						if (debug)
-							System.out.println("Worker Thread " + threadID + "sent message");
+						send(outgoing,buffer,channel,debug);
 						break;
 					}
 
@@ -102,31 +98,54 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							outgoing = new UserLogonResponse("false", "User was not Verified.");
 						}
 						// Outgoing is the reply to the client program
-						if (debug)
-							System.out.println(
-									"Worker Thread " + threadID + " sending new message: " + outgoing.toString());
-						buffer = ByteBuffer.wrap(MessageSerializer.serializeMessage(outgoing));
-						channel.write(buffer);
-						if (debug)
-							System.out.println("Worker Thread " + threadID + "sent message");
-
+						send(outgoing,buffer,channel,debug);
 						break;
 					}
 					case (RECORDS_REQUEST):
 					{
-						//get newest updated account object
+						RecordsRequest requestMessage = (RecordsRequest) message;
+						String requestUser = requestMessage.getUsername();
+						
+						
+						//get newest updated account object and games from db TODO
+						Account update = new Account();
+						List<Game> games = new ArrayList<Game>();
+						
+						
+						send(new RecordsRequestResponse(games, update),buffer,channel,debug);
 						break;
 					}
 					case (CREATE_INVITATION):
 					{
+						CreateInvitation inviteMessage = (CreateInvitation) message;
+						String inviter = inviteMessage.getInviter();
+						String invitee = inviteMessage.getInvitee();
+						
+						//Register invitation to invitee's account object in the db TODO
+						
+						send(new CreateInvitationResponse("UNKNOWN","UNIMPLIMENTED"),buffer,channel,debug);
 						break;
 					}
 					case (RESPOND_TO_INVITATION):
 					{
+						
+						RespondToInvitation respondMessage = (RespondToInvitation) message;
+						Invitation acceptedInvite = respondMessage.getInvitation();
+						
+						//Create new game on db TODO
+						
+						send(new RespondToInvitationResponse("UNKNOWN","UNIMPLIMENTED"),buffer,channel,debug);
 						break;
 					}
 					case (SUBMIT_MOVE):
 					{
+						SubmitMove moveMessage = (SubmitMove) message;
+						Game gameUpdate = moveMessage.getGameUpdate();
+						//Check that the move is legal, process captures, check if won, update game state on DB TODO
+						
+						
+						send(new RespondToInvitationResponse("UNKNOWN","UNIMPLIMENTED"),buffer,channel,debug);
+						
 						break;
 					}
 					}
@@ -152,4 +171,16 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 	public void terminate() {
 		running = false;
 	}
+	
+	private void send(Message outgoing,ByteBuffer buffer, SocketChannel channel, boolean debug) throws IOException
+	{
+		if (debug)
+			System.out.println(
+					"Worker Thread " + threadID + " sending new message: " + outgoing.toString());
+		buffer = ByteBuffer.wrap(MessageSerializer.serializeMessage(outgoing));
+		channel.write(buffer);
+		if (debug)
+			System.out.println("Worker Thread " + threadID + "sent message");
+	}
+
 }

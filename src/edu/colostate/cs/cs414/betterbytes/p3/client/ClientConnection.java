@@ -76,10 +76,10 @@ public class ClientConnection extends Thread
 					{
 						connect(key);
 					}
-					 if(key.isReadable()){
+					/* if(key.isReadable()){
 	                    read(key);
 	                }
-	                
+	                */
 					 keyIterator.remove();
 			  }			
 			}
@@ -129,7 +129,7 @@ public class ClientConnection extends Thread
 		}
 		//Set key to ready to writes
 		key.interestOps(SelectionKey.OP_WRITE);
-		System.out.println("Recieved response: " + new String(message));
+		// System.out.println("Recieved response22: " + new String(message));
 		return message;
 	}
 	
@@ -151,6 +151,17 @@ public class ClientConnection extends Thread
 			catch (IOException e){}
 		
 			serverKey.interestOps(SelectionKey.OP_READ);
+			
+			
+			while(response == null)
+			{
+				if(serverKey.isReadable())
+				{
+					byte[] responseBytes = read(serverKey);
+					response = MessageSerializer.deserializeMessage(responseBytes);
+					System.out.println("Recieved response: " + response.toString());
+				}
+			}
 		
 		}
 		return response;

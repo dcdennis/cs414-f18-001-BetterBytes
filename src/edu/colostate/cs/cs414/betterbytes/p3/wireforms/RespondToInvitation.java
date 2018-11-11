@@ -13,17 +13,17 @@ public class RespondToInvitation implements Message, Protocol, Serializable {
 	private final String type = Protocol.RESPOND_TO_INVITATION;
 	
 	private Invitation invite;
-	private Account responder;
 	
+	public RespondToInvitation(Invitation invite)
+	{
+		this.invite = invite;
+	}
 	
 	public Invitation getInvitation()
 	{
 		return invite;
 	}
-	public Account getResponder()
-	{
-		return responder;
-	}
+
 	public String getType() {
 		return type;
 	}

@@ -14,15 +14,15 @@ public class CreateInvitation  implements Message, Protocol, Serializable {
 	private static final long serialVersionUID = 7358388651791225247L;
 	private final String type = Protocol.CREATE_INVITATION;
 	
-	private Account account;
-	private List<Invitation> invites;
+	private String inviter;
+	private String invitee;
 	
 	
 	
-	public CreateInvitation(Account account, List<Invitation> invites)
+	public CreateInvitation(String inviter, String invitee)
 	{
-		this.account = account;
-		this.invites = invites;
+		this.inviter = inviter;
+		this.invitee = invitee;
 	}
 	
 	@Override
@@ -30,12 +30,12 @@ public class CreateInvitation  implements Message, Protocol, Serializable {
 		return type;
 	}
 
-	public Account getAccount() {
-		return account;
+	public String getInviter() {
+		return inviter;
 	}
 	
-	public List<Invitation> getInvitation() {
-		return invites;
+	public String getInvitee() {
+		return invitee;
 	}
 
 }

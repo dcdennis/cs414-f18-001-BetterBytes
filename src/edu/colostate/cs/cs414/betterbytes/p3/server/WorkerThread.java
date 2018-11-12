@@ -74,9 +74,9 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Message outgoing = null;
 
 						if (created) {
-							outgoing = new UserRegistrationResponse("true", "User was created successfully");
+							outgoing = new UserRegistrationResponse(true, "User was created successfully");
 						} else {
-							outgoing = new UserRegistrationResponse("false",
+							outgoing = new UserRegistrationResponse(false,
 									"Most likely a duplicated username, could also be a failed SQL connection");
 						}
 						send(outgoing,buffer,channel,debug);
@@ -93,9 +93,9 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Message outgoing = null;
 
 						if (loggedIn) {
-							outgoing = new UserLogonResponse("true", "User was verified and logged in");
+							outgoing = new UserLogonResponse(true, "User was verified and logged in");
 						} else {
-							outgoing = new UserLogonResponse("false", "User was not Verified.");
+							outgoing = new UserLogonResponse(false, "User was not Verified.");
 						}
 						// Outgoing is the reply to the client program
 						send(outgoing,buffer,channel,debug);
@@ -123,7 +123,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						
 						//Register invitation to invitee's account object in the db TODO
 						
-						send(new CreateInvitationResponse("UNKNOWN","UNIMPLIMENTED"),buffer,channel,debug);
+						send(new CreateInvitationResponse(false,"UNIMPLIMENTED"),buffer,channel,debug);
 						break;
 					}
 					case (RESPOND_TO_INVITATION):
@@ -134,7 +134,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						
 						//Create new game on db TODO
 						
-						send(new RespondToInvitationResponse("UNKNOWN","UNIMPLIMENTED"),buffer,channel,debug);
+						send(new RespondToInvitationResponse(false,"UNIMPLIMENTED"),buffer,channel,debug);
 						break;
 					}
 					case (SUBMIT_MOVE):
@@ -144,7 +144,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						//Check that the move is legal, process captures, check if won, update game state on DB TODO
 						
 						
-						send(new RespondToInvitationResponse("UNKNOWN","UNIMPLIMENTED"),buffer,channel,debug);
+						send(new RespondToInvitationResponse(false,"UNIMPLIMENTED"),buffer,channel,debug);
 						
 						break;
 					}

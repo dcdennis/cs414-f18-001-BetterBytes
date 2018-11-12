@@ -12,16 +12,16 @@ public class SubmitMoveResponse implements Message, Protocol, Serializable {
 	 * 
 	 */
 	private final String type = Protocol.SUBMIT_MOVE_RESPONSE;
-	private String status;
+	private boolean status;
 	private String message;
 	
-	public SubmitMoveResponse(String status, String message)
+	public SubmitMoveResponse(boolean status, String message)
 	{
 		this.status = status;
 		this.message = message;
 	}
 	
-	public String getStatus() {return status;}
+	public boolean getStatus() {return status;}
 	public String getMessage() {return message;}
 	@Override
 	public String getType() {

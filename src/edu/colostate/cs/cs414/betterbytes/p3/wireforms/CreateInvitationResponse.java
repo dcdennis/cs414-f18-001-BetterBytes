@@ -12,14 +12,14 @@ public class CreateInvitationResponse implements Message, Protocol, Serializable
 	private static final long serialVersionUID = 1524313760540559931L;
 	private final String type = Protocol.CREATE_INVITATION_RESPONSE;
 	
-	private String status;
+	private boolean status;
 	private String message;
-	public CreateInvitationResponse(String status, String message)
+	public CreateInvitationResponse(boolean status, String message)
 	{
 		this.status = status;
 		this.message = message;
 	}
-	public String getStatus() {return status;}
+	public boolean getStatus() {return status;}
 	public String getMessage() {return message;}
 	
 	@Override

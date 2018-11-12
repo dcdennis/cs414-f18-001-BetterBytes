@@ -10,30 +10,21 @@ public class UserLogonResponse implements Message, Protocol, Serializable {
 	/**
 	 * 
 	 */
-	private String status;
+	private boolean status;
 	private String message;
 	private final String type = Protocol.USER_LOGON_RESPONSE;
 	
-	public UserLogonResponse(String status, String message)
+	public UserLogonResponse(boolean status, String message)
 	{
 		this.status = status;
 		this.message = message;
-	}
-	
-	public UserLogonResponse(String stringRep)
-	{
-		String[] data = stringRep.split(", ");
-		if(!data[0].equals(USER_LOGON_RESPONSE))
-			System.out.println("Something is wrong");
-		this.status = data[1];
-		this.message = data[2];
 	}
 	
 	public String getStringRepresentation() {
 		return USER_LOGON_RESPONSE + ", " + status + ", " + message;
 	}
 	
-	public String getStatus() {return status;}
+	public boolean getStatus() {return status;}
 	public String getMessage() {return message;}
 	
 	public boolean equals(Object O)
@@ -41,7 +32,7 @@ public class UserLogonResponse implements Message, Protocol, Serializable {
 		if(O instanceof UserLogonResponse)
 		{
 			UserLogonResponse m = (UserLogonResponse) O;
-			return this.status.equals(m.getStatus()) && this.message.equals(m.getMessage());
+			return this.status == m.getStatus() && this.message.equals(m.getMessage());
 		}
 		return false;
 	}

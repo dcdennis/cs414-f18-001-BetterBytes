@@ -10,16 +10,16 @@ public class RespondToInvitationResponse implements Message, Protocol, Serializa
 	private final String type = Protocol.RESPOND_TO_INVITATION_RESPONSE;
 	
 	
-	private String status;
+	private boolean status;
 	private String message;
 	
-	public RespondToInvitationResponse(String status, String message)
+	public RespondToInvitationResponse(boolean status, String message)
 	{
 		this.status = status;
 		this.message = message;
 	}
 	
-	public String getStatus() {return status;}
+	public boolean getStatus() {return status;}
 	public String getMessage() {return message;}
 	
 	

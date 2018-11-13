@@ -46,6 +46,13 @@ public class SQLDriver {
 			   query += "WHERE `username`=\"" + username + "\" AND `password`=\"" + password+ "\";";
 		runQuery(query);		
 	}
+	
+	public void getAccount(String username,String password,Account acc)
+	{		
+		String query  = "Select `account` FROM betterbytes.users";
+			   query += "WHERE `username`=\"" + username + "\" AND `password`=\"" + password+ "\";";
+		runQuery(query);		
+	}
 
 	// Checks if a user already exists
 	// if they do not then we add them to the database
@@ -92,14 +99,18 @@ public class SQLDriver {
 
 	public boolean checkLogin(String username, String password) {
 		String result[] = loginQuery(username, password);
-		if (result[1].equals(password))
+		if(result[1] == null || !(result[1].equals(password)))
+			return false;		
+		else if (result[1].equals(password))
 			return true;
+		
 		return false;
+
 	}// End method
 
 	public String[] loginQuery(String username, String password) {
 		String[] results = new String[3];
-		String query = "SELECT * FROM betterbytes.users WHERE `username` LIKE '" + username + "';";
+		String query = "SELECT * FROM betterbytes.users WHERE `username` LIKE '" + username + "' AND `password` LIKE '" + password + "';";
 		try {
 			Statement st = database.createStatement();
 			try {

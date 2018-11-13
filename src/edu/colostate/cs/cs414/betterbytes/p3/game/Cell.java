@@ -10,18 +10,25 @@ public class Cell {
 	private String type;
 	private Piece piece;
 	private boolean isOccupied;
+
+	private int x;
+	private int y;
 	
 	
 	// CTOR
 	public Cell() {}
-	public Cell(String type) {
+	public Cell(String type, int x, int y) {
 		this.type = type;
+		this.x = x;
+		this.y = y;
 	}
-	public Cell(String type, Piece piece) {
+	public Cell(String type, Piece piece, int x, int y) {
 		this.piece = piece;
 		this.type = type;
+		this.x = x;
+		this.y = y;
 	}
-	
+
 	// ACCESSORS
 	public boolean isCorner() {
 		return this.type.equals(CORNER);
@@ -42,6 +49,22 @@ public class Cell {
 	public Piece getPiece() {
 		return this.piece;
 	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 	
 	// MUTATORS
 	public void setPiece(Piece piece) {
@@ -49,6 +72,11 @@ public class Cell {
 		if(isOccupied == false) {
 			this.isOccupied = true;
 		}
+	}
+
+	public void removePiece(){
+		this.piece = null;
+		this.isOccupied = false;
 	}
 	
 	

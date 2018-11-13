@@ -61,7 +61,7 @@ class SQLDriverTest {
 	{
 		SQLDriver sql = SQLDriver.getInstance();
 		String[] results = sql.loginQuery("ctunnell@rams.colostate.edu","TestPassword");
-		assertEquals(null,results[2]);
+		assertEquals("ctunnell",results[2]);
 	}
 	
 	@Test
@@ -79,4 +79,8 @@ class SQLDriverTest {
 		
 		assertEquals(testAcc.getUsername(),results[2]);
 	}
+	
+
+	
+	
 }

@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
+import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
+
 public class SQLDriver {
 
 	private Connection database;
@@ -37,6 +39,13 @@ public class SQLDriver {
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	public void setAccount(String username,String password,Account acc)
+	{		
+		String query  = "UPDATE betterbytes.users SET `username`=\"" + username + "\", `password`=\"" + password + "\",`account`=\"" + acc.getUsername() + "\" ";
+			   query += "WHERE `username`=\"" + username + "\" AND `password`=\"" + password+ "\";";
+		runQuery(query);		
+	}
 
 	// Checks if a user already exists
 	// if they do not then we add them to the database
@@ -56,7 +65,7 @@ public class SQLDriver {
 
 	public boolean deleteUser(String username, String password) {
 		String query = "DELETE FROM betterbytes.users WHERE `username` LIKE '" + username + "' and `password` LIKE '"
-				+ password + "';";
+				+ password + "';";		
 		runQuery(query);
 
 		String result[] = loginQuery(username, password);
@@ -89,7 +98,7 @@ public class SQLDriver {
 	}// End method
 
 	public String[] loginQuery(String username, String password) {
-		String[] results = new String[2];
+		String[] results = new String[3];
 		String query = "SELECT * FROM betterbytes.users WHERE `username` LIKE '" + username + "';";
 		try {
 			Statement st = database.createStatement();
@@ -101,6 +110,8 @@ public class SQLDriver {
 					while (result.next()) {
 						results[0] = result.getString(1);
 						results[1] = result.getString(2);
+						results[2] = result.getString(3);
+						
 					}
 				} finally {
 					result.close();

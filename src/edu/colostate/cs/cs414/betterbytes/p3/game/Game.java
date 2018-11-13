@@ -55,7 +55,7 @@ public class Game {
 		if (reply != null) {
 			if (reply.getType().equals(Protocol.SUBMIT_MOVE_RESPONSE)) {
 				SubmitMoveResponse re = (SubmitMoveResponse) reply;
-				return re.getStatus().equals("successful"); //??????????
+				return re.getStatus();
 			}
 		}
 		return false;

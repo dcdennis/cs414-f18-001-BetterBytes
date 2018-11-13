@@ -12,10 +12,10 @@ public class SQLDriver {
 	private Connection database;
 	// must be changed for whatever machine it is being run on 3306 is the port
 	// server
-	private String url = "jdbc:mysql://127.0.0.1:3306/?user=root";
+	private String url = "jdbc:mysql://faure.cs.colostate.edu/betterbytes";	
 	// Credentials for the database to log into
-	private String user = "root";
-	private String pass = "Code";
+	private String user = "ctunnell";
+	private String pass = "830336263";
 
 	private static final SQLDriver instance = new SQLDriver();
 
@@ -47,7 +47,7 @@ public class SQLDriver {
 		if (result[0] != null) {
 			return false;
 		} else {
-			String query = "INSERT INTO test.database (username, password) VALUES ('" + username + "' , '" + password
+			String query = "INSERT INTO betterbytes.users (username, password) VALUES ('" + username + "' , '" + password
 					+ "' );";
 			runQuery(query);
 			return true;
@@ -55,7 +55,7 @@ public class SQLDriver {
 	}// End Methods
 
 	public boolean deleteUser(String username, String password) {
-		String query = "DELETE FROM test.database WHERE `username` LIKE '" + username + "' and `password` LIKE '"
+		String query = "DELETE FROM betterbytes.users WHERE `username` LIKE '" + username + "' and `password` LIKE '"
 				+ password + "';";
 		runQuery(query);
 
@@ -90,7 +90,7 @@ public class SQLDriver {
 
 	public String[] loginQuery(String username, String password) {
 		String[] results = new String[2];
-		String query = "SELECT * FROM test.database WHERE `username` LIKE '" + username + "';";
+		String query = "SELECT * FROM betterbytes.users WHERE `username` LIKE '" + username + "';";
 		try {
 			Statement st = database.createStatement();
 			try {

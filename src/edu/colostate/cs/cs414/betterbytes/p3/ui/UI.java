@@ -287,7 +287,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		String absPath = System.getProperty("user.dir") + "/src/";
 		this.gamesListModel.clear();
 		Message reply = ClientConnection.getInstance().send(new RecordsRequest("Dan"));
-		if(reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {		
+		if(reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {		
 			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
 			if(rr != null) {
 				

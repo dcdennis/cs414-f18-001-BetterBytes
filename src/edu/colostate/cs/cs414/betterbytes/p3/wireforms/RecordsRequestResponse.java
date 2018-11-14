@@ -24,7 +24,7 @@ public class RecordsRequestResponse implements Message, Protocol, Serializable {
 		this.account = account;
 	}
 	
-	public String getGames() {return games;}
+	public List<Game> getGames() {return games;}
 	public Account getAccount() {return account;}
 	@Override
 	public String getType() {

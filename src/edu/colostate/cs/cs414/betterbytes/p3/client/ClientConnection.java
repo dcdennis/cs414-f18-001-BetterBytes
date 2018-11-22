@@ -155,6 +155,13 @@ public class ClientConnection extends Thread
 			
 			while(response == null)
 			{
+				try{
+					this.sleep(100);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 				if(serverKey.isReadable())
 				{
 					byte[] responseBytes = read(serverKey);

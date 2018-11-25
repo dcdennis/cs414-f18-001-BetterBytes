@@ -21,9 +21,11 @@ public class Game {
 	private Player defender;
 	private ArrayList<Move> moves;
 	private GameFrame gameframe = null;
+	private GameResult result;
 
 	// CONSTRUCTOR
 	public Game() {
+		
 	}
 
 	public Game(String startTime, Player attacker, Player defender) {
@@ -34,6 +36,7 @@ public class Game {
 		this.moves = new ArrayList<Move>();
 		gameframe = new GameFrame();
 		gameframe.setGame(this);
+		setResult(GameResult.CONTINUE);
 	}
 
 	// SETTERS
@@ -98,4 +101,12 @@ public class Game {
 		return this.gameframe.getCell(x, y);
 	}
 
+	public GameResult getResult() {
+		return result;
+	}
+
+	public void setResult(GameResult result) {
+		this.result = result;
+	}
+	
 }

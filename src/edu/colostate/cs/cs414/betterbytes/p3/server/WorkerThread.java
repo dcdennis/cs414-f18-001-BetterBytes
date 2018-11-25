@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
+import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.RulesEngine;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.*;
 
@@ -19,6 +21,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 	private final boolean debug = true;
 	private ThreadPoolManager manager;
 	private SQLDriver sql;
+	private RulesEngine rules = RulesEngine.getInstance();
 
 	private int threadID;
 
@@ -143,6 +146,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						SubmitMove moveMessage = (SubmitMove) message;
 						Game gameUpdate = moveMessage.getGameUpdate();
 						// this variation of addGame is TODO
+						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
 						sql.addGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 						send(new RespondToInvitationResponse(false, "UNIMPLIMENTED"), buffer, channel, debug);
 

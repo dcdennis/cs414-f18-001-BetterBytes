@@ -13,7 +13,7 @@ public class RulesEngine {
 	private RulesEngine() {
 	}
 
-	public RulesEngine getInstance() {
+	public static RulesEngine getInstance() {
 		return instance;
 	}
 

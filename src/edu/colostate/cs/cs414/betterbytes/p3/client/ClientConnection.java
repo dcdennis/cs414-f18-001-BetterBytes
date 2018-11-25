@@ -131,6 +131,7 @@ public class ClientConnection extends Thread
 		return message;
 	}
 	
+	@SuppressWarnings("static-access")
 	public synchronized Message send(Message message)
 	{
 		Message response = null;

@@ -2,7 +2,6 @@ package edu.colostate.cs.cs414.betterbytes.p3.utilities;
 
 import java.util.List;
 
-import edu.colostate.cs.cs414.betterbytes.p3.game.Cell;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Move;

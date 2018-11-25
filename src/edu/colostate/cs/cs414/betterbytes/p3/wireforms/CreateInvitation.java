@@ -1,10 +1,6 @@
 package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
 import java.io.Serializable;
-import java.util.List;
-
-import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
-import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
 
 public class CreateInvitation  implements Message, Protocol, Serializable {
 	

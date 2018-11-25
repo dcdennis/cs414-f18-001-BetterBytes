@@ -2,8 +2,6 @@ package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
 import java.io.Serializable;
 
-import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
-
 public class RecordsRequest implements Message, Protocol, Serializable {
 
 	/**

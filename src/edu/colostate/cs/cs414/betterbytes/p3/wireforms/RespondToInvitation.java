@@ -2,7 +2,6 @@ package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
 import java.io.Serializable;
 
-import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
 
 public class RespondToInvitation implements Message, Protocol, Serializable {

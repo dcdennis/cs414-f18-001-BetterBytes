@@ -1,9 +1,5 @@
 package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;

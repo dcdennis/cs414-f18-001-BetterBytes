@@ -82,13 +82,19 @@ public class Game {
 		return this.defender;
 	}
 
-	public Cell getCell(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+	public void makeMove(Move nextMove)
+	{ 
+		edu.colostate.cs.cs414.betterbytes.p3.ui.Piece toMove = this.gameframe.getCell(nextMove.getStartX(), nextMove.getStartY()).getPiece();
+		this.gameframe.movePiece(toMove,this.gameframe.getCell(nextMove.getStartX(), nextMove.getStartY()),this.gameframe.getCell(nextMove.getEndX(), nextMove.getEndY()));
+		
 	}
 
 	public List<Move> getMoves() {
 		return moves;
+	}
+
+	public edu.colostate.cs.cs414.betterbytes.p3.ui.Cell getCell(int x, int y) {
+		return this.gameframe.getCell(x, y);
 	}
 
 }

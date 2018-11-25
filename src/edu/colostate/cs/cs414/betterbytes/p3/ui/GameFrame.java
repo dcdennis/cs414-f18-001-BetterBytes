@@ -1,15 +1,11 @@
 package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Point;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
-import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 
 /**
  * This class represents a physical Tafl game, including the grid which contains

@@ -51,5 +51,9 @@ public class Cell {
 		}
 	}
 	
-	
+	public void removePiece()
+	{
+		this.piece = null;
+		this.isOccupied = false;
+	}
 }

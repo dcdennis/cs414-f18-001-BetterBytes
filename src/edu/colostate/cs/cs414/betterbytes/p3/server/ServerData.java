@@ -1,10 +1,9 @@
 package edu.colostate.cs.cs414.betterbytes.p3.server;
 
-import java.util.ArrayList;
+import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
-import java.nio.channels.SocketChannel;
 
 // This class allows access to an active account's socket channel
 // The server can now write to a specified client

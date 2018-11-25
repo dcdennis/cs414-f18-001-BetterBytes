@@ -130,4 +130,8 @@ public class Account {
 	public void setInvites(List<Invitation> invites) {
 		this.invites = invites;
 	}
+
+	public void addInvite(Invitation invitation) {
+		this.invites.add(invitation);
+	}
 }

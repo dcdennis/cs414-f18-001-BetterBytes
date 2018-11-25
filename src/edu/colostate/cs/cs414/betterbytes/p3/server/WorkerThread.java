@@ -10,6 +10,7 @@ import java.util.List;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.*;
 
@@ -108,9 +109,9 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							String requestUser = requestMessage.getUsername();
 							
 							
-							//get newest updated account object and games from db TODO
-							Account update = new Account();
-							List<Game> games = new ArrayList<Game>();
+							//done, but relies on methods that are themselves TODO
+							Account update = sql.getAccount(requestUser);
+							List<Game> games = sql.getGames(requestUser);
 							
 							
 							send(new RecordsRequestResponse(games, update),buffer,channel,debug);
@@ -122,9 +123,11 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							String inviter = inviteMessage.getInviter();
 							String invitee = inviteMessage.getInvitee();
 							
-							//Register invitation to invitee's account object in the db TODO
+							Account inviteeAccount = sql.getAccount(invitee);
+							inviteeAccount.addInvite(new Invitation(inviter,invitee));
+							sql.setAccount(inviteeAccount);
 							
-							send(new CreateInvitationResponse(false,"UNIMPLIMENTED"),buffer,channel,debug);
+							send(new CreateInvitationResponse(true,"Invitation Sent"),buffer,channel,debug);
 							break;
 						}
 						case (RESPOND_TO_INVITATION):
@@ -132,19 +135,23 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							
 							RespondToInvitation respondMessage = (RespondToInvitation) message;
 							Invitation acceptedInvite = respondMessage.getInvitation();
+							String recipient = acceptedInvite.getRecipient();
+							String sender = acceptedInvite.getSender();
 							
-							//Create new game on db TODO
+							//newGame is TODO
+							sql.newGame(sender, recipient);
 							
 							send(new RespondToInvitationResponse(false,"UNIMPLIMENTED"),buffer,channel,debug);
 							break;
 						}
 						case (SUBMIT_MOVE):
 						{
+							
+							
 							SubmitMove moveMessage = (SubmitMove) message;
 							Game gameUpdate = moveMessage.getGameUpdate();
-							//Check that the move is legal, process captures, check if won, update game state on DB TODO
-							
-							
+							//this variation of addGame is TODO
+							sql.addGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 							send(new RespondToInvitationResponse(false,"UNIMPLIMENTED"),buffer,channel,debug);
 							
 							break;

@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.List;
 
+import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
@@ -281,6 +283,28 @@ public class SQLDriver {
 		}
 		return results;
 	}
+
+	public Account getAccount(String requestUser) {
+		//TODO Theres no reason to REQUIRE getting only with a username and password, 
+		//and frankly I dont want to try and trace the path backwords and fix everything, this is easier
+		return null;
+	}
+
+	public List<Game> getGames(String requestUser) {
+		// TODO Same as above, just that I need every game a user is playing as a list
+		return null;
+	}
+
+	public void newGame(String playerOne, String playerTwo) {
+		// TODO creates a new game with the default state
+		
+	}
+
+	public void addGame(Player attacker, Player defender, Game gameUpdate) {
+		// TODO updates a game. like the ones you already have, just with a serialized game object.
+		
+	}
+
 
 	/*
 	 * SQLDriver sql = SQLDriver.getInstance(); String[] results =

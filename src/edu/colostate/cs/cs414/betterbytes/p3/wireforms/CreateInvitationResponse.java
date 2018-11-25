@@ -7,25 +7,31 @@ public class CreateInvitationResponse implements Message, Protocol, Serializable
 	/**
 	 * 
 	 */
-	
-	
+
 	private static final long serialVersionUID = 1524313760540559931L;
 	private final String type = Protocol.CREATE_INVITATION_RESPONSE;
-	
+
 	private boolean status;
 	private String message;
-	public CreateInvitationResponse(boolean status, String message)
-	{
+
+	public CreateInvitationResponse(boolean status, String message) {
 		this.status = status;
 		this.message = message;
 	}
-	public boolean getStatus() {return status;}
-	public String getMessage() {return message;}
-	
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
 	@Override
 	public String getType() {
 		return type;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -35,6 +41,7 @@ public class CreateInvitationResponse implements Message, Protocol, Serializable
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

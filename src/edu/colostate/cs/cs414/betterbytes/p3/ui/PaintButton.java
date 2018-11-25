@@ -25,14 +25,10 @@ public class PaintButton {
 	/**
 	 * Constructor for button
 	 * 
-	 * @param String
-	 *            text that will be displayed.
-	 * @param int
-	 *            x coordinate
-	 * @param int
-	 *            y coordinate
-	 * @param Game
-	 *            class reference needed for executing actions
+	 * @param String text that will be displayed.
+	 * @param        int x coordinate
+	 * @param        int y coordinate
+	 * @param Game   class reference needed for executing actions
 	 */
 	public PaintButton(String text, int x, int y, GameFrame game) {
 		this.setText(text);
@@ -46,8 +42,7 @@ public class PaintButton {
 	/**
 	 * This method receives graphics and paints this button
 	 * 
-	 * @param g
-	 *            is the Graphics object being used
+	 * @param g is the Graphics object being used
 	 */
 	public void paint(Graphics g) {
 		if (fill != null) {

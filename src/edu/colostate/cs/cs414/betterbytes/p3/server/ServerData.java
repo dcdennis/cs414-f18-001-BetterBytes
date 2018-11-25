@@ -12,23 +12,23 @@ import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 public class ServerData {
 
 	// FIELDS
-	private HashMap<Account, SocketChannel> AccountChannels = new HashMap< Account, SocketChannel>();	
-	
+	private HashMap<Account, SocketChannel> AccountChannels = new HashMap<Account, SocketChannel>();
+
 	// CTOR INSTANCE
 	private static final ServerData instance = new ServerData();
 
 	public static ServerData getInstance() {
 		return instance;
-	}	
-	
+	}
+
 	// ACCESSORS
 	public SocketChannel getChannel(Account account) {
 		return this.AccountChannels.get(account);
 	}
-	
-	//MUTATORS	
+
+	// MUTATORS
 	public void addAccountChannelPair(Account account, SocketChannel channel) {
 		this.AccountChannels.put(account, channel);
 	}
-	
+
 }

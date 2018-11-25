@@ -19,15 +19,11 @@ public class Grid {
 	private GameFrame game = null;
 
 	/**
-	 * Constructor for Grid, the object that holds the Cells and Pieces of the
-	 * Game.
+	 * Constructor for Grid, the object that holds the Cells and Pieces of the Game.
 	 * 
-	 * @param baseX
-	 *            coordinate in which the grid will be painted
-	 * @param baseY
-	 *            coordinate in which the grid will be painted
-	 * @param game
-	 *            reference to the Game object
+	 * @param baseX coordinate in which the grid will be painted
+	 * @param baseY coordinate in which the grid will be painted
+	 * @param game  reference to the Game object
 	 */
 	public Grid(int baseX, int baseY, GameFrame game) {
 		this.game = game;
@@ -91,7 +87,6 @@ public class Grid {
 	public ArrayList<Cell> getCells() {
 		return this.cells;
 	}
-	
 
 	/**
 	 * 
@@ -121,8 +116,8 @@ public class Grid {
 	}
 
 	/**
-	 * Returns Cell object when given a valid x y, will return null if x y is
-	 * not on board
+	 * Returns Cell object when given a valid x y, will return null if x y is not on
+	 * board
 	 * 
 	 * @param x
 	 * @param y
@@ -134,17 +129,13 @@ public class Grid {
 				return c;
 		return null;
 	}
-	
 
 	/**
 	 * This method will move Piece p from Cell old to Cell nu
 	 * 
-	 * @param p
-	 *            Piece to move
-	 * @param old
-	 *            Cell that contains Piece p
-	 * @param nu
-	 *            Destination Cell
+	 * @param p   Piece to move
+	 * @param old Cell that contains Piece p
+	 * @param nu  Destination Cell
 	 */
 	public void movePiece(Piece p, Cell old, Cell nu) {
 		if (p != null && old != null && nu != null && game.isOurTurn()) {
@@ -164,11 +155,10 @@ public class Grid {
 	}
 
 	/**
-	 * This method reads a String and attempts to load the board from it. It
-	 * will fail if string is wrongly formatted or incomplete
+	 * This method reads a String and attempts to load the board from it. It will
+	 * fail if string is wrongly formatted or incomplete
 	 * 
-	 * @param data
-	 *            String to parse board from
+	 * @param data String to parse board from
 	 * @return whether it was successful or not
 	 */
 	public boolean setBoardFromString(String data) {
@@ -205,8 +195,8 @@ public class Grid {
 	}
 
 	/**
-	 * This method saves the current grid to a string that can later be loaded.
-	 * Uses '~' and ':' to separate data.
+	 * This method saves the current grid to a string that can later be loaded. Uses
+	 * '~' and ':' to separate data.
 	 * 
 	 * @return Grid data converted to a single string
 	 */

@@ -53,17 +53,18 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private ArrayList<String> loadedGames = new ArrayList<String>();
 	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
 
-	
-	private ClientConnection connection; 
-	
+	private ClientConnection connection;
+
 	/**
 	 * Creates new form UI
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
 	 */
-	public UI(ClientConnection connection) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public UI(ClientConnection connection) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
 		initComponents();
 		this.setTitle("Tafl Control Panel    |    Profile: ");
 		this.refreshData();
@@ -164,53 +165,48 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout.createParallelGroup(
-						javax.swing.GroupLayout.Alignment.LEADING, false).addGroup(layout
-								.createSequentialGroup().addGroup(layout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-										.addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-										.addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout
-												.createSequentialGroup()
-												.addComponent(RESUMEGAMEBUTTON, javax.swing.GroupLayout.PREFERRED_SIZE,
-														101, javax.swing.GroupLayout.PREFERRED_SIZE)
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false).addGroup(layout
+						.createSequentialGroup()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+								.addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+										.addComponent(RESUMEGAMEBUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 101,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(QUITGAMEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(jScrollPane1))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(jLabel2)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+										.addGroup(layout.createSequentialGroup()
+												.addComponent(ACCEPTBUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 95,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(QUITGAMEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+												.addComponent(DECLINEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addComponent(jScrollPane1))
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(jLabel2).addGroup(layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING, false)
-												.addGroup(layout.createSequentialGroup()
-														.addComponent(ACCEPTBUTTON,
-																javax.swing.GroupLayout.PREFERRED_SIZE, 95,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addComponent(DECLINEBUTTON,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-												.addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
-														javax.swing.GroupLayout.PREFERRED_SIZE))))
+										.addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200,
+												javax.swing.GroupLayout.PREFERRED_SIZE))))
 						.addComponent(REFRESHBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-						.addGroup(
-								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-										.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(VIEWGAMEMANUALBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(SENDINVITEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(PROFILESTATSBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+						.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(VIEWGAMEMANUALBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(SENDINVITEBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(PROFILESTATSBUTTON, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 
-						.addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(layout.createSequentialGroup()
 								.addComponent(REFRESHBUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 31,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,33 +227,31 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 								.addComponent(SENDINVITEBUTTON)
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(PROFILESTATSBUTTON)))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(RESUMEGAMEBUTTON).addComponent(QUITGAMEBUTTON).addComponent(ACCEPTBUTTON)
-								.addComponent(DECLINEBUTTON))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(RESUMEGAMEBUTTON).addComponent(QUITGAMEBUTTON).addComponent(ACCEPTBUTTON)
+						.addComponent(DECLINEBUTTON))
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		pack();
 	}// </editor-fold>
 
 	/**
-	 * @param args
-	 *            the command line arguments
-	 * @throws UnknownHostException 
-	 * @throws InterruptedException 
+	 * @param args the command line arguments
+	 * @throws UnknownHostException
+	 * @throws InterruptedException
 	 */
 	public static void main(String args[]) throws UnknownHostException, InterruptedException {
 		/* Set the Nimbus look and feel */
 		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting
 		// code (optional) ">
 		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the
-		 * default look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
-		 * html
+		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+		 * look and feel. For details see
+		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf. html
 		 */
 		try {
-			
+
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -276,21 +270,20 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		// </editor-fold>
 
 		/* Create and display the form */
-		/*java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new UI().setVisible(true);
-			}
-		});*/
+		/*
+		 * java.awt.EventQueue.invokeLater(new Runnable() { public void run() { new
+		 * UI().setVisible(true); } });
+		 */
 	}
 
 	public void refreshData() {
 		String absPath = System.getProperty("user.dir") + "/src/";
 		this.gamesListModel.clear();
 		Message reply = ClientConnection.getInstance().send(new RecordsRequest("Dan"));
-		if(reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {		
+		if (reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {
 			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
-			if(rr != null) {
-				
+			if (rr != null) {
+
 			}
 		}
 		for (File f : new File("edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
@@ -344,7 +337,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "Login":
 			System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
-			Message response = connection.send(new UserLogon(USERNAME.getText(),PASSWORD.getText()));
+			Message response = connection.send(new UserLogon(USERNAME.getText(), PASSWORD.getText()));
 			Account received = ((UserLogonResponse) response).getAcc();
 			System.out.println(received.getUsername());
 			System.out.println(received.getPassword());
@@ -372,15 +365,16 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			break;
 		}
 	}
-	
-	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+
+	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			UnsupportedLookAndFeelException {
 		for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 			if ("Nimbus".equals(info.getName())) {
 				javax.swing.UIManager.setLookAndFeel(info.getClassName());
 				break;
 			}
 		}
-		
+
 	}
 
 }

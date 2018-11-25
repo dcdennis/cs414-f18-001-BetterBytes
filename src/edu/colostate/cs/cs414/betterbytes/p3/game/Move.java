@@ -5,25 +5,30 @@ public class Move {
 	private int endX;
 	private int startY;
 	private int endY;
+
 	public Move(int startX, int endX, int startY, int endY) {
 		this.startX = startX;
 		this.endX = endX;
 		this.startY = startY;
 		this.endY = endY;
 	}
+
 	public int getStartX() {
 		return startX;
 	}
-	
+
 	public int getStartY() {
 		return startY;
 	}
+
 	public int getEndX() {
 		return endX;
 	}
+
 	public int getEndY() {
 		return endY;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -34,6 +39,7 @@ public class Move {
 		result = prime * result + startY;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

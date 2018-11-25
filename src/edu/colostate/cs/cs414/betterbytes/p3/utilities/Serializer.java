@@ -13,73 +13,65 @@ import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 
 public abstract class Serializer {
-	public static byte[] serialize(Object o)
-	{
+	public static byte[] serialize(Object o) {
 		byte[] res = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutput out = null;
-		try
-		{
-			out = new ObjectOutputStream(bos);   
+		try {
+			out = new ObjectOutputStream(bos);
 			out.writeObject(o);
 			out.flush();
 			res = bos.toByteArray();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				bos.close();
+			} catch (IOException ex) {
+			}
 		}
-		finally 
-		{
-		  try 
-		  {
-		    bos.close();
-		  } 
-		  catch (IOException ex) {}
-		}
-		//System.out.println("SERIALIZE():   '" + new String(res) + "'");
+		// System.out.println("SERIALIZE(): '" + new String(res) + "'");
 		return res;
 	}
-	public static Message deserializeMessage(byte[] bytes)
-	{
+
+	public static Message deserializeMessage(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in = null;
 		Object object = null;
 		Message message = null;
 		System.out.println(new String(bytes));
-		try 
-		{
-			  in = new ObjectInputStream(bis);
-			  object = in.readObject();
-			  message = (Message) object;
+		try {
+			in = new ObjectInputStream(bis);
+			object = in.readObject();
+			message = (Message) object;
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
-		}finally {
-			  try {
-				    if (in != null) {
-				      in.close();
-				    }
-				  } catch (IOException ex) {
-				    // ignore close exception
-				  }
+		} finally {
+			try {
+				if (in != null) {
+					in.close();
 				}
+			} catch (IOException ex) {
+				// ignore close exception
+			}
+		}
 		return message;
 	}
-	
-	public static Account deserializeAccount(byte[] bytes)
-	{		 
-		//System.out.println("DESERIALIZE(): '" + new String(bytes) + "'");
-		
+
+	public static Account deserializeAccount(byte[] bytes) {
+		// System.out.println("DESERIALIZE(): '" + new String(bytes) + "'");
+
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in = null;
 		Object object = null;
 		Account account = null;
-		try
-		{
+		try {
 			in = new ObjectInputStream(bis);
 			object = in.readObject();
 			account = (Account) object;
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				if (in != null) {
 					in.close();
@@ -90,21 +82,19 @@ public abstract class Serializer {
 		}
 		return account;
 	}
-	
-	public static Game deserializeGame(byte[] bytes)
-	{
+
+	public static Game deserializeGame(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in = null;
 		Object object = null;
 		Game game = null;
-		try
-		{
+		try {
 			in = new ObjectInputStream(bis);
 			object = in.readObject();
 			game = (Game) object;
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				if (in != null) {
 					in.close();

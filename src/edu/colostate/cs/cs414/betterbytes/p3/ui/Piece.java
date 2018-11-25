@@ -16,16 +16,15 @@ public class Piece {
 	private PieceType type = null;
 	private boolean white = false;
 	public Image king = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_king.png");
-	public Image[] rooks = { Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/pieces/black_rook.png"),
+	public Image[] rooks = {
+			Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/pieces/black_rook.png"),
 			Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_rook.png") };
 
 	/**
 	 * Constructor for piece
 	 * 
-	 * @param type
-	 *            of piece
-	 * @param isWhite
-	 *            is white piece
+	 * @param type    of piece
+	 * @param isWhite is white piece
 	 */
 	public Piece(PieceType type, boolean isWhite) {
 		this.setType(type);

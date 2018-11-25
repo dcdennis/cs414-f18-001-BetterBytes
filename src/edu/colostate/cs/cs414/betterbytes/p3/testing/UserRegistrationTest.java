@@ -10,7 +10,7 @@ class UserRegistrationTest {
 
 	@Test
 	void test() {
-		UserRegistration m1 = new UserRegistration("USERNAME","PASSWORDHASH");
+		UserRegistration m1 = new UserRegistration("USERNAME", "PASSWORDHASH");
 		String m1String = m1.getStringRepresentation();
 		UserRegistration m2 = new UserRegistration(m1String);
 		assertTrue(m1.equals(m2));

@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
 	private int width = 886;
 	private int height = 935;
 	private Game game = null;
- 
+
 	/**
 	 * This starts a new game.
 	 */
@@ -39,8 +39,7 @@ public class GameFrame extends JFrame {
 	/**
 	 * This will start a game based off of an ArrayList of Cells
 	 * 
-	 * @param board
-	 *            ArrayList of Cells
+	 * @param board ArrayList of Cells
 	 */
 	public GameFrame(ArrayList<Cell> board) {
 		this.setup();
@@ -50,8 +49,7 @@ public class GameFrame extends JFrame {
 	/**
 	 * This will start a game based off a String of board data.
 	 * 
-	 * @param board
-	 *            String of data
+	 * @param board String of data
 	 */
 	public GameFrame(String board) {
 		this.setup();
@@ -77,14 +75,12 @@ public class GameFrame extends JFrame {
 		GameFrame gf = new GameFrame();
 
 		/*
-		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 2, 5);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 3, 3);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 6, 6);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 7, 3);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
+		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7); gf.placePiece(new
+		 * Piece(PieceType.KING, true), 2, 5); gf.placePiece(new Piece(PieceType.KING,
+		 * false), 3, 3); gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
+		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7); gf.placePiece(new
+		 * Piece(PieceType.KING, true), 6, 6); gf.placePiece(new Piece(PieceType.KING,
+		 * false), 7, 3); gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
 		 * 
 		 * Tools.log(gf.getBufferPanel().getGrid().saveToString());
 		 */
@@ -96,7 +92,7 @@ public class GameFrame extends JFrame {
 		// Tools.log(gf.getGrid().saveToString());
 
 	}
-	
+
 	public void setupNewGame() {
 
 		this.getGrid().setBoardFromString(
@@ -225,17 +221,13 @@ public class GameFrame extends JFrame {
 	public ArrayList<Cell> getBoard() {
 		return this.getGrid().getCells();
 	}
-	
+
 	/**
-	 * This method returns whether the piece of Cell c can move to the x y
-	 * given.
+	 * This method returns whether the piece of Cell c can move to the x y given.
 	 * 
-	 * @param c
-	 *            Cell that contains the piece to move
-	 * @param x
-	 *            destination x
-	 * @param y
-	 *            destination y
+	 * @param c Cell that contains the piece to move
+	 * @param x destination x
+	 * @param y destination y
 	 * @return whether the piece can move to destination
 	 */
 	public boolean canMove(Cell c, int x, int y) {
@@ -290,7 +282,7 @@ public class GameFrame extends JFrame {
 	}
 
 	public boolean sendMoveToServer() {
-		if(this.getGame() != null) {
+		if (this.getGame() != null) {
 			this.getGame().sendGameToServer();
 		}
 		return false;

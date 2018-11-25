@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 
@@ -88,5 +89,30 @@ public abstract class Serializer {
 			}
 		}
 		return account;
+	}
+	
+	public static Game deserializeGame(byte[] bytes)
+	{
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		ObjectInput in = null;
+		Object object = null;
+		Game game = null;
+		try
+		{
+			in = new ObjectInputStream(bis);
+			object = in.readObject();
+			game = (Game) object;
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException ex) {
+				// ignore close exception
+			}
+		}
+		return game;
 	}
 }

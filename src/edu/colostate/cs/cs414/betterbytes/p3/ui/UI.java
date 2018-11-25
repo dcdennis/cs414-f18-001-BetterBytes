@@ -17,11 +17,14 @@ import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequestResponse;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogon;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistration;
 
 /**
@@ -293,7 +296,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 				
 			}
 		}
-		for (File f : new File(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
+		for (File f : new File("edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
 			Tools.log(f.getName());
 			this.gamesListModel.addElement(f.getName());
 			CURRENTGAMESLIST.setModel(gamesListModel);
@@ -344,7 +347,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "Login":
 			System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
-			connection.send(new UserRegistration(USERNAME.getText(),PASSWORD.getText()));
+			Message response = connection.send(new UserLogon(USERNAME.getText(),PASSWORD.getText()));
+			Account received = ((UserLogonResponse) response).getAcc();
+			System.out.println(received.getUsername());
+			System.out.println(received.getPassword());
 			break;
 		case "Refresh":
 			this.refreshData();

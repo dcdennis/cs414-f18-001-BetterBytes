@@ -10,7 +10,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-import edu.colostate.cs.cs414.betterbytes.p3.utilities.MessageSerializer;
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 
 
@@ -44,44 +44,42 @@ public class ClientConnection extends Thread
 	{
 		try
 		{
-		//Configure Channel and selector and initiate connection
-		channel = SocketChannel.open();		 
-        channel.configureBlocking(false); 
-        channel.connect(new InetSocketAddress(serverHost, serverPort));
-        selector = Selector.open();
-        channel.register(selector, SelectionKey.OP_CONNECT);
+			//Configure Channel and selector and initiate connection
+			channel = SocketChannel.open();		 
+	        channel.configureBlocking(false); 
+	        channel.connect(new InetSocketAddress(serverHost, serverPort));
+	        selector = Selector.open();
+	        channel.register(selector, SelectionKey.OP_CONNECT);		
+	        
+			//Start the statistics collector thread
+				
+			//Main Loop
+			while(running)
+			{		
+				//Check if channels are available for operations
+				int readyChannels = selector.select();
+				if(readyChannels == 0) continue;
+				//generate keyset of available channels. this should be redundant as theirs only one, but if it works.
+				Set<SelectionKey> selectedKeys = selector.selectedKeys();
+				Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
 		
-        
-		//Start the statistics collector thread
-			
-		//Main Loop
-		while(running)
-		{		
-			//Check if channels are available for operations
-			int readyChannels = selector.select();
-			if(readyChannels == 0) continue;
-			//generate keyset of available channels. this should be redundant as theirs only one, but if it works.
-			Set<SelectionKey> selectedKeys = selector.selectedKeys();
-			Iterator<SelectionKey> keyIterator = selectedKeys.iterator();
-	
-			//Loop through all (one) active key
-			while(keyIterator.hasNext()) 
-			{
-				  	//get the key and remove it from iterator set
-				  	SelectionKey key = keyIterator.next();
-				  	
-				  	
-				  	//Complete Connection
-					if(key.isConnectable())
-					{
-						connect(key);
-					}
-					/* if(key.isReadable()){
-	                    read(key);
-	                }
-	                */
-					 keyIterator.remove();
-			  }			
+				//Loop through all (one) active key
+				while(keyIterator.hasNext()) 
+				{
+					  	//get the key and remove it from iterator set
+					  	SelectionKey key = keyIterator.next();					  	
+					  	
+					  	//Complete Connection
+						if(key.isConnectable())
+						{
+							connect(key);
+						}
+						/* if(key.isReadable()){
+		                    read(key);
+		                }
+		                */
+						 keyIterator.remove();
+				 }			
 			}
 		}
 		catch(Exception e)
@@ -142,7 +140,7 @@ public class ClientConnection extends Thread
 			{
 				//Wrap bytes of the string representation of the message in buffer and send
 				SocketChannel channel = (SocketChannel) serverKey.channel();
-				ByteBuffer buffer = ByteBuffer.wrap(MessageSerializer.serializeMessage(message));
+				ByteBuffer buffer = ByteBuffer.wrap(Serializer.serialize(message));
 				System.out.println("Sending Message: " + message.toString());
 				channel.write(buffer);
 				buffer.flip();
@@ -150,26 +148,20 @@ public class ClientConnection extends Thread
 			}
 			catch (IOException e){}
 		
-			serverKey.interestOps(SelectionKey.OP_READ);
-			
+			serverKey.interestOps(SelectionKey.OP_READ);			
 			
 			while(response == null)
 			{
-				try{
-					this.sleep(100);
-				}
-				catch (InterruptedException e)
-				{
-					e.printStackTrace();
-				}
+				try{this.sleep(1000);}
+				catch (InterruptedException e)	{e.printStackTrace();}
+				
 				if(serverKey.isReadable())
 				{
 					byte[] responseBytes = read(serverKey);
-					response = MessageSerializer.deserializeMessage(responseBytes);
+					response = Serializer.deserializeMessage(responseBytes);
 					System.out.println("Recieved response: " + response.toString());
 				}
-			}
-		
+			}		
 		}
 		return response;
 	}

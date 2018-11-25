@@ -10,6 +10,7 @@ import java.sql.Statement;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
 
 public class SQLDriver {
 
@@ -44,16 +45,35 @@ public class SQLDriver {
 	
 	public void setAccount(String username,String password,Account acc)
 	{		
-		String query  = "UPDATE betterbytes.users SET `username`=\"" + username + "\", `password`=\"" + password + "\",`account`=\"" + acc.getUsername() + "\" ";
+		String query  = "UPDATE betterbytes.users SET `username`=\"" + username + "\", "
+						+ "`password`=\"" + password + "\",`account`=\""
+						+ new String(Serializer.serialize(acc)) + "\" ";
+		
 			   query += "WHERE `username`=\"" + username + "\" AND `password`=\"" + password+ "\";";
 		runQuery(query);		
 	}
 	
-	public void getAccount(String username,String password,Account acc)
+	public void setAccount(Account acc)
+	{		
+		String query  = "UPDATE betterbytes.users SET `username`=\"" + acc.getUsername() + "\", "
+						+ "`password`=\"" + acc.getPassword() + "\",`account`=\""
+						+ new String(Serializer.serialize(acc)) + "\" ";
+		
+			   query += "WHERE `username`=\"" + acc.getUsername() + "\" AND `password`=\"" + acc.getPassword() + "\";";
+		runQuery(query);		
+	}
+	
+	// Gets the account from a given username and password
+	// Returns the Account object
+	public Account getAccount(String username,String password)
 	{		
 		String query  = "Select `account` FROM betterbytes.users";
 			   query += "WHERE `username`=\"" + username + "\" AND `password`=\"" + password+ "\";";
-		runQuery(query);		
+			   
+		String [] results = loginQuery(username, password);		
+		Account received = Serializer.deserializeAccount(results[2].getBytes());
+			  
+		return received;		
 	}
 
 	// Checks if a user already exists
@@ -190,8 +210,7 @@ public class SQLDriver {
 			query = "SELECT * FROM betterbytes.game WHERE `player1` LIKE \"" + p2 +
 				       "\" and `player2` LIKE \"" + p1 + "\";";			
 			results = queryGame(query);			
-		}	
-		
+		}
 		return results[2];
 	}
 
@@ -223,6 +242,7 @@ public class SQLDriver {
 		}
 	}
 
+	
 	public boolean checkLogin(String username, String password) {
 		String result[] = loginQuery(username, password);
 		if(result[1] == null || !(result[1].equals(password)))

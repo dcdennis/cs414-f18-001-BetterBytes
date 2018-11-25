@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 
+import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 
 public abstract class Serializer {
@@ -33,6 +34,7 @@ public abstract class Serializer {
 		  } 
 		  catch (IOException ex) {}
 		}
+		//System.out.println("SERIALIZE():   '" + new String(res) + "'");
 		return res;
 	}
 	public static Message deserializeMessage(byte[] bytes)
@@ -41,6 +43,7 @@ public abstract class Serializer {
 		ObjectInput in = null;
 		Object object = null;
 		Message message = null;
+		System.out.println(new String(bytes));
 		try 
 		{
 			  in = new ObjectInputStream(bis);
@@ -59,8 +62,11 @@ public abstract class Serializer {
 				}
 		return message;
 	}
+	
 	public static Account deserializeAccount(byte[] bytes)
-	{
+	{		 
+		//System.out.println("DESERIALIZE(): '" + new String(bytes) + "'");
+		
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in = null;
 		Object object = null;

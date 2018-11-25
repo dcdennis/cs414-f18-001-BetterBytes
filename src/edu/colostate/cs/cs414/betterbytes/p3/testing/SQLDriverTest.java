@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import edu.colostate.cs.cs414.betterbytes.p3.server.SQLDriver;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
 
 class SQLDriverTest {
 	
@@ -42,12 +43,12 @@ class SQLDriverTest {
 	}
 	
 	@Test
-	//TODO doesnt return account from seriel object
-	void testAccountRetrieve()
+	void testGetAccount()
 	{
-		SQLDriver sql = SQLDriver.getInstance();
-		String[] results = sql.loginQuery("ctunnell@rams.colostate.edu","TestPassword");
-		assertEquals("ctunnell",results[2]);
+		Account testAcc = new Account("ctunnell","TestPassword");		
+		SQLDriver sql = SQLDriver.getInstance();		
+		Account recAcc = sql.getAccount(testAcc.getUsername(),testAcc.getPassword());				
+		assertTrue(testAcc.equals(recAcc));	
 	}
 	
 	@Test
@@ -57,26 +58,21 @@ class SQLDriverTest {
 	// will be changed when we serialize Account
 	void testSetAccount()
 	{
-		Account testAcc = new Account("ctunnell@rams.colostate.edu","TestPassword","ctunnell");
-		
+		Account testAcc = new Account("ctunnell","TestPassword");		
 		SQLDriver sql = SQLDriver.getInstance();
-		sql.setAccount(testAcc.getEmail(),testAcc.getPassword(), testAcc);		
-		String[] results = sql.loginQuery(testAcc.getEmail(),testAcc.getPassword());
+		sql.setAccount(testAcc.getUsername(),testAcc.getPassword(), testAcc);		
+		String[] results = sql.loginQuery(testAcc.getUsername(),testAcc.getPassword());		
 		
-		assertEquals(testAcc.getUsername(),results[2]);
+		Account received = Serializer.deserializeAccount(results[2].getBytes());	
+		assertTrue(testAcc.equals(received));
 	}
-
-
-
-	
 	
 	@Test
 	void testGetGameAcc()
 	{		
 		SQLDriver sql = SQLDriver.getInstance();
-		Account testAcc1 = new Account("ctunnell","TestPassword","ctunnell");
-		Account testAcc2 = new Account("Jhpokorski","TestPassword2","jhpokorski");		
-
+		Account testAcc1  = new Account("ctunnell","TestPassword");
+		Account testAcc2  = new Account("Jhpokorski","TestPassword2");	
 		assertEquals("Game In Progress", sql.getGame(testAcc1, testAcc2));		
 	}
 	
@@ -84,8 +80,8 @@ class SQLDriverTest {
 	void testGetGameAccFlipped()
 	{		
 		SQLDriver sql = SQLDriver.getInstance();
-		Account testAcc1 = new Account("ctunnell","TestPassword","ctunnell");
-		Account testAcc2 = new Account("Jhpokorski","TestPassword2","jhpokorski");		
+		Account testAcc1  = new Account("ctunnell","TestPassword");
+		Account testAcc2  = new Account("Jhpokorski","TestPassword2");		
 		// Reverse the players
 		assertEquals("Game In Progress", sql.getGame(testAcc2, testAcc1));		
 	}
@@ -94,23 +90,21 @@ class SQLDriverTest {
 	void testGetGamePlr()
 	{		
 		SQLDriver sql = SQLDriver.getInstance();
-		Account testAcc1 = new Account("ctunnell","TestPassword","ctunnell");
+		Account testAcc1  = new Account("ctunnell","TestPassword");
 		Player p1 = new Player(testAcc1);
-		Account testAcc2 = new Account("Jhpokorski","TestPassword2","jhpokorski");		
+		Account testAcc2  = new Account("Jhpokorski","TestPassword2");		
 		Player p2 = new Player(testAcc2);
 		// Reverse the players
 		assertEquals("Game In Progress", sql.getGame(p1, p2));		
 	}
-
-
 	
 	@Test
 	void testGetGamePlrFlipped()
 	{		
 		SQLDriver sql = SQLDriver.getInstance();
-		Account testAcc1 = new Account("ctunnell","TestPassword","ctunnell");
+		Account testAcc1  = new Account("ctunnell","TestPassword");
 		Player p1 = new Player(testAcc1);
-		Account testAcc2 = new Account("Jhpokorski","TestPassword2","jhpokorski");		
+		Account testAcc2  = new Account("Jhpokorski","TestPassword2");	
 		Player p2 = new Player(testAcc2);
 		// Reverse the players
 		assertEquals("Game In Progress", sql.getGame(p2, p1));		

@@ -5,6 +5,7 @@ import java.util.List;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Move;
+import edu.colostate.cs.cs414.betterbytes.p3.ui.Cell;
 import edu.colostate.cs.cs414.betterbytes.p3.ui.PieceType;
 
 public class RulesEngine {
@@ -98,5 +99,49 @@ public class RulesEngine {
 			}
 		}
 		return nonKingFound;
+	}
+
+	public Game processCaptures(Game oldGame, Game gameUpdate) {
+		Cell newLoc = null;
+		for(int x = 0; x < 11; x++)
+		{
+			for(int y = 0; y< 11; y++)
+			{
+				if(gameUpdate.getCell(x, y).hasPiece() && !oldGame.getCell(x, y).hasPiece())
+				{
+					newLoc = gameUpdate.getCell(x, y);
+				}
+			}
+		}
+		//check above
+		if(newLoc.getRealY() <= 8)
+		{
+			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()+2);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
+				gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()+1).setPiece(null);
+		}
+		//check below
+		if(newLoc.getRealY() >= 2)
+		{
+			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()-2);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
+				gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()-1).setPiece(null);
+		}
+		//check left
+		if(newLoc.getRealX() <= 8)
+		{
+			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX()+2, newLoc.getX());
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
+				gameUpdate.getCell(newLoc.getRealX()+1, newLoc.getRealX()).setPiece(null);
+		}
+		//check right
+		if(newLoc.getRealX() >= 2)
+		{
+			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX()-2, newLoc.getX());
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
+				gameUpdate.getCell(newLoc.getRealX()-1, newLoc.getRealX()).setPiece(null);
+		}
+					
+		return gameUpdate;
 	}
 }

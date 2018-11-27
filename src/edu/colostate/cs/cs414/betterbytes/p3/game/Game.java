@@ -5,16 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
-import edu.colostate.cs.cs414.betterbytes.p3.ui.Cell;
-import edu.colostate.cs.cs414.betterbytes.p3.ui.GameFrame;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMoveResponse;
 
-public class Game implements Serializable{
+public class Game implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	// GLOBALS
 	private String startTime;
 	private String endTime;
@@ -22,15 +25,16 @@ public class Game implements Serializable{
 	private Player attacker;
 	private Player defender;
 	private ArrayList<Move> moves;
-	private GameFrame gameframe = null;
 	private GameResult result;
-	
-	public ArrayList<Cell> cells = new ArrayList<Cell>(); //These need to be public
-	public ArrayList<Cell> backup = new ArrayList<Cell>(); //These need to be public
+
+//	public ArrayList<Cell> cells = new ArrayList<Cell>(); //These need to be public
+//	public ArrayList<Cell> backup = new ArrayList<Cell>(); //These need to be public
+
+	public ArrayList<Cell> cells = new ArrayList<Cell>();
 
 	// CONSTRUCTOR
 	public Game() {
-		
+
 	}
 
 	public Game(String startTime, Player attacker, Player defender) {
@@ -88,20 +92,23 @@ public class Game implements Serializable{
 		return this.defender;
 	}
 
-	public void makeMove(Move nextMove) {
-		edu.colostate.cs.cs414.betterbytes.p3.ui.Piece toMove = this.gameframe
-				.getCell(nextMove.getStartX(), nextMove.getStartY()).getPiece();
-		this.gameframe.movePiece(toMove, this.gameframe.getCell(nextMove.getStartX(), nextMove.getStartY()),
-				this.gameframe.getCell(nextMove.getEndX(), nextMove.getEndY()));
-
-	}
+//	public void makeMove(Move nextMove) {
+//		edu.colostate.cs.cs414.betterbytes.p3.ui.Piece toMove = this.gameframe
+//				.getCell(nextMove.getStartX(), nextMove.getStartY()).getPiece();
+//		this.gameframe.movePiece(toMove, this.gameframe.getCell(nextMove.getStartX(), nextMove.getStartY()),
+//				this.gameframe.getCell(nextMove.getEndX(), nextMove.getEndY()));
+//
+//	}
 
 	public List<Move> getMoves() {
 		return moves;
 	}
 
 	public Cell getCell(int x, int y) {
-		return this.gameframe.getCell(x, y);
+		for (Cell c : cells)
+			if (c.getX() == x && c.getY() == y)
+				return c;
+		return null;
 	}
 
 	public GameResult getResult() {
@@ -111,21 +118,4 @@ public class Game implements Serializable{
 	public void setResult(GameResult result) {
 		this.result = result;
 	}
-
-	public ArrayList<Cell> getBackup() {
-		return backup;
-	}
-
-	public void setBackup(ArrayList<Cell> backup) {
-		this.backup = backup;
-	}
-
-	public ArrayList<Cell> getCells() {
-		return cells;
-	}
-
-	public void setCells(ArrayList<Cell> cells) {
-		this.cells = cells;
-	}
-	
 }

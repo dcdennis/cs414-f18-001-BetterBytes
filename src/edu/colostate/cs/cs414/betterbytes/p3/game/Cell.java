@@ -7,6 +7,7 @@ public class Cell {
 	public final String SQUARE = "S"; // normal cells
 
 	// GLOBALS
+	private int x, y;
 	private String type;
 	private Piece piece;
 	private boolean isOccupied;
@@ -56,5 +57,25 @@ public class Cell {
 	public void removePiece() {
 		this.piece = null;
 		this.isOccupied = false;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public boolean hasPiece() {
+		return this.getPiece() != null;
 	}
 }

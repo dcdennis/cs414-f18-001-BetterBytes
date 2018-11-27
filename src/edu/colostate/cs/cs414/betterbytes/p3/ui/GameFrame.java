@@ -276,7 +276,18 @@ public class GameFrame extends JFrame implements Serializable {
 	}
 
 	public void display(Game game) {
-		this.getGrid().setBoard(game.cells);
+		ArrayList<Cell> cs = new ArrayList<Cell>();
+		for (edu.colostate.cs.cs414.betterbytes.p3.game.Cell c : game.cells) {
+			Cell nu = new Cell(c.getX(), c.getY(), this.getGrid());
+			edu.colostate.cs.cs414.betterbytes.p3.game.Piece p = c.getPiece();
+			if (p != null) {
+				Piece nup = new Piece(p.getType() == "king" ? PieceType.KING : PieceType.ROOK,
+						p.getColor() == "white" ? true : false);
+				nu.setPiece(nup);
+			}
+			cs.add(nu);
+		}
+		this.getGrid().setBoard(cs);
 		this.turn = game.getTurn();
 	}
 

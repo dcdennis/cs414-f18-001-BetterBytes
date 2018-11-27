@@ -41,4 +41,8 @@ public class Piece {
 		return this.color;
 	}
 
+	public boolean isWhite() {
+		return this.getType().equals("white");
+	}
+
 }

@@ -13,8 +13,8 @@ public class Grid {
 
 	private int baseX = 15, baseY = 15;
 
-	private ArrayList<Cell> cells = new ArrayList<Cell>();
-	private ArrayList<Cell> backup = new ArrayList<Cell>();
+	//private ArrayList<Cell> cells = new ArrayList<Cell>();
+	//private ArrayList<Cell> backup = new ArrayList<Cell>();
 
 	private GameFrame game = null;
 
@@ -31,7 +31,7 @@ public class Grid {
 		this.setBaseY(baseY);
 		for (int x = 1; x <= 11; x++) {
 			for (int y = 1; y <= 11; y++) {
-				cells.add(new Cell(x, y, this));
+				game.getGame().cells.add(new Cell(x, y, this));
 			}
 		}
 	}
@@ -43,11 +43,11 @@ public class Grid {
 	 * @return Successful
 	 */
 	public boolean setBoard(ArrayList<Cell> board) {
-		if (board.size() == cells.size()) {
-			for (int i = 0; i < cells.size(); i++) {
-				cells.get(i).setX(board.get(i).getX());
-				cells.get(i).setY(board.get(i).getY());
-				cells.get(i).setPiece(board.get(i).getPiece());
+		if (board.size() == game.getGame().cells.size()) {
+			for (int i = 0; i < game.getGame().cells.size(); i++) {
+				game.getGame().cells.get(i).setX(board.get(i).getX());
+				game.getGame().cells.get(i).setY(board.get(i).getY());
+				game.getGame().cells.get(i).setPiece(board.get(i).getPiece());
 			}
 			return true;
 		} else {
@@ -61,10 +61,10 @@ public class Grid {
 	 * move and not wanting to send a move
 	 */
 	public void revertLastMove() {
-		for (int i = 0; i < cells.size(); i++) {
-			cells.get(i).setX(backup.get(i).getX());
-			cells.get(i).setY(backup.get(i).getY());
-			cells.get(i).setPiece(backup.get(i).getPiece());
+		for (int i = 0; i < game.getGame().cells.size(); i++) {
+			game.getGame().cells.get(i).setX(game.getGame().backup.get(i).getX());
+			game.getGame().cells.get(i).setY(game.getGame().backup.get(i).getY());
+			game.getGame().cells.get(i).setPiece(game.getGame().backup.get(i).getPiece());
 		}
 	}
 
@@ -85,7 +85,7 @@ public class Grid {
 	}
 
 	public ArrayList<Cell> getCells() {
-		return this.cells;
+		return this.game.getGame().cells;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class Grid {
 	 * @return Cell object
 	 */
 	public Cell getCell(int x, int y) {
-		for (Cell c : this.cells)
+		for (Cell c : this.game.getGame().cells)
 			if (c.getX() == x && c.getY() == y)
 				return c;
 		return null;
@@ -139,11 +139,11 @@ public class Grid {
 	 */
 	public void movePiece(Piece p, Cell old, Cell nu) {
 		if (p != null && old != null && nu != null && game.isOurTurn()) {
-			backup.clear();
-			for (Cell c : cells) {
+			game.getGame().backup.clear();
+			for (Cell c : game.getGame().cells) {
 				Cell nc = new Cell(c.getX(), c.getY(), this);
 				nc.setPiece(c.getPiece());
-				backup.add(nc);
+				game.getGame().backup.add(nc);
 			}
 			// if(nu.hasPiece()) {
 
@@ -202,7 +202,7 @@ public class Grid {
 	 */
 	public String saveToString() {
 		String data = "";
-		for (Cell c : cells) {
+		for (Cell c : game.getGame().cells) {
 			if (c.getPiece() != null) {
 				data += "~" + c.getX() + ":" + c.getY() + ":" + c.getPiece().getType() + ":" + c.getPiece().isWhite();
 			} else {

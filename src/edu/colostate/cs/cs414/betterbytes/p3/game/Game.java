@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
+import edu.colostate.cs.cs414.betterbytes.p3.ui.Cell;
 import edu.colostate.cs.cs414.betterbytes.p3.ui.GameFrame;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
@@ -23,6 +24,9 @@ public class Game implements Serializable{
 	private ArrayList<Move> moves;
 	private GameFrame gameframe = null;
 	private GameResult result;
+	
+	public ArrayList<Cell> cells = new ArrayList<Cell>(); //These need to be public
+	public ArrayList<Cell> backup = new ArrayList<Cell>(); //These need to be public
 
 	// CONSTRUCTOR
 	public Game() {
@@ -35,7 +39,7 @@ public class Game implements Serializable{
 		this.defender = defender;
 		this.startTime = startTime;
 		this.moves = new ArrayList<Move>();
-		gameframe = new GameFrame();
+		gameframe = new GameFrame(this);
 		gameframe.setGame(this);
 		setResult(GameResult.CONTINUE);
 	}
@@ -108,6 +112,22 @@ public class Game implements Serializable{
 
 	public void setResult(GameResult result) {
 		this.result = result;
+	}
+
+	public ArrayList<Cell> getBackup() {
+		return backup;
+	}
+
+	public void setBackup(ArrayList<Cell> backup) {
+		this.backup = backup;
+	}
+
+	public ArrayList<Cell> getCells() {
+		return cells;
+	}
+
+	public void setCells(ArrayList<Cell> cells) {
+		this.cells = cells;
 	}
 	
 }

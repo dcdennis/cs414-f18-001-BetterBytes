@@ -32,9 +32,10 @@ public class GameFrame extends JFrame implements Serializable {
 	/**
 	 * This starts a new game.
 	 */
-	public GameFrame() {
+	public GameFrame(Game game) {
+		this.game = game;
 		this.setup();
-		this.setupNewGame();
+		//this.setupNewGame();
 	}
 
 	/**
@@ -72,27 +73,27 @@ public class GameFrame extends JFrame implements Serializable {
 		this.setResizable(false);
 	}
 
-	public static void main(String[] arg0) {
-		GameFrame gf = new GameFrame();
-
-		/*
-		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7); gf.placePiece(new
-		 * Piece(PieceType.KING, true), 2, 5); gf.placePiece(new Piece(PieceType.KING,
-		 * false), 3, 3); gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7); gf.placePiece(new
-		 * Piece(PieceType.KING, true), 6, 6); gf.placePiece(new Piece(PieceType.KING,
-		 * false), 7, 3); gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
-		 * 
-		 * Tools.log(gf.getBufferPanel().getGrid().saveToString());
-		 */
-
-		// String it =
-		// "~1:1:75:null:false~1:2:75:null:false~1:3:75:null:false~1:4:75:null:false~1:5:75:null:false~1:6:75:null:false~1:7:75:KING:true~1:8:75:null:false~2:1:75:null:false~2:2:75:null:false~2:3:75:null:false~2:4:75:null:false~2:5:75:KING:true~2:6:75:null:false~2:7:75:null:false~2:8:75:null:false~3:1:75:null:false~3:2:75:null:false~3:3:75:KING:false~3:4:75:null:false~3:5:75:null:false~3:6:75:null:false~3:7:75:null:false~3:8:75:null:false~4:1:75:null:false~4:2:75:null:false~4:3:75:null:false~4:4:75:null:false~4:5:75:null:false~4:6:75:null:false~4:7:75:KING:false~4:8:75:null:false~5:1:75:null:false~5:2:75:null:false~5:3:75:null:false~5:4:75:null:false~5:5:75:null:false~5:6:75:null:false~5:7:75:null:false~5:8:75:KING:true~6:1:75:null:false~6:2:75:null:false~6:3:75:null:false~6:4:75:null:false~6:5:75:null:false~6:6:75:KING:true~6:7:75:null:false~6:8:75:null:false~7:1:75:null:false~7:2:75:null:false~7:3:75:KING:false~7:4:75:null:false~7:5:75:null:false~7:6:75:null:false~7:7:75:null:false~7:8:75:null:false~8:1:75:null:false~8:2:75:null:false~8:3:75:null:false~8:4:75:KING:true~8:5:75:null:false~8:6:75:null:false~8:7:75:null:false~8:8:75:null:false";
-		// gf.getBufferPanel().getGrid().setBoardFromString(it);
-
-		// Tools.log(gf.getGrid().saveToString());
-
-	}
+//	public static void main(String[] arg0) {
+//		//GameFrame gf = new GameFrame();
+//
+//		/*
+//		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7); gf.placePiece(new
+//		 * Piece(PieceType.KING, true), 2, 5); gf.placePiece(new Piece(PieceType.KING,
+//		 * false), 3, 3); gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
+//		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7); gf.placePiece(new
+//		 * Piece(PieceType.KING, true), 6, 6); gf.placePiece(new Piece(PieceType.KING,
+//		 * false), 7, 3); gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
+//		 * 
+//		 * Tools.log(gf.getBufferPanel().getGrid().saveToString());
+//		 */
+//
+//		// String it =
+//		// "~1:1:75:null:false~1:2:75:null:false~1:3:75:null:false~1:4:75:null:false~1:5:75:null:false~1:6:75:null:false~1:7:75:KING:true~1:8:75:null:false~2:1:75:null:false~2:2:75:null:false~2:3:75:null:false~2:4:75:null:false~2:5:75:KING:true~2:6:75:null:false~2:7:75:null:false~2:8:75:null:false~3:1:75:null:false~3:2:75:null:false~3:3:75:KING:false~3:4:75:null:false~3:5:75:null:false~3:6:75:null:false~3:7:75:null:false~3:8:75:null:false~4:1:75:null:false~4:2:75:null:false~4:3:75:null:false~4:4:75:null:false~4:5:75:null:false~4:6:75:null:false~4:7:75:KING:false~4:8:75:null:false~5:1:75:null:false~5:2:75:null:false~5:3:75:null:false~5:4:75:null:false~5:5:75:null:false~5:6:75:null:false~5:7:75:null:false~5:8:75:KING:true~6:1:75:null:false~6:2:75:null:false~6:3:75:null:false~6:4:75:null:false~6:5:75:null:false~6:6:75:KING:true~6:7:75:null:false~6:8:75:null:false~7:1:75:null:false~7:2:75:null:false~7:3:75:KING:false~7:4:75:null:false~7:5:75:null:false~7:6:75:null:false~7:7:75:null:false~7:8:75:null:false~8:1:75:null:false~8:2:75:null:false~8:3:75:null:false~8:4:75:KING:true~8:5:75:null:false~8:6:75:null:false~8:7:75:null:false~8:8:75:null:false";
+//		// gf.getBufferPanel().getGrid().setBoardFromString(it);
+//
+//		// Tools.log(gf.getGrid().saveToString());
+//
+//	}
 
 	public void setupNewGame() {
 

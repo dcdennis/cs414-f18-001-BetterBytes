@@ -115,11 +115,11 @@ public class PaintButton implements Serializable{
 				Tools.log("Sending Move");
 				game.setSecondCheck(false);
 				// Tools.log(game.getGrid().saveToString());
-				if (game.sendMoveToServer()) {
-					game.setStatus("Move Sent!");
-				} else {
-					game.setStatus("Connection failed, Try again!");
-				}
+//				if (game.sendMoveToServer()) {
+//					game.setStatus("Move Sent!");
+//				} else {
+//					game.setStatus("Connection failed, Try again!");
+//				}
 			} else {
 				game.setStatus("Are you sure?");
 				game.setSecondCheck(true);

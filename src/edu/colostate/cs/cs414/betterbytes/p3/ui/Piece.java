@@ -15,10 +15,10 @@ public class Piece {
 	private String absPath = System.getProperty("user.dir") + "/src/";
 	private PieceType type = null;
 	private boolean white = false;
-	public Image king = Tools.getLocalImg("edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_king.png");
+	public Image king = Tools.getLocalImg(absPath+"edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_king.png");
 	public Image[] rooks = {
-			Tools.getLocalImg("edu/colostate/cs/cs414/betterbytes/p3/data/pieces/black_rook.png"),
-			Tools.getLocalImg("edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_rook.png") };
+			Tools.getLocalImg(absPath+"edu/colostate/cs/cs414/betterbytes/p3/data/pieces/black_rook.png"),
+			Tools.getLocalImg(absPath+"edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_rook.png") };
 
 	/**
 	 * Constructor for piece

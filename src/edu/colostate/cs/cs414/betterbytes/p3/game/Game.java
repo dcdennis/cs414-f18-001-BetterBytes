@@ -39,8 +39,6 @@ public class Game implements Serializable{
 		this.defender = defender;
 		this.startTime = startTime;
 		this.moves = new ArrayList<Move>();
-		gameframe = new GameFrame(this);
-		gameframe.setGame(this);
 		setResult(GameResult.CONTINUE);
 	}
 

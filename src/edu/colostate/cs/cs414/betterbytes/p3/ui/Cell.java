@@ -19,7 +19,7 @@ public class Cell {
 	private Piece holding = null;
 	private Grid grid = null;
 	private boolean selected = false;
-	private Image icon = Tools.getLocalImg("edu/colostate/cs/cs414/betterbytes/p3/data/corner.png");
+	private Image icon = Tools.getLocalImg(absPath+"edu/colostate/cs/cs414/betterbytes/p3/data/corner.png");
 
 	/**
 	 * Constructor for Cell

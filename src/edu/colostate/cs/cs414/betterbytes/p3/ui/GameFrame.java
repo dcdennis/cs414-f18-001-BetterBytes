@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
 import java.awt.BorderLayout;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -15,7 +16,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
  * @author Daniel McClure - 830437441
  *
  */
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

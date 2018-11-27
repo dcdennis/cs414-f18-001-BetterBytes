@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 
@@ -12,8 +13,12 @@ import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
  * referenced in the Mouse class
  * 
  */
-public class PaintButton {
+public class PaintButton implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String text = null;
 	private int x, y;
 	private Color fill = null;

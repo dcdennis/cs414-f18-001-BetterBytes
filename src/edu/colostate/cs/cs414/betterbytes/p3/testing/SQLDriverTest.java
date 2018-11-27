@@ -44,6 +44,14 @@ class SQLDriverTest {
 		Account recAcc = sql.getAccount(testAcc.getUsername(), testAcc.getPassword());
 		assertTrue(testAcc.equals(recAcc));
 	}
+	
+	@Test
+	void testGetAccountUsername() {
+		Account testAcc = new Account("ctunnell", "TestPassword");
+		SQLDriver sql = SQLDriver.getInstance();
+		Account recAcc = sql.getAccount(testAcc.getUsername());
+		assertTrue(testAcc.equals(recAcc));
+	}
 
 	@Test
 	// TODO doesn't set serial object yet
@@ -64,7 +72,10 @@ class SQLDriverTest {
 	void testGetGameAcc() {
 		SQLDriver sql = SQLDriver.getInstance();
 		Account testAcc1 = new Account("ctunnell", "TestPassword");
+		Player p1 = new Player(testAcc1);
 		Account testAcc2 = new Account("Jhpokorski", "TestPassword2");
+		Player p2 = new Player(testAcc2);
+		
 		assertEquals("Game In Progress", sql.getGame(testAcc1, testAcc2));
 	}
 
@@ -117,9 +128,7 @@ class SQLDriverTest {
 	 * sql.addGame(testAcc1, testAcc2, "Game In Progress");
 	 * assertEquals("Game In Progress", sql.getGame(testAcc1, testAcc2)); }
 	 * 
-	 * @Test void testAddUser() { // ctunnell must not be in the database before
-	 * running this SQLDriver sql = SQLDriver.getInstance();
-	 * assertEquals(true,sql.addUser("ctunnell", "ValidPassword")); }
+
 	 * 
 	 * 
 	 * @Test void deleteUser() { SQLDriver sql = SQLDriver.getInstance();

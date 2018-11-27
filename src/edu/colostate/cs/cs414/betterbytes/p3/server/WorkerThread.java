@@ -136,10 +136,14 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						String sender = acceptedInvite.getSender();
 						Account updateRecipient = sql.getAccount(recipient);
 						updateRecipient.getInvites().remove(acceptedInvite);
-						// newGame is TODO
-						sql.newGame(sender, recipient);
+						
+						Player attacker = new Player(sql.getAccount(sender));
+						Player defender = new Player(updateRecipient);
+						
+						Game g1 = new Game("0.0",attacker,defender);
+						sql.addGame(sender, recipient,g1);
 
-						send(new RespondToInvitationResponse(false, "UNIMPLIMENTED"), buffer, channel, debug);
+						send(new RespondToInvitationResponse(true, "Game Added to Account"), buffer, channel, debug);
 						break;
 					}
 					case (SUBMIT_MOVE): {

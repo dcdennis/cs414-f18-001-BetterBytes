@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMoveResponse;
 
-public class Game {
+public class Game implements Serializable{
 
 	// GLOBALS
 	private String startTime;

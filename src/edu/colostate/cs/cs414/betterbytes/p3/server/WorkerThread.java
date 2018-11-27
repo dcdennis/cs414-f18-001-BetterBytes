@@ -134,7 +134,8 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Invitation acceptedInvite = respondMessage.getInvitation();
 						String recipient = acceptedInvite.getRecipient();
 						String sender = acceptedInvite.getSender();
-
+						Account updateRecipient = sql.getAccount(recipient);
+						updateRecipient.getInvites().remove(acceptedInvite);
 						// newGame is TODO
 						sql.newGame(sender, recipient);
 
@@ -145,7 +146,10 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 
 						SubmitMove moveMessage = (SubmitMove) message;
 						Game gameUpdate = moveMessage.getGameUpdate();
+						//I need an updated getgame, once that exists replace null with the comment TODO
+						Game oldGame = null;//sql.getGame(gameUpdate.getAttacker().getAccount().getUsername(), gameUpdate.getDefender().getAccount().getUsername())
 						// this variation of addGame is TODO
+						gameUpdate = rules.processCaptures(oldGame,gameUpdate);
 						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
 						sql.addGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 						send(new RespondToInvitationResponse(false, "UNIMPLIMENTED"), buffer, channel, debug);

@@ -117,29 +117,33 @@ public class RulesEngine {
 		if(newLoc.getRealY() <= 8)
 		{
 			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()+2);
-			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
+			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()+1);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
 				gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()+1).setPiece(null);
 		}
 		//check below
 		if(newLoc.getRealY() >= 2)
 		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()-1);
 			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()-2);
-			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
-				gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()-1).setPiece(null);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				captureLoc.setPiece(null);
 		}
 		//check left
 		if(newLoc.getRealX() <= 8)
 		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX()+1, newLoc.getRealX());
 			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX()+2, newLoc.getX());
-			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
-				gameUpdate.getCell(newLoc.getRealX()+1, newLoc.getRealX()).setPiece(null);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				captureLoc.setPiece(null);
 		}
 		//check right
 		if(newLoc.getRealX() >= 2)
 		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX()-1, newLoc.getRealX());
 			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX()-2, newLoc.getX());
-			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite())
-				gameUpdate.getCell(newLoc.getRealX()-1, newLoc.getRealX()).setPiece(null);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				captureLoc.setPiece(null);
 		}
 					
 		return gameUpdate;

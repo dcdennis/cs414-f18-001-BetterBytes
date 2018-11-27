@@ -100,7 +100,7 @@ public class Game implements Serializable{
 		return moves;
 	}
 
-	public edu.colostate.cs.cs414.betterbytes.p3.ui.Cell getCell(int x, int y) {
+	public Cell getCell(int x, int y) {
 		return this.gameframe.getCell(x, y);
 	}
 

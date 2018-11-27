@@ -136,27 +136,24 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						String sender = acceptedInvite.getSender();
 						Account updateRecipient = sql.getAccount(recipient);
 						updateRecipient.getInvites().remove(acceptedInvite);
-						
+
 						Player attacker = new Player(sql.getAccount(sender));
 						Player defender = new Player(updateRecipient);
-						
-						Game g1 = new Game("0.0",attacker,defender);
-						sql.addGame(sender, recipient,g1);
+
+						Game g1 = new Game("0.0", attacker, defender);
+						sql.addGame(sender, recipient, g1);
 
 						send(new RespondToInvitationResponse(true, "Game Added to Account"), buffer, channel, debug);
 						break;
 					}
 					case (SUBMIT_MOVE): {
-
 						SubmitMove moveMessage = (SubmitMove) message;
 						Game gameUpdate = moveMessage.getGameUpdate();
-						//I need an updated getgame, once that exists replace null with the comment TODO
-						Game oldGame = null;//sql.getGame(gameUpdate.getAttacker().getAccount().getUsername(), gameUpdate.getDefender().getAccount().getUsername())
-						// this variation of addGame is TODO
-						gameUpdate = rules.processCaptures(oldGame,gameUpdate);
+						Game oldGame = sql.getGame(gameUpdate.getAttacker(), gameUpdate.getDefender());
+						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
 						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
 						sql.addGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
-						send(new RespondToInvitationResponse(false, "UNIMPLIMENTED"), buffer, channel, debug);
+						send(new RespondToInvitationResponse(true, "Move Submitted"), buffer, channel, debug);
 
 						break;
 					}

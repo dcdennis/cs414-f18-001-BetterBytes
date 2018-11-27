@@ -1,9 +1,10 @@
 package edu.colostate.cs.cs414.betterbytes.p3.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public class Account implements Serializable{
 
 	@Override
 	public int hashCode() {

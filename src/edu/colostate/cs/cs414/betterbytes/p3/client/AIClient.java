@@ -11,7 +11,6 @@ import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequestResponse;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RespondToInvitation;

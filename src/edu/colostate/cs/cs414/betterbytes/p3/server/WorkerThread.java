@@ -152,6 +152,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Game oldGame = sql.getGame(gameUpdate.getAttacker(), gameUpdate.getDefender());
 						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
 						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
+						gameUpdate.changeTurns();
 						sql.addGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 						send(new RespondToInvitationResponse(true, "Move Submitted"), buffer, channel, debug);
 

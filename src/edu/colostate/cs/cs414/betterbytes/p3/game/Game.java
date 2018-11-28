@@ -109,7 +109,13 @@ public class Game implements Serializable {
 
 	//FOR AI CLIENT ONLY
 	public Game(Game game, String scriptOutput) {
-		// TODO Auto-generated constructor stub
+		this.turn = game.getTurn();
+		this.attacker = game.attacker;
+		this.defender = game.defender;
+		this.startTime = game.startTime;
+		this.moves = game.getMoves();
+		this.result = game.getResult();
+		//Rebuild cells from the scriptOutput TODO
 	}
 
 	// SETTERS

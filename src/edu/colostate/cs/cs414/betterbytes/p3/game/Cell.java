@@ -89,7 +89,14 @@ public class Cell implements Serializable{
 		this.piece = piece;
 		this.type = type;
 	}
-
+	
+	public Cell(int x, int y, String type, Piece piece)
+	{
+		this.x = x;
+		this.y = y;
+		this.type = type;
+		this.piece = piece;
+	}
 	// ACCESSORS
 	public boolean isCorner() {
 		return this.type.equals(CORNER);

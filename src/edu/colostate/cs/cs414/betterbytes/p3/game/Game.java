@@ -44,8 +44,67 @@ public class Game implements Serializable {
 		this.attacker = attacker;
 		this.defender = defender;
 		this.startTime = startTime;
-		//this.moves = new ArrayList<Move>();
+		this.moves = new ArrayList<Move>();
 		setResult(GameResult.CONTINUE);
+		ArrayList<Cell> tempCells = new ArrayList<Cell>();
+		for(int i = 0; i < 11; i++)
+		{
+			for(int j = 0; j < 11; j++)
+			{
+				if((i == 0 || i==10) && (j == 0 || j == 10))
+					tempCells.add(new Cell(i,j,"C",null));
+				else if(i == 5 && j == 5)
+					tempCells.add(new Cell(i,j,"T",null));
+				else
+					tempCells.add(new Cell(i,j,"S",null));
+			}
+		}
+		tempCells.toArray(cells);
+		this.getCell(3,0).setPiece(new Piece(true,"black"));
+		this.getCell(4,0).setPiece(new Piece(true,"black"));
+		this.getCell(5,0).setPiece(new Piece(true,"black"));
+		this.getCell(6,0).setPiece(new Piece(true,"black"));
+		this.getCell(7,0).setPiece(new Piece(true,"black"));
+		this.getCell(5,1).setPiece(new Piece(true,"black"));
+		
+		this.getCell(0,3).setPiece(new Piece(true,"black"));
+		this.getCell(0,4).setPiece(new Piece(true,"black"));
+		this.getCell(0,5).setPiece(new Piece(true,"black"));
+		this.getCell(0,6).setPiece(new Piece(true,"black"));
+		this.getCell(0,7).setPiece(new Piece(true,"black"));
+		this.getCell(1,5).setPiece(new Piece(true,"black"));
+		
+		this.getCell(3,10).setPiece(new Piece(true,"black"));
+		this.getCell(4,10).setPiece(new Piece(true,"black"));
+		this.getCell(5,10).setPiece(new Piece(true,"black"));
+		this.getCell(6,10).setPiece(new Piece(true,"black"));
+		this.getCell(7,10).setPiece(new Piece(true,"black"));
+		this.getCell(5,9).setPiece(new Piece(true,"black"));
+		
+		this.getCell(10,3).setPiece(new Piece(true,"black"));
+		this.getCell(10,4).setPiece(new Piece(true,"black"));
+		this.getCell(10,5).setPiece(new Piece(true,"black"));
+		this.getCell(10,6).setPiece(new Piece(true,"black"));
+		this.getCell(10,7).setPiece(new Piece(true,"black"));
+		this.getCell(9,5).setPiece(new Piece(true,"black"));
+		
+		this.getCell(5,7).setPiece(new Piece(true,"white"));
+		
+		this.getCell(4,6).setPiece(new Piece(true,"white"));
+		this.getCell(5,6).setPiece(new Piece(true,"white"));
+		this.getCell(6,6).setPiece(new Piece(true,"white"));
+		
+		this.getCell(3,5).setPiece(new Piece(true,"white"));
+		this.getCell(4,5).setPiece(new Piece(true,"white"));
+		this.getCell(5,5).setPiece(new Piece(false,"white"));
+		this.getCell(6,5).setPiece(new Piece(true,"white"));
+		this.getCell(7,5).setPiece(new Piece(true,"white"));
+
+		this.getCell(4,4).setPiece(new Piece(true,"white"));
+		this.getCell(5,4).setPiece(new Piece(true,"white"));
+		this.getCell(6,4).setPiece(new Piece(true,"white"));
+		
+		this.getCell(5,3).setPiece(new Piece(true,"white"));
 	}
 
 	// SETTERS

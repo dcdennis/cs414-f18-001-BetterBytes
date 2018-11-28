@@ -2,6 +2,7 @@ package edu.colostate.cs.cs414.betterbytes.p3.game;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
@@ -17,7 +18,8 @@ public class Game implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+
 	// GLOBALS
 	private String startTime;
 	private String endTime;
@@ -118,5 +120,69 @@ public class Game implements Serializable {
 	public void setResult(GameResult result) {
 		this.result = result;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((attacker == null) ? 0 : attacker.hashCode());
+		result = prime * result + Arrays.hashCode(cells);
+		result = prime * result + ((defender == null) ? 0 : defender.hashCode());
+		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+		result = prime * result + ((moves == null) ? 0 : moves.hashCode());
+		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
+		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
+		result = prime * result + ((turn == null) ? 0 : turn.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Game other = (Game) obj;
+		if (attacker == null) {
+			if (other.attacker != null)
+				return false;
+		} else if (!attacker.equals(other.attacker))
+			return false;
+		if (!Arrays.equals(cells, other.cells))
+			return false;
+		if (defender == null) {
+			if (other.defender != null)
+				return false;
+		} else if (!defender.equals(other.defender))
+			return false;
+		if (endTime == null) {
+			if (other.endTime != null)
+				return false;
+		} else if (!endTime.equals(other.endTime))
+			return false;
+		if (moves == null) {
+			if (other.moves != null)
+				return false;
+		} else if (!moves.equals(other.moves))
+			return false;
+		if (result != other.result)
+			return false;
+		if (startTime == null) {
+			if (other.startTime != null)
+				return false;
+		} else if (!startTime.equals(other.startTime))
+			return false;
+		if (turn == null) {
+			if (other.turn != null)
+				return false;
+		} else if (!turn.equals(other.turn))
+			return false;
+		return true;
+	}
+
+
+
 	
 }

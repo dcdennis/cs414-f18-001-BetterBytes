@@ -17,11 +17,11 @@ public class DemoClient {
 			System.out.println("Setting up connection");
 			connection.setUp(InetAddress.getLocalHost().getHostName(), 8080);
 			connection.start();
-			System.out.println("connection started");
+			System.out.println("connection started"); 
 
 			java.awt.EventQueue.invokeLater(new Runnable() {
 				public void run() {
-					try {
+					try { 
 						for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
 								.getInstalledLookAndFeels()) {
 							if ("Nimbus".equals(info.getName())) {

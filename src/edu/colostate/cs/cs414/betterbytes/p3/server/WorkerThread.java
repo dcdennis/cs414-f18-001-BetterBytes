@@ -32,7 +32,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 	}
 
 	@Override
-	public void run() {
+	public void run() { 
 		while (running) {
 			if (debug)
 				System.out.println("WORKER THREAD " + threadID + " Waiting for new task");
@@ -110,7 +110,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						String requestUser = requestMessage.getUsername();
 
 						// done, but relies on methods that are themselves TODO
-						Account update = sql.getAccount(requestUser);
+						Account update = sql.getAccount(requestUser); 
 						List<Game> games = sql.getGames(requestUser);
 
 						send(new RecordsRequestResponse(games, update), buffer, channel, debug);

@@ -1,29 +1,40 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
-public class Move {
+import java.io.Serializable;
+
+public class Move implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int startX;
 	private int endX;
 	private int startY;
 	private int endY;
+
 	public Move(int startX, int endX, int startY, int endY) {
 		this.startX = startX;
 		this.endX = endX;
 		this.startY = startY;
 		this.endY = endY;
 	}
+
 	public int getStartX() {
 		return startX;
 	}
-	
+
 	public int getStartY() {
 		return startY;
 	}
+
 	public int getEndX() {
 		return endX;
 	}
+
 	public int getEndY() {
 		return endY;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -34,6 +45,7 @@ public class Move {
 		result = prime * result + startY;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

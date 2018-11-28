@@ -16,35 +16,35 @@ public class UserLogon implements Message, Protocol, Serializable {
 	private String username;
 	private String passwordHash;
 	private final String type = Protocol.USER_LOGON;
-		
-	public UserLogon(String username, String passwordHash)
-	{
+
+	public UserLogon(String username, String passwordHash) {
 		this.username = username;
 		this.passwordHash = passwordHash;
 	}
-		
-	public UserLogon(String stringRep)
-	{
+
+	public UserLogon(String stringRep) {
 		String[] data = stringRep.split(", ");
-		if(!data[0].equals(USER_LOGON))
+		if (!data[0].equals(USER_LOGON))
 			System.out.println("Something is wrong");
 		this.username = data[1];
 		this.passwordHash = data[2];
 	}
-	
-	public String getStringRepresentation()
-	{
+
+	public String getStringRepresentation() {
 		return USER_LOGON + ", " + username + ", " + passwordHash;
 	}
-		
-	public String getUsername() {return username;}
-	public String getPasswordHash() {return passwordHash;}
-	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
 	@Override
-	public boolean equals(Object O)
-	{
-		if(O instanceof UserLogon)
-		{
+	public boolean equals(Object O) {
+		if (O instanceof UserLogon) {
 			UserLogon m = (UserLogon) O;
 			return this.username.equals(m.getUsername()) && this.passwordHash.equals(m.getPasswordHash());
 		}

@@ -10,7 +10,7 @@ class UserLogonTest {
 
 	@Test
 	void test() {
-		UserLogon m1 = new UserLogon("USERNAME","PASSWORD");
+		UserLogon m1 = new UserLogon("USERNAME", "PASSWORD");
 		String m1String = m1.getStringRepresentation();
 		UserLogon m2 = new UserLogon(m1String);
 		assertTrue(m1.equals(m2));

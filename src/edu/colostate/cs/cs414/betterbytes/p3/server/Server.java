@@ -14,7 +14,7 @@ public class Server {
 	ThreadPoolManager manager = ThreadPoolManager.getInstance();
 
 	public Server(int portNum, int poolSize) {
-		this.portNum = portNum;
+		this.portNum = portNum; 
 		manager.initialize(poolSize);
 		running = true;
 	}

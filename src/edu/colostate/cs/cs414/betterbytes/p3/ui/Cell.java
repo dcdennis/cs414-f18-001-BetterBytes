@@ -19,19 +19,15 @@ public class Cell {
 	private Piece holding = null;
 	private Grid grid = null;
 	private boolean selected = false;
-	private Image icon = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p3/data/corner.png");
+	private Image icon = Tools.getLocalImg(absPath+"edu/colostate/cs/cs414/betterbytes/p3/data/corner.png");
 
 	/**
 	 * Constructor for Cell
 	 * 
-	 * @param x
-	 *            coordinate in relation to the chess board
-	 * @param y
-	 *            coordinate in relation to the chess board
-	 * @param size
-	 *            of the cell
-	 * @param grid
-	 *            reference to grid class
+	 * @param x    coordinate in relation to the chess board
+	 * @param y    coordinate in relation to the chess board
+	 * @param size of the cell
+	 * @param grid reference to grid class
 	 */
 	public Cell(int x, int y, Grid grid) {
 		this.setX(x);
@@ -84,8 +80,7 @@ public class Cell {
 	/**
 	 * This will put piece p on this cell
 	 * 
-	 * @param p
-	 *            designated piece to be placed
+	 * @param p designated piece to be placed
 	 */
 	public void setPiece(Piece p) {
 		this.holding = p;
@@ -120,8 +115,7 @@ public class Cell {
 	/**
 	 * A cell will be equal if the coordinates of the cell are the same
 	 * 
-	 * @param c
-	 *            Cell being compared
+	 * @param c Cell being compared
 	 * @return whether they are equal
 	 */
 	public boolean equals(Cell c) {

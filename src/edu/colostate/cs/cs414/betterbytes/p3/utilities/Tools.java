@@ -22,7 +22,7 @@ public class Tools {
 		try {
 			File pathToFile = new File(iFile);
 			if (!pathToFile.exists()) {
-				Tools.log("File doesn't Exist: " + iFile);
+				Tools.log("File doesn't Exist: " + pathToFile.getAbsolutePath());
 				return null;
 			}
 			BufferedImage image = ImageIO.read(pathToFile);

@@ -1,6 +1,13 @@
 package edu.colostate.cs.cs414.betterbytes.p3.user;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4601225344910731288L;
 
 	@Override
 	public int hashCode() {
@@ -10,6 +17,7 @@ public class Player {
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -31,34 +39,40 @@ public class Player {
 			return false;
 		return true;
 	}
+
 	// GLOBAL FIELDS
 	public Account account;
 	public String color;
-	
+
 	// CONSTRUCTORS
-	public Player() {}
+	public Player() {
+	}
+
 	public Player(Account account) {
 		this.account = account;
 	}
+
 	public Player(Account account, String color) {
 		this.account = account;
 		this.color = color;
 	}
-	
+
 	// SETTERS
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
+
 	// GETTERS
 	public Account getAccount() {
 		return this.account;
 	}
+
 	public String getColor() {
 		return this.color;
 	}
-	
+
 }

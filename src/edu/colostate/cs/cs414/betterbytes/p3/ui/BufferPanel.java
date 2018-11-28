@@ -16,7 +16,7 @@ public class BufferPanel extends JPanel implements Runnable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String absPath = System.getProperty("user.dir") + "/src/";
 	private Image img = null;
 	private Mouse mouse = new Mouse(this);
@@ -47,8 +47,7 @@ public class BufferPanel extends JPanel implements Runnable {
 	 * offsetting I use to shadow and emphasize certain cells. Will definitely
 	 * generate Code Smells because of similar repeated code
 	 * 
-	 * @param g
-	 *            Graphics object
+	 * @param g Graphics object
 	 */
 	public void paintCells(Graphics g) {
 		for (Cell c : this.getGrid().getCells()) {
@@ -101,8 +100,7 @@ public class BufferPanel extends JPanel implements Runnable {
 	/**
 	 * Method for painting the Pieces of the board
 	 * 
-	 * @param g
-	 *            Graphics
+	 * @param g Graphics
 	 */
 	public void paintPieces(Graphics g) {
 		for (Cell c : this.getGrid().getCells()) {

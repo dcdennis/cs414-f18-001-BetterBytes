@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 
@@ -12,8 +13,12 @@ import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
  * referenced in the Mouse class
  * 
  */
-public class PaintButton {
+public class PaintButton implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String text = null;
 	private int x, y;
 	private Color fill = null;
@@ -25,14 +30,10 @@ public class PaintButton {
 	/**
 	 * Constructor for button
 	 * 
-	 * @param String
-	 *            text that will be displayed.
-	 * @param int
-	 *            x coordinate
-	 * @param int
-	 *            y coordinate
-	 * @param Game
-	 *            class reference needed for executing actions
+	 * @param String text that will be displayed.
+	 * @param        int x coordinate
+	 * @param        int y coordinate
+	 * @param Game   class reference needed for executing actions
 	 */
 	public PaintButton(String text, int x, int y, GameFrame game) {
 		this.setText(text);
@@ -46,8 +47,7 @@ public class PaintButton {
 	/**
 	 * This method receives graphics and paints this button
 	 * 
-	 * @param g
-	 *            is the Graphics object being used
+	 * @param g is the Graphics object being used
 	 */
 	public void paint(Graphics g) {
 		if (fill != null) {
@@ -114,7 +114,6 @@ public class PaintButton {
 			if (game.isSecondCheck()) {
 				Tools.log("Sending Move");
 				game.setSecondCheck(false);
-				// Tools.log(game.getGrid().saveToString());
 				if (game.sendMoveToServer()) {
 					game.setStatus("Move Sent!");
 				} else {

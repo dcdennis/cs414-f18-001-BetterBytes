@@ -1,6 +1,5 @@
 package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

@@ -13,5 +13,5 @@ public interface Protocol {
 	public final String RESPOND_TO_INVITATION_RESPONSE = "09";
 	public final String SUBMIT_MOVE = "10";
 	public final String SUBMIT_MOVE_RESPONSE = "11";
-	
+
 }

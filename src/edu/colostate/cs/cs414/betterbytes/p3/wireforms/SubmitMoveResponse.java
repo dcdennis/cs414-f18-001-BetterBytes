@@ -14,14 +14,16 @@ public class SubmitMoveResponse implements Message, Protocol, Serializable {
 	private final String type = Protocol.SUBMIT_MOVE_RESPONSE;
 	private boolean status;
 	private String message;
-	
-	public SubmitMoveResponse(boolean status, String message)
-	{
+
+	public SubmitMoveResponse(boolean status, String message) {
 		this.status = status;
 		this.message = message;
 	}
-	
-	public boolean getStatus() {return status;}
+
+	public boolean getStatus() {
+		return status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -56,7 +58,10 @@ public class SubmitMoveResponse implements Message, Protocol, Serializable {
 		return true;
 	}
 
-	public String getMessage() {return message;}
+	public String getMessage() {
+		return message;
+	}
+
 	@Override
 	public String getType() {
 		return type;

@@ -5,8 +5,7 @@ package edu.colostate.cs.cs414.betterbytes.p3.wireforms;
 
 import java.io.Serializable;
 
-public class UserRegistration implements Message, Protocol, Serializable 
-{
+public class UserRegistration implements Message, Protocol, Serializable {
 	/**
 	 * 
 	 */
@@ -14,43 +13,43 @@ public class UserRegistration implements Message, Protocol, Serializable
 	private String username;
 	private String passwordHash;
 	private final String type = Protocol.USER_REGISTRATION;
-	//private String passwordSalt;
-	
+	// private String passwordSalt;
+
 	@Override
 	public String toString() {
 		return "UserRegistration [username=" + username + ", passwordHash=" + passwordHash + ", type=" + type + "]";
 	}
 
-	public UserRegistration(String username, String passwordHash)
-	{
+	public UserRegistration(String username, String passwordHash) {
 		this.username = username;
 		this.passwordHash = passwordHash;
-		//this.passwordSalt = passwordSalt;
+		// this.passwordSalt = passwordSalt;
 	}
-	
-	public UserRegistration(String stringRep)
-	{
+
+	public UserRegistration(String stringRep) {
 		String[] data = stringRep.split(", ");
-		if(!data[0].equals(USER_REGISTRATION))
+		if (!data[0].equals(USER_REGISTRATION))
 			System.out.println("Something is wrong");
 		this.username = data[1];
 		this.passwordHash = data[2];
-		//this.passwordSalt = data[3];
+		// this.passwordSalt = data[3];
 	}
-	
-	public String getStringRepresentation()
-	{
+
+	public String getStringRepresentation() {
 		return USER_REGISTRATION + ", " + username + ", " + passwordHash; // + ", " + passwordSalt;
 	}
-	
-	public String getUsername() {return username;}
-	public String getPasswordHash() {return passwordHash;}
-	//public String getPasswordSalt() {return passwordSalt;}
-	
-	public boolean equals(Object O)
-	{
-		if(O instanceof UserRegistration)
-		{
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+	// public String getPasswordSalt() {return passwordSalt;}
+
+	public boolean equals(Object O) {
+		if (O instanceof UserRegistration) {
 			UserRegistration m = (UserRegistration) O;
 			return this.username.equals(m.getUsername()) && this.passwordHash.equals(m.getPasswordHash());
 		}

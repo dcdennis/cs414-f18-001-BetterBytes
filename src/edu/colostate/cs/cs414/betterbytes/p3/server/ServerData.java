@@ -1,10 +1,9 @@
 package edu.colostate.cs.cs414.betterbytes.p3.server;
 
-import java.util.ArrayList;
+import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
-import java.nio.channels.SocketChannel;
 
 // This class allows access to an active account's socket channel
 // The server can now write to a specified client
@@ -13,23 +12,23 @@ import java.nio.channels.SocketChannel;
 public class ServerData {
 
 	// FIELDS
-	private HashMap<Account, SocketChannel> AccountChannels = new HashMap< Account, SocketChannel>();	
-	
+	private HashMap<Account, SocketChannel> AccountChannels = new HashMap<Account, SocketChannel>();
+
 	// CTOR INSTANCE
 	private static final ServerData instance = new ServerData();
 
 	public static ServerData getInstance() {
 		return instance;
-	}	
-	
+	}
+
 	// ACCESSORS
 	public SocketChannel getChannel(Account account) {
 		return this.AccountChannels.get(account);
 	}
-	
-	//MUTATORS	
+
+	// MUTATORS
 	public void addAccountChannelPair(Account account, SocketChannel channel) {
 		this.AccountChannels.put(account, channel);
 	}
-	
+
 }

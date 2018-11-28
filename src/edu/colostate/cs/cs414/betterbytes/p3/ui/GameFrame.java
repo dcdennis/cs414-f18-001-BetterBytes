@@ -1,15 +1,16 @@
 package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 
+import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
-import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMoveResponse;
 
 /**
  * This class represents a physical Tafl game, including the grid which contains
@@ -19,7 +20,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
  * @author Daniel McClure - 830437441
  *
  */
-public class GameFrame extends JFrame {
+public class GameFrame extends JFrame implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,36 +31,15 @@ public class GameFrame extends JFrame {
 	private boolean secondCheck = false;
 	private int width = 886;
 	private int height = 935;
+	private Player turn = null;
 	private Game game = null;
- 
-	/**
-	 * This starts a new game.
-	 */
-	public GameFrame() {
-		this.setup();
-		this.setupNewGame();
-	}
+	private ClientConnection connection = null;
 
-	/**
-	 * This will start a game based off of an ArrayList of Cells
-	 * 
-	 * @param board
-	 *            ArrayList of Cells
-	 */
-	public GameFrame(ArrayList<Cell> board) {
+	public GameFrame(Game game, ClientConnection connection) {
+		this.connection = connection;
+		this.game = game;
 		this.setup();
-		this.setBoard(board);
-	}
-
-	/**
-	 * This will start a game based off a String of board data.
-	 * 
-	 * @param board
-	 *            String of data
-	 */
-	public GameFrame(String board) {
-		this.setup();
-		this.getGrid().setBoardFromString(board);
+		this.display(game);
 	}
 
 	/**
@@ -78,17 +58,15 @@ public class GameFrame extends JFrame {
 	}
 
 	public static void main(String[] arg0) {
-		GameFrame gf = new GameFrame();
+		GameFrame gf = new GameFrame(new Game(), null);
 
 		/*
-		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 2, 5);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 3, 3);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 6, 6);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 7, 3);
-		 * gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
+		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7); gf.placePiece(new
+		 * Piece(PieceType.KING, true), 2, 5); gf.placePiece(new Piece(PieceType.KING,
+		 * false), 3, 3); gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
+		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7); gf.placePiece(new
+		 * Piece(PieceType.KING, true), 6, 6); gf.placePiece(new Piece(PieceType.KING,
+		 * false), 7, 3); gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
 		 * 
 		 * Tools.log(gf.getBufferPanel().getGrid().saveToString());
 		 */
@@ -100,7 +78,7 @@ public class GameFrame extends JFrame {
 		// Tools.log(gf.getGrid().saveToString());
 
 	}
-	
+
 	public void setupNewGame() {
 
 		this.getGrid().setBoardFromString(
@@ -229,17 +207,13 @@ public class GameFrame extends JFrame {
 	public ArrayList<Cell> getBoard() {
 		return this.getGrid().getCells();
 	}
-	
+
 	/**
-	 * This method returns whether the piece of Cell c can move to the x y
-	 * given.
+	 * This method returns whether the piece of Cell c can move to the x y given.
 	 * 
-	 * @param c
-	 *            Cell that contains the piece to move
-	 * @param x
-	 *            destination x
-	 * @param y
-	 *            destination y
+	 * @param c Cell that contains the piece to move
+	 * @param x destination x
+	 * @param y destination y
 	 * @return whether the piece can move to destination
 	 */
 	public boolean canMove(Cell c, int x, int y) {
@@ -285,19 +259,52 @@ public class GameFrame extends JFrame {
 		return false;
 	}
 
-	public Game getGame() {
-		return game;
+	public void display(Game game) {
+		ArrayList<Cell> cs = new ArrayList<Cell>();
+		if (game.cells != null && game.cells.length > 0) {
+			for (edu.colostate.cs.cs414.betterbytes.p3.game.Cell c : game.cells) {
+				if (c != null) {
+					Cell nu = new Cell(c.getX(), c.getY(), this.getGrid());
+					edu.colostate.cs.cs414.betterbytes.p3.game.Piece p = c.getPiece();
+					if (p != null) {
+						Piece nup = new Piece(p.getType() == "king" ? PieceType.KING : PieceType.ROOK,
+								p.getColor() == "white" ? true : false);
+						nu.setPiece(nup);
+					}
+					cs.add(nu);
+				}
+			}
+			this.getGrid().setBoard(cs);
+		}
+		this.turn = game.getTurn();
 	}
 
-	public void setGame(Game game) {
-		this.game = game;
+	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {
+		ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> pieces = new ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece>();
+		for (Cell c : this.getGrid().getCells()) {
+			if (c.hasPiece()) {
+				edu.colostate.cs.cs414.betterbytes.p3.game.Piece p = new edu.colostate.cs.cs414.betterbytes.p3.game.Piece(
+						c.getPiece().getType().equals(PieceType.ROOK), c.getPiece().isWhite() ? "white" : "black");
+			} else {
+				pieces.add(null);
+			}
+		}
+		return pieces;
 	}
 
 	public boolean sendMoveToServer() {
-		if(this.getGame() != null) {
-			this.getGame().sendGameToServer();
+		ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell> gamecells = new ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell>();
+		for (Cell c : this.getGrid().getCells()) {
+			edu.colostate.cs.cs414.betterbytes.p3.game.Cell nu = new edu.colostate.cs.cs414.betterbytes.p3.game.Cell(
+					c.getX(), c.getY(), null, null);
+			if (c.hasPiece()) {
+				edu.colostate.cs.cs414.betterbytes.p3.game.Piece nup = new edu.colostate.cs.cs414.betterbytes.p3.game.Piece(
+						c.getPiece().getType().equals(PieceType.ROOK), c.getPiece().isWhite() ? "white" : "black");
+				nu.setPiece(nup);
+			}
+			gamecells.add(nu);
 		}
-		return false;
+		return ((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus();
 	}
 
 }

@@ -8,18 +8,19 @@ public class RespondToInvitationResponse implements Message, Protocol, Serializa
 	 */
 	private static final long serialVersionUID = 3074605210833532094L;
 	private final String type = Protocol.RESPOND_TO_INVITATION_RESPONSE;
-	
-	
+
 	private boolean status;
 	private String message;
-	
-	public RespondToInvitationResponse(boolean status, String message)
-	{
+
+	public RespondToInvitationResponse(boolean status, String message) {
 		this.status = status;
 		this.message = message;
 	}
-	
-	public boolean getStatus() {return status;}
+
+	public boolean getStatus() {
+		return status;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,9 +55,10 @@ public class RespondToInvitationResponse implements Message, Protocol, Serializa
 		return true;
 	}
 
-	public String getMessage() {return message;}
-	
-	
+	public String getMessage() {
+		return message;
+	}
+
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub

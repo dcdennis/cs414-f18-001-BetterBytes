@@ -101,7 +101,8 @@ public class RulesEngine {
 	}
 
 	public Game processCaptures(Game oldGame, Game gameUpdate) {
-		edu.colostate.cs.cs414.betterbytes.p3.game.Cell newLoc = null;
+		Cell newLoc = null;
+		Cell oldLoc = null;
 		for(int x = 0; x < 11; x++)
 		{
 			for(int y = 0; y< 11; y++)
@@ -110,8 +111,13 @@ public class RulesEngine {
 				{
 					newLoc = gameUpdate.getCell(x, y);
 				}
+				if(!gameUpdate.getCell(x, y).hasPiece() && oldGame.getCell(x, y).hasPiece())
+				{
+					oldLoc = gameUpdate.getCell(x, y);
+				}
 			}
 		}
+		gameUpdate.getMoves().add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY()));
 		//check above
 		if(newLoc.getY() <= 8)
 		{

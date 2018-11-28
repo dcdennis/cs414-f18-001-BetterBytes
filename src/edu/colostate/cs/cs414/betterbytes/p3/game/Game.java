@@ -103,7 +103,6 @@ public class Game implements Serializable {
 	public List<Move> getMoves() {
 		return moves;
 	}
-
 	public Cell getCell(int x, int y) {
 		for (Cell c : cells)
 			if (c.getX() == x && c.getY() == y)

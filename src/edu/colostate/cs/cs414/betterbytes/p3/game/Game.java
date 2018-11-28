@@ -107,6 +107,11 @@ public class Game implements Serializable {
 		this.getCell(5,3).setPiece(new Piece(true,"white"));
 	}
 
+	//FOR AI CLIENT ONLY
+	public Game(Game game, String scriptOutput) {
+		// TODO Auto-generated constructor stub
+	}
+
 	// SETTERS
 	public void changeTurns() {
 		if (turn == attacker) {
@@ -229,6 +234,10 @@ public class Game implements Serializable {
 		} else if (!turn.equals(other.turn))
 			return false;
 		return true;
+	}
+
+	public Cell[] getCells() {
+		return cells;
 	}
 
 }// End Class

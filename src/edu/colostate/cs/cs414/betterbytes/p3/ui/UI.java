@@ -349,11 +349,6 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			this.refreshData();
 			break;
 		case "Resume":
-			if (CURRENTGAMESLIST.getSelectedValue() != null) {
-				// resume game
-				if (CURRENTGAMESLIST.getSelectedValue() != null)
-					new GameFrame(this.loadedGames.get(CURRENTGAMESLIST.getSelectedIndex()));
-			}
 			break;
 		case "View Game Manual":
 			this.gameManual();

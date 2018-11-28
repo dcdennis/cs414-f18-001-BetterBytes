@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMoveResponse;
 
 /**
  * This class represents a physical Tafl game, including the grid which contains
@@ -29,33 +32,14 @@ public class GameFrame extends JFrame implements Serializable {
 	private int width = 886;
 	private int height = 935;
 	private Player turn = null;
+	private Game game = null;
+	private ClientConnection connection = null;
 
-	/**
-	 * This starts a new game.
-	 */
-	public GameFrame() {
+	public GameFrame(Game game, ClientConnection connection) {
+		this.connection = connection;
+		this.game = game;
 		this.setup();
-		this.setupNewGame();
-	}
-
-	/**
-	 * This will start a game based off of an ArrayList of Cells
-	 * 
-	 * @param board ArrayList of Cells
-	 */
-	public GameFrame(ArrayList<Cell> board) {
-		this.setup();
-		this.setBoard(board);
-	}
-
-	/**
-	 * This will start a game based off a String of board data.
-	 * 
-	 * @param board String of data
-	 */
-	public GameFrame(String board) {
-		this.setup();
-		this.getGrid().setBoardFromString(board);
+		this.display(game);
 	}
 
 	/**
@@ -74,7 +58,7 @@ public class GameFrame extends JFrame implements Serializable {
 	}
 
 	public static void main(String[] arg0) {
-		GameFrame gf = new GameFrame();
+		GameFrame gf = new GameFrame(new Game(), null);
 
 		/*
 		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7); gf.placePiece(new
@@ -277,17 +261,21 @@ public class GameFrame extends JFrame implements Serializable {
 
 	public void display(Game game) {
 		ArrayList<Cell> cs = new ArrayList<Cell>();
-		for (edu.colostate.cs.cs414.betterbytes.p3.game.Cell c : game.cells) {
-			Cell nu = new Cell(c.getX(), c.getY(), this.getGrid());
-			edu.colostate.cs.cs414.betterbytes.p3.game.Piece p = c.getPiece();
-			if (p != null) {
-				Piece nup = new Piece(p.getType() == "king" ? PieceType.KING : PieceType.ROOK,
-						p.getColor() == "white" ? true : false);
-				nu.setPiece(nup);
+		if (game.cells != null && game.cells.length > 0) {
+			for (edu.colostate.cs.cs414.betterbytes.p3.game.Cell c : game.cells) {
+				if (c != null) {
+					Cell nu = new Cell(c.getX(), c.getY(), this.getGrid());
+					edu.colostate.cs.cs414.betterbytes.p3.game.Piece p = c.getPiece();
+					if (p != null) {
+						Piece nup = new Piece(p.getType() == "king" ? PieceType.KING : PieceType.ROOK,
+								p.getColor() == "white" ? true : false);
+						nu.setPiece(nup);
+					}
+					cs.add(nu);
+				}
 			}
-			cs.add(nu);
+			this.getGrid().setBoard(cs);
 		}
-		this.getGrid().setBoard(cs);
 		this.turn = game.getTurn();
 	}
 
@@ -302,6 +290,21 @@ public class GameFrame extends JFrame implements Serializable {
 			}
 		}
 		return pieces;
+	}
+
+	public boolean sendMoveToServer() {
+		ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell> gamecells = new ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell>();
+		for (Cell c : this.getGrid().getCells()) {
+			edu.colostate.cs.cs414.betterbytes.p3.game.Cell nu = new edu.colostate.cs.cs414.betterbytes.p3.game.Cell(
+					c.getX(), c.getY(), null, null);
+			if (c.hasPiece()) {
+				edu.colostate.cs.cs414.betterbytes.p3.game.Piece nup = new edu.colostate.cs.cs414.betterbytes.p3.game.Piece(
+						c.getPiece().getType().equals(PieceType.ROOK), c.getPiece().isWhite() ? "white" : "black");
+				nu.setPiece(nup);
+			}
+			gamecells.add(nu);
+		}
+		return ((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus();
 	}
 
 }

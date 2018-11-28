@@ -153,13 +153,6 @@ public class Game implements Serializable {
 		return this.defender;
 	}
 
-//	public void makeMove(Move nextMove) {
-//		edu.colostate.cs.cs414.betterbytes.p3.ui.Piece toMove = this.gameframe
-//				.getCell(nextMove.getStartX(), nextMove.getStartY()).getPiece();
-//		this.gameframe.movePiece(toMove, this.gameframe.getCell(nextMove.getStartX(), nextMove.getStartY()),
-//				this.gameframe.getCell(nextMove.getEndX(), nextMove.getEndY()));
-//
-//	}
 
 	public Move [] getMoves() {
 		return moves;

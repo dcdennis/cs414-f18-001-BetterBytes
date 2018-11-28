@@ -1,7 +1,13 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
-public class Cell {
+import java.io.Serializable;
 
+public class Cell implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1784363620073141366L;
 	public final String CORNER = "C"; // 4 corner cells
 	public final String THRONE = "T"; // middle throne cell
 	public final String SQUARE = "S"; // normal cells

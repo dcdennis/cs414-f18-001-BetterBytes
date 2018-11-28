@@ -2,11 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p3.utilities;
 
 import java.util.List;
 
+import edu.colostate.cs.cs414.betterbytes.p3.game.Cell;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Move;
-import edu.colostate.cs.cs414.betterbytes.p3.ui.Cell;
-import edu.colostate.cs.cs414.betterbytes.p3.ui.PieceType;
 
 public class RulesEngine {
 	private static RulesEngine instance = new RulesEngine();
@@ -113,38 +112,38 @@ public class RulesEngine {
 				}
 			}
 		}
-//		//check above
-//		if(newLoc.getRealY() <= 8)
-//		{
-//			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()+2);
-//			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()+1);
-//			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-//				gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()+1).setPiece(null);
-//		}
-//		//check below
-//		if(newLoc.getRealY() >= 2)
-//		{
-//			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getRealX()-1);
-//			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX(), newLoc.getX()-2);
-//			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-//				captureLoc.setPiece(null);
-//		}
-//		//check left
-//		if(newLoc.getRealX() <= 8)
-//		{
-//			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX()+1, newLoc.getRealX());
-//			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX()+2, newLoc.getX());
-//			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-//				captureLoc.setPiece(null);
-//		}
-//		//check right
-//		if(newLoc.getRealX() >= 2)
-//		{
-//			Cell captureLoc = gameUpdate.getCell(newLoc.getRealX()-1, newLoc.getRealX());
-//			Cell checkLoc = gameUpdate.getCell(newLoc.getRealX()-2, newLoc.getX());
-//			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-//				captureLoc.setPiece(null);
-//		}
+		//check above
+		if(newLoc.getY() <= 8)
+		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1);
+			Cell checkLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()+2);		
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).setPiece(null);
+		}
+		//check below
+		if(newLoc.getY() >= 2)
+		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()-1);
+			Cell checkLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()-2);
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				captureLoc.setPiece(null);
+		}
+		//check left
+		if(newLoc.getX() <= 8)
+		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getX()+1, newLoc.getY());
+			Cell checkLoc = gameUpdate.getCell(newLoc.getX()+2, newLoc.getY());
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				captureLoc.setPiece(null);
+		}
+		//check right
+		if(newLoc.getX() >= 2)
+		{
+			Cell captureLoc = gameUpdate.getCell(newLoc.getX()-1, newLoc.getY());
+			Cell checkLoc = gameUpdate.getCell(newLoc.getX()-2, newLoc.getY());
+			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
+				captureLoc.setPiece(null);
+		}
 					
 		return gameUpdate;
 	}

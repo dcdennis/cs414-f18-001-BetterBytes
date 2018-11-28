@@ -1,7 +1,13 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
-public class Piece {
+import java.io.Serializable;
 
+public class Piece implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8063544977871411012L;
 	private boolean isRook;
 	private boolean isKing;
 	private String type;

@@ -1,6 +1,13 @@
 package edu.colostate.cs.cs414.betterbytes.p3.user;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4601225344910731288L;
 
 	@Override
 	public int hashCode() {

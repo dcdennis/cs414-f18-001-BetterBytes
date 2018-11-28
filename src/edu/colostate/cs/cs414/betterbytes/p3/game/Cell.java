@@ -1,13 +1,38 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.Serializer;
 
 public class Cell implements Serializable{
-
+	/*
+	
+	public static void main (String [] args )
+	{	
+		Cell serialC = new Cell("C");
+		Cell serialT = new Cell("T");
+		
+		ArrayList <Cell> cells = new ArrayList<Cell>();
+		cells.add(serialC);
+		cells.add(serialT);
+		
+		
+		byte [] serialed = Serializer.serialize(serialC);
+		System.out.println(serialed.toString());
+		 Cell deSerialed = Serializer.deserializeCell(serialed);
+		 
+		 System.out.println(serialC.isCorner());
+		 System.out.println(deSerialed.isCorner());
+		 
+	}
+		 */
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1784363620073141366L;
+	private static final long serialVersionUID = 1L;
 	public final String CORNER = "C"; // 4 corner cells
 	public final String THRONE = "T"; // middle throne cell
 	public final String SQUARE = "S"; // normal cells

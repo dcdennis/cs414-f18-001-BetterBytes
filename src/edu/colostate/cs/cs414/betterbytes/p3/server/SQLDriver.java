@@ -19,11 +19,11 @@ public class SQLDriver {
 	// Code to add the cases needed for the testing to work
 	public static void main(String[] args) {
 		// setPlayersinDB();
-		// setGamesinDB();
+		 setGamesinDB();
 	}
 
 	private static void setPlayersinDB() {
-		SQLDriver sql = SQLDriver.getInstance();
+		SQLDriver sql = SQLDriver.getInstance(); 
 		Account testAcc1 = new Account("ctunnell", "TestPassword");
 		Account testAcc2 = new Account("Jhpokorski", "TestPassword2");
 		Account testAcc3 = new Account("ctunnell@rams.colostate.edu", "TestPassword");
@@ -99,8 +99,7 @@ public class SQLDriver {
 	public Account getAccount(String username) {
 		String query = "Select * FROM betterbytes.users";
 		query += " WHERE `username`=\"" + username + "\";";
-		String[] results = runQueryRes(query);
-		System.out.println(results[1]);
+		String[] results = runQueryRes(query);		
 		Account received = Serializer.deserializeAccount(results[2].getBytes());
 
 		return received;
@@ -233,6 +232,7 @@ public class SQLDriver {
 					+ "\";";
 			results = queryGame(query);
 		}
+		
 		return Serializer.deserializeGame(results[2].getBytes());
 	}
 

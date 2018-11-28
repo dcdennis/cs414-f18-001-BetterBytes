@@ -1,13 +1,19 @@
 package edu.colostate.cs.cs414.betterbytes.p3.user;
 
-public class Invitation {
+import java.io.Serializable;
 
+public class Invitation implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1112740004632087227L;
 	String sender;
 	String recipient;
 
 	public Invitation(String sender, String recipient) {
 		this.sender = sender;
-		this.recipient = recipient;
+		this.recipient = recipient; 
 	}
 
 	public String getSender() {

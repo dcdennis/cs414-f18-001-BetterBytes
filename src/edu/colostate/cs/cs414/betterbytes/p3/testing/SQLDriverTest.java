@@ -96,7 +96,7 @@ class SQLDriverTest {
 		Account testAcc2 = new Account("Jhpokorski", "TestPassword2");
 		Player p2 = new Player(testAcc2);
 		// Reverse the players
-		assertEquals("Game In Progress", sql.getGame(p1, p2));
+		assertEquals("Game In Progress", sql.getGame(p1, p2)); 
 	}
 
 	@Test

@@ -7,7 +7,7 @@ public class Piece implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8063544977871411012L;
+	private static final long serialVersionUID = 1L;
 	private boolean isRook;
 	private boolean isKing;
 	private String type;

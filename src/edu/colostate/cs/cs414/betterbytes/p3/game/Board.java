@@ -1,7 +1,14 @@
 package edu.colostate.cs.cs414.betterbytes.p3.game;
 
-public class Board {
+import java.io.Serializable;
 
+public class Board implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3252334098475305497L;
+	
 	private Cell cells[];
 
 	public Board() {

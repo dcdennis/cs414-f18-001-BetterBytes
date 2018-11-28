@@ -30,7 +30,7 @@ public class Game implements Serializable {
 //	public ArrayList<Cell> cells = new ArrayList<Cell>(); //These need to be public
 //	public ArrayList<Cell> backup = new ArrayList<Cell>(); //These need to be public
 
-	public ArrayList<Cell> cells = new ArrayList<Cell>();
+	public Cell [] cells = new Cell [121];
 
 	// CONSTRUCTOR
 	public Game() {
@@ -42,7 +42,7 @@ public class Game implements Serializable {
 		this.attacker = attacker;
 		this.defender = defender;
 		this.startTime = startTime;
-		this.moves = new ArrayList<Move>();
+		//this.moves = new ArrayList<Move>();
 		setResult(GameResult.CONTINUE);
 	}
 
@@ -103,6 +103,7 @@ public class Game implements Serializable {
 	public List<Move> getMoves() {
 		return moves;
 	}
+	
 	public Cell getCell(int x, int y) {
 		for (Cell c : cells)
 			if (c.getX() == x && c.getY() == y)
@@ -117,4 +118,5 @@ public class Game implements Serializable {
 	public void setResult(GameResult result) {
 		this.result = result;
 	}
+	
 }

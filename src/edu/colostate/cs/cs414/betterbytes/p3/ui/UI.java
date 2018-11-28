@@ -49,11 +49,12 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private DefaultListModel<String> gamesListModel = new DefaultListModel<String>();
-	private DefaultListModel<?> invitesListModel = new DefaultListModel<Object>();
+	private DefaultListModel<?> invitesListModel = new DefaultListModel<Object>(); 
 	private ArrayList<String> loadedGames = new ArrayList<String>();
 	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
 
 	private ClientConnection connection;
+	private Account user;
 
 	/**
 	 * Creates new form UI
@@ -67,7 +68,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			IllegalAccessException, UnsupportedLookAndFeelException {
 		initComponents();
 		this.setTitle("Tafl Control Panel    |    Profile: ");
-		this.refreshData();
+		//this.refreshData();
 		this.connection = connection;
 		start();
 		this.setVisible(true);
@@ -279,7 +280,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void refreshData() {
 		String absPath = System.getProperty("user.dir") + "/src/";
 		this.gamesListModel.clear();
-		Message reply = ClientConnection.getInstance().send(new RecordsRequest("Dan"));
+		Message reply = ClientConnection.getInstance().send(new RecordsRequest(user.getUsername()));
 		if (reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {
 			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
 			if (rr != null) {
@@ -295,6 +296,12 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	}
 
 	public void login() {
+		//TODO Handle invalid Login
+		System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
+		Message response = connection.send(new UserLogon(USERNAME.getText(), PASSWORD.getText()));
+		user = ((UserLogonResponse) response).getAcc();
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
 
 	}
 
@@ -336,11 +343,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		Tools.log(e.getActionCommand());
 		switch (e.getActionCommand()) {
 		case "Login":
-			System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
-			Message response = connection.send(new UserLogon(USERNAME.getText(), PASSWORD.getText()));
-			Account received = ((UserLogonResponse) response).getAcc();
-			System.out.println(received.getUsername());
-			System.out.println(received.getPassword());
+			login();
 			break;
 		case "Refresh":
 			this.refreshData();

@@ -26,9 +26,8 @@ public class Game implements Serializable {
 	private Player turn; // Player that needs to make a move
 	private Player attacker;
 	private Player defender;
-	private ArrayList<Move> moves;
-	private GameResult result;
-
+	private Move  [] moves;
+	private GameResult result;	
 //	public ArrayList<Cell> cells = new ArrayList<Cell>(); //These need to be public
 //	public ArrayList<Cell> backup = new ArrayList<Cell>(); //These need to be public
 
@@ -44,22 +43,23 @@ public class Game implements Serializable {
 		this.attacker = attacker;
 		this.defender = defender;
 		this.startTime = startTime;
-		this.moves = new ArrayList<Move>();
+		this.moves = new Move [0];
 		setResult(GameResult.CONTINUE);
-		ArrayList<Cell> tempCells = new ArrayList<Cell>();
+		
+		int counter = 0;
 		for(int i = 0; i < 11; i++)
 		{
 			for(int j = 0; j < 11; j++)
 			{
-				if((i == 0 || i==10) && (j == 0 || j == 10))
-					tempCells.add(new Cell(i,j,"C",null));
+				if((i == 0 || i==10) && (j == 0 || j == 10))				
+					cells[counter] = new Cell(i,j,"C",null);				
 				else if(i == 5 && j == 5)
-					tempCells.add(new Cell(i,j,"T",null));
+					cells[counter] = new Cell(i,j,"T",null);
 				else
-					tempCells.add(new Cell(i,j,"S",null));
+					cells[counter] = new Cell(i,j,"S",null);
+				counter++;
 			}
-		}
-		tempCells.toArray(cells);
+		}		
 		this.getCell(3,0).setPiece(new Piece(true,"black"));
 		this.getCell(4,0).setPiece(new Piece(true,"black"));
 		this.getCell(5,0).setPiece(new Piece(true,"black"));
@@ -161,7 +161,7 @@ public class Game implements Serializable {
 //
 //	}
 
-	public List<Move> getMoves() {
+	public Move [] getMoves() {
 		return moves;
 	}
 	
@@ -188,7 +188,7 @@ public class Game implements Serializable {
 		result = prime * result + Arrays.hashCode(cells);
 		result = prime * result + ((defender == null) ? 0 : defender.hashCode());
 		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-		result = prime * result + ((moves == null) ? 0 : moves.hashCode());
+		result = prime * result + Arrays.hashCode(moves);
 		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
 		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
 		result = prime * result + ((turn == null) ? 0 : turn.hashCode());
@@ -221,10 +221,7 @@ public class Game implements Serializable {
 				return false;
 		} else if (!endTime.equals(other.endTime))
 			return false;
-		if (moves == null) {
-			if (other.moves != null)
-				return false;
-		} else if (!moves.equals(other.moves))
+		if (!Arrays.equals(moves, other.moves))
 			return false;
 		if (result != other.result)
 			return false;
@@ -241,7 +238,4 @@ public class Game implements Serializable {
 		return true;
 	}
 
-
-
-	
-}
+}// End Class

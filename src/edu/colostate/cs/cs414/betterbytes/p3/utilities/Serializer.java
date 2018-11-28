@@ -51,7 +51,7 @@ public abstract class Serializer {
 			try {
 				if (in != null) {
 					in.close();
-				}
+				} 
 			} catch (IOException ex) {
 				// ignore close exception
 			}

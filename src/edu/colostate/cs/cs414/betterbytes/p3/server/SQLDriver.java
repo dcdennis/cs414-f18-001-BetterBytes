@@ -4,7 +4,6 @@ package edu.colostate.cs.cs414.betterbytes.p3.server;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class SQLDriver {
 
 	// Code to add the cases needed for the testing to work
 	public static void main(String[] args) {
-		// setPlayersinDB();
+		 setPlayersinDB();
 		 setGamesinDB();
 	}
 
@@ -27,9 +26,9 @@ public class SQLDriver {
 		Account testAcc1 = new Account("ctunnell", "TestPassword");
 		Account testAcc2 = new Account("Jhpokorski", "TestPassword2");
 		Account testAcc3 = new Account("ctunnell@rams.colostate.edu", "TestPassword");
-		boolean val1 = sql.addUser(testAcc1);
-		boolean val2 = sql.addUser(testAcc2);
-		boolean val3 = sql.addUser(testAcc3);
+		sql.addUser(testAcc1);
+		sql.addUser(testAcc2);
+		sql.addUser(testAcc3);
 	}
 
 	private static void setGamesinDB() {
@@ -200,9 +199,7 @@ public class SQLDriver {
 			Statement st = database.createStatement();
 			try {
 				ResultSet result = st.executeQuery(query);
-				try {
-					ResultSetMetaData metaData = result.getMetaData();
-					int colCount = metaData.getColumnCount();
+				try {									
 					while (result.next()) {
 						results[0] = result.getString(1);
 						results[1] = result.getString(2);
@@ -276,7 +273,7 @@ public class SQLDriver {
 		}
 	}
 
-	// Can be changed to Arraylist if needed to be more specific.
+	// Can be changed to Array list if needed to be more specific.
 	private String[] runQueryRes(String query) {
 		String[] results = new String[3];
 		try {
@@ -284,8 +281,6 @@ public class SQLDriver {
 			try {
 				ResultSet result = st.executeQuery(query);
 				try {
-					ResultSetMetaData metaData = result.getMetaData();
-					int colCount = metaData.getColumnCount();
 					while (result.next()) {
 						results[0] = result.getString(1);
 						results[1] = result.getString(2);
@@ -311,8 +306,6 @@ public class SQLDriver {
 			try {
 				ResultSet result = st.executeQuery(query);
 				try {
-					ResultSetMetaData metaData = result.getMetaData();
-					int colCount = metaData.getColumnCount();
 					while (result.next()) {
 						results.add(result.getString(1));
 					}
@@ -349,8 +342,6 @@ public class SQLDriver {
 			try {
 				ResultSet result = st.executeQuery(query);
 				try {
-					ResultSetMetaData metaData = result.getMetaData();
-					int colCount = metaData.getColumnCount();
 					while (result.next()) {
 						results[0] = result.getString(1);
 						results[1] = result.getString(2);
@@ -368,23 +359,29 @@ public class SQLDriver {
 		}
 		return results;
 	}
-
-	public List<Game> getGames(String username) {
-		// TODO Same as above, just that I need every game a user is playing as a list
+//TODO TEST
+	public List<Game> getGames(String username) {		
 		String query = "Select 'state' from betterbytes.game WHERE `player1` like '" + username + "';";
-
 		List<String> resultStrings = getGamesQuery(query);
-		return null;
+		
+		query = "Select 'state' from betterbytes.game WHERE `player2` like '" + username + "';";		
+		resultStrings.addAll(getGamesQuery(query));
+		
+		List<Game> games = new ArrayList<Game>();
+		
+		for (int i = 0; i < resultStrings.size(); i++)
+		{
+			games.add(Serializer.deserializeGame(resultStrings.get(i).getBytes()));
+		}
+		return games;
 	}
 
 	public List<Game> getGames(Account acc) {
-		// TODO Same as above, just that I need every game a user is playing as a list
-		return null;
+		return getGames(acc.getUsername());
 	}
 
-	public List<Game> getGames(Player acc) {
-		// TODO Same as above, just that I need every game a user is playing as a list
-		return null;
+	public List<Game> getGames(Player p1) {
+		return getGames(p1.getAccount().getUsername());
 	}
 
 }// End Class

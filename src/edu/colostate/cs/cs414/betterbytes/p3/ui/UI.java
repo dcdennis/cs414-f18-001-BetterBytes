@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
+import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
@@ -284,7 +286,19 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		if (reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {
 			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
 			if (rr != null) {
-
+				 List<Game> games = rr.getGames();
+				 for(Game g : games) {
+					 String currGame = "";
+					 if(g.getAttacker().getAccount().equals(user))
+					 {
+						 currGame = g.getDefender().getAccount().getUsername();
+					 }
+					 else
+						 currGame = g.getAttacker().getAccount().getUsername();	
+					currGame = user.getUsername() + " vs " + currGame;
+					this.gamesListModel.addElement(currGame);
+					CURRENTGAMESLIST.setModel(gamesListModel);
+				 }
 			}
 		}
 		for (File f : new File("edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {

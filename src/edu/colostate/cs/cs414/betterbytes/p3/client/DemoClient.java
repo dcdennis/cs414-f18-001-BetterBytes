@@ -7,6 +7,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p3.ui.*;
 
+/**
+ * DemoClient to show off
+ * @author jhpok
+ * @version 1.0
+ * @since 1.0
+ */
 public class DemoClient {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException {

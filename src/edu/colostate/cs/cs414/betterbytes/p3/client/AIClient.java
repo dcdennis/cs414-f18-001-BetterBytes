@@ -18,7 +18,12 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogon;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
 
-
+/**
+ * AIClient for calling python machine learning code
+ * @author jhpok
+ * @version 1.0
+ * @since 1.0
+ */
 public class AIClient {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 	IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException 

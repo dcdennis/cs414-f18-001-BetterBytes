@@ -12,6 +12,10 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMoveResponse;
 
+/**
+ * Represents the entire game of taffle
+ * @version 1.0
+ */
 public class Game implements Serializable {
 
 	/**
@@ -38,6 +42,13 @@ public class Game implements Serializable {
 
 	}
 
+	/**
+	 * Construct a new game with a initial time, one attacker player, and a defender player.
+	 * Sets up the board to the base state and places the correct pieces on the cells.
+	 * @param startTime time the match would start at
+	 * @param attacker attacking player
+	 * @param defender defending player
+	 */
 	public Game(String startTime, Player attacker, Player defender) {
 		this.turn = attacker;
 		this.attacker = attacker;
@@ -108,6 +119,10 @@ public class Game implements Serializable {
 	}
 
 	// SETTERS
+
+	/**
+	 * Changes the turn the next players turn
+	 */
 	public void changeTurns() {
 		if (turn == attacker) {
 			this.turn = defender;
@@ -116,10 +131,18 @@ public class Game implements Serializable {
 		}
 	}
 
+	/**
+	 * Set the end time of the game
+	 * @param end
+	 */
 	public void setEndTime(String end) {
 		this.endTime = end;
 	}
 
+	/**
+	 * Sends a move, not the entire game, to the server.
+	 * @return true if the server responds correctly, false otherwise
+	 */
 	public boolean sendGameToServer() {
 		SubmitMove move = new SubmitMove(this);
 		Message reply = ClientConnection.getInstance().send(move);
@@ -133,31 +156,61 @@ public class Game implements Serializable {
 	}
 
 	// GETTERS
+
+	/**
+	 * Gets the start time of the game
+	 * @return game start time
+	 */
 	public String getStartTime() {
 		return this.startTime;
 	}
 
+	/**
+	 * Gets the end time of the game
+	 * @return game end time
+	 */
 	public String getEndTime() {
 		return this.endTime;
 	}
 
+	/**
+	 * Gets the turn player
+	 * @return current turn
+	 */
 	public Player getTurn() {
 		return this.turn;
 	}
 
+	/**
+	 * Gets the attacker player
+	 * @return attacker
+	 */
 	public Player getAttacker() {
 		return this.attacker;
 	}
 
+	/**
+	 * Gets the defender player
+	 * @return defender
+	 */
 	public Player getDefender() {
 		return this.defender;
 	}
 
-
+	/**
+	 * Gets the arrays of moves
+	 * @return moves
+	 */
 	public Move [] getMoves() {
 		return moves;
 	}
-	
+
+	/**
+	 * Get cell at position (x,y)
+	 * @param x position x
+	 * @param y position y
+	 * @return the cell at position (x,y) if one exists, null otherwise
+	 */
 	public Cell getCell(int x, int y) {
 		for (Cell c : cells)
 			if (c.getX() == x && c.getY() == y)
@@ -165,10 +218,18 @@ public class Game implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Gets the result of the game
+	 * @return game result
+	 */
 	public GameResult getResult() {
 		return result;
 	}
 
+	/**
+	 * Sets the result of the game
+	 * @param result game result
+	 */
 	public void setResult(GameResult result) {
 		this.result = result;
 	}

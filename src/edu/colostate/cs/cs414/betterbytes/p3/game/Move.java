@@ -2,6 +2,9 @@ package edu.colostate.cs.cs414.betterbytes.p3.game;
 
 import java.io.Serializable;
 
+/**
+ * Represents a move on the board
+ */
 public class Move implements Serializable{
 	/**
 	 * 
@@ -12,6 +15,13 @@ public class Move implements Serializable{
 	private int startY;
 	private int endY;
 
+	/**
+	 * Construct a movement from position (startX, startY) to (endX, endY)
+	 * @param startX x position of the start of the move
+	 * @param endX x position of the end of the move
+	 * @param startY y position of the start of the move
+	 * @param endY y position of the end of the move
+	 */
 	public Move(int startX, int endX, int startY, int endY) {
 		this.startX = startX;
 		this.endX = endX;
@@ -19,18 +29,34 @@ public class Move implements Serializable{
 		this.endY = endY;
 	}
 
+	/**
+	 * Gets the x position of the start of the move
+	 * @return startX
+	 */
 	public int getStartX() {
 		return startX;
 	}
 
+	/**
+	 * Gets the y position of the start of the move
+	 * @return startY
+	 */
 	public int getStartY() {
 		return startY;
 	}
 
+	/**
+	 * Gets the x position of the end of the move
+	 * @return endX
+	 */
 	public int getEndX() {
 		return endX;
 	}
 
+	/**
+	 * Gets the y position of the end of the move
+	 * @return endY
+	 */
 	public int getEndY() {
 		return endY;
 	}

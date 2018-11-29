@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p3.game;
 
 import java.io.Serializable;
 
+/**
+ * Represents a piece on a cell
+ * @version 1.0
+ */
 public class Piece implements Serializable{
 
 	/**
@@ -53,6 +57,11 @@ public class Piece implements Serializable{
 		return true;
 	}
 
+	/**
+	 * Constructs a new piece based on its type and color.
+	 * @param isRook if the piece is a rook or not
+	 * @param color color of the piece as a string
+	 */
 	public Piece(boolean isRook, String color) {
 		this.isRook = isRook;
 		this.isKing = !isRook;
@@ -60,6 +69,10 @@ public class Piece implements Serializable{
 		this.type = initPieceType();
 	}
 
+	/**
+	 * Determines the type of the piece based on the isRook field
+	 * @return The String "rook" if isRook is true, otherwise "king"
+	 */
 	public String initPieceType() {
 		if (isRook == true) {
 			return "rook";
@@ -68,22 +81,42 @@ public class Piece implements Serializable{
 		}
 	}
 
+	/**
+	 * Returns if the piece is a rook
+	 * @return true if the piece is a rook, false otherwise
+	 */
 	public boolean isRook() {
 		return this.isRook;
 	}
 
+	/**
+	 * Returns if the piece is a king
+	 * @return true if the piece is a king, false otherwise
+	 */
 	public boolean isKing() {
 		return this.isKing;
 	}
 
+	/**
+	 * Gets the type of the piece
+	 * @return the piece's type
+	 */
 	public String getType() {
 		return this.type;
 	}
 
+	/**
+	 * Gets the color of the piece
+	 * @return the piece's color
+	 */
 	public String getColor() {
 		return this.color;
 	}
 
+	/**
+	 * Determines if the piece is white or not
+	 * @return true if the piece is white, false otherwise
+	 */
 	public boolean isWhite() {
 		return this.getType().equals("white");
 	}

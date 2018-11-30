@@ -40,7 +40,7 @@ public class Game implements Serializable {
 
 	public Game(String startTime, Player attacker, Player defender) {
 		this.turn = attacker;
-		this.attacker = attacker;
+		this.attacker = attacker; 
 		this.defender = defender;
 		this.startTime = startTime;
 		this.moves = new Move [0];
@@ -105,6 +105,17 @@ public class Game implements Serializable {
 		this.getCell(6,4).setPiece(new Piece(true,"white"));
 		
 		this.getCell(5,3).setPiece(new Piece(true,"white"));
+	}
+
+	//FOR AI CLIENT ONLY
+	public Game(Game game, String scriptOutput) {
+		this.turn = game.getTurn();
+		this.attacker = game.attacker;
+		this.defender = game.defender;
+		this.startTime = game.startTime;
+		this.moves = game.getMoves();
+		this.result = game.getResult();
+		//Rebuild cells from the scriptOutput TODO
 	}
 
 	// SETTERS
@@ -229,6 +240,10 @@ public class Game implements Serializable {
 		} else if (!turn.equals(other.turn))
 			return false;
 		return true;
+	}
+
+	public Cell[] getCells() {
+		return cells;
 	}
 
 }// End Class

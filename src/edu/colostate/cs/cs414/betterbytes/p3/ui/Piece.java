@@ -12,7 +12,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
  */
 public class Piece {
 
-	private String absPath = System.getProperty("user.dir") + "/src/";
+	private String absPath = "";
 	private PieceType type = null;
 	private boolean white = false;
 	public Image king = Tools.getLocalImg(absPath+"edu/colostate/cs/cs414/betterbytes/p3/data/pieces/white_king.png");

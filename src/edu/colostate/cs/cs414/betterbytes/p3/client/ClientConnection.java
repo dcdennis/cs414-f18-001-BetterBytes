@@ -137,7 +137,7 @@ public class ClientConnection extends Thread {
 				} catch (InterruptedException e) {
 					e.printStackTrace(); 
 				}
-
+ 
 				if (serverKey.isReadable()) {
 					byte[] responseBytes = read(serverKey);
 					response = Serializer.deserializeMessage(responseBytes);

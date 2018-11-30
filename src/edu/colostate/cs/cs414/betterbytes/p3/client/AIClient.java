@@ -1,8 +1,12 @@
 package edu.colostate.cs.cs414.betterbytes.p3.client;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.swing.UnsupportedLookAndFeelException;
@@ -20,6 +24,8 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
 
 
 public class AIClient {
+	private static final String AIScriptPath = null;
+
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 	IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException 
 	{
@@ -51,9 +57,27 @@ public class AIClient {
 				{
 					if(game.getResult() == GameResult.CONTINUE && game.getTurn().getAccount().getUsername().equals("AIUSER"));
 					{
-						//THis is where the python call goes
-						Game gameUpdate = null;
-						connection.send(new SubmitMove(gameUpdate));
+						//Build the input strings for the python script
+						String board = game.getCells().toString();
+						String color;
+						if(game.getAttacker().getAccount().getUsername().equals("AIUSER"))
+							color = "black";
+						else
+							color = "white";
+							//Write the input strings to a file
+						BufferedWriter writer = new BufferedWriter(new FileWriter("outgoingGame.txt"));
+						writer.write(board + "\n" + color);
+						writer.close();
+						//Run the AI Script, wait for it to complete
+						Process AIScript = Runtime.getRuntime().exec(AIScriptPath);AIScript.waitFor();
+						String scriptOutput = "";
+						try{
+							scriptOutput = new String(Files.readAllBytes(Paths.get("incomingGame.txt")));
+							Game gameUpdate = new Game(game,scriptOutput);
+							connection.send(new SubmitMove(gameUpdate));
+							}catch(IOException e){
+								e.printStackTrace();
+								}
 					}
 				}
 			}

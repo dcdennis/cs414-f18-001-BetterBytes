@@ -7,8 +7,10 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
+import edu.colostate.cs.cs414.betterbytes.p3.ui.GameFrame;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
@@ -32,7 +34,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 	}
 
 	@Override
-	public void run() { 
+	public void run() {
 		while (running) {
 			if (debug)
 				System.out.println("WORKER THREAD " + threadID + " Waiting for new task");
@@ -73,7 +75,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						String username = registrationMessage.getUsername();
 						String password = registrationMessage.getPasswordHash();
 
-						boolean created = sql.addUser(username, password);
+						boolean created = sql.addUser(new Account(username, password));
 						Message outgoing = null;
 
 						if (created) {
@@ -110,8 +112,9 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						String requestUser = requestMessage.getUsername();
 
 						// done, but relies on methods that are themselves TODO
-						Account update = sql.getAccount(requestUser); 
-						List<Game> games = sql.getGames(requestUser);
+						Account update = sql.getAccount(requestUser);
+						System.out.println("ACC: " + update.getUsername());
+						List<Game> games = sql.getGames(update);
 
 						send(new RecordsRequestResponse(games, update), buffer, channel, debug);
 						break;
@@ -150,10 +153,12 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						SubmitMove moveMessage = (SubmitMove) message;
 						Game gameUpdate = moveMessage.getGameUpdate();
 						Game oldGame = sql.getGame(gameUpdate.getAttacker(), gameUpdate.getDefender());
+						
 						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
 						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
-						sql.addGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
-						send(new RespondToInvitationResponse(true, "Move Submitted"), buffer, channel, debug);
+						gameUpdate.changeTurns();
+						sql.updateGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
+						send(new SubmitMoveResponse(true, "Move Submitted"), buffer, channel, debug);
 
 						break;
 					}

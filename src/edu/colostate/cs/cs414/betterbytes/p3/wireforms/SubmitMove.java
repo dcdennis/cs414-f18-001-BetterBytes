@@ -15,7 +15,7 @@ public class SubmitMove implements Message, Protocol, Serializable {
 	private Game gameUpdate;
 
 	public SubmitMove(Game gameUpdate) {
-		this.gameUpdate = gameUpdate;
+		this.gameUpdate = gameUpdate; 
 	}
 
 	public Game getGameUpdate() {

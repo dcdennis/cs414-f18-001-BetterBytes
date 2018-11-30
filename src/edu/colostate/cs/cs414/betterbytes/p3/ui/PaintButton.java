@@ -25,12 +25,12 @@ public class PaintButton implements Serializable{
 	private int width = 70;
 	private int height = 35;
 	private boolean mo = false;
-	private GameFrame game = null;
+	private GameFrame game = null; 
 
 	/**
 	 * Constructor for button
 	 * 
-	 * @param String text that will be displayed.
+	 * @param String text that will be displayed. 
 	 * @param        int x coordinate
 	 * @param        int y coordinate
 	 * @param Game   class reference needed for executing actions

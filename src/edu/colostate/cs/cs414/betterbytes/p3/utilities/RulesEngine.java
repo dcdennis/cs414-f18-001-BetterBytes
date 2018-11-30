@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.betterbytes.p3.utilities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.colostate.cs.cs414.betterbytes.p3.game.Cell;
@@ -14,7 +16,7 @@ public class RulesEngine {
 	}
 
 	public static RulesEngine getInstance() {
-		return instance;
+		return instance; 
 	}
 
 	public GameResult gameHasEnded(Game game) {
@@ -76,9 +78,9 @@ public class RulesEngine {
 				return GameResult.BLACK;
 		}
 		// CASE: Move pattern repetition
-		List<Move> moveHistory = game.getMoves();
+		ArrayList<Move> moveHistory = new ArrayList<Move>((Arrays.asList(game.getMoves())));
 		if (moveHistory.size() > 12) {
-			List<Move> movePattern = moveHistory.subList(moveHistory.size() - 3, moveHistory.size());
+			ArrayList<Move> movePattern = (ArrayList<Move>) moveHistory.subList(moveHistory.size() - 3, moveHistory.size());
 			if (moveHistory.subList(moveHistory.size() - 7, moveHistory.size() - 4).equals(movePattern)
 					&& moveHistory.subList(moveHistory.size() - 11, moveHistory.size() - 8).equals(movePattern))
 				return GameResult.DRAW;
@@ -115,9 +117,12 @@ public class RulesEngine {
 				{
 					oldLoc = gameUpdate.getCell(x, y);
 				}
-			}
+			} 
 		}
-		gameUpdate.getMoves().add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY()));
+		//TODO check it works
+		ArrayList<Move> moveHistory = new ArrayList<Move> (Arrays.asList(gameUpdate.getMoves()));		
+		moveHistory.add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY())); 
+		
 		//check above
 		if(newLoc.getY() <= 8)
 		{

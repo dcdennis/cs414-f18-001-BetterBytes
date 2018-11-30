@@ -35,7 +35,7 @@ public class BufferPanel extends JPanel implements Runnable {
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		this.paintBackGround(g);
 		this.paintCells(g);
-		this.paintPieces(g);
+		this.paintPieces(g); 
 		this.paintButtons(g);
 		this.paintStatus(g);
 		// Tools.drawSharpText("" + mouse.getLocation(), 15, 15, Color.red,

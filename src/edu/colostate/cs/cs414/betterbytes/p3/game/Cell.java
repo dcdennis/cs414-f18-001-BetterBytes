@@ -68,6 +68,7 @@ public class Cell implements Serializable {
 		else
 			this.type = SQUARE;
 	}
+	
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -134,7 +135,15 @@ public class Cell implements Serializable {
 	public void setType(String s) {
 		this.type = s;
 	}
-
+	
+	public String dump()
+	{
+		if(this.piece != null)
+			return this.x + ":" + this.y + ":" + this.piece.dump();
+		else
+			return this.x + ":" + this.y + ":" + "__";
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -15,6 +15,11 @@ public class Piece implements Serializable{
 
 	public Piece() { 
 	}
+	
+	public String dump()
+	{
+		return "" + this.color.charAt(0) + this.type.toUpperCase().charAt(0);
+	}
 
 	@Override
 	public int hashCode() {

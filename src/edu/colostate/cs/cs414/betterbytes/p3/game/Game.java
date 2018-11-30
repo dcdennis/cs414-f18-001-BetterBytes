@@ -259,10 +259,24 @@ public class Game implements Serializable {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {
+	public String toString() { 
 		return "Game [startTime=" + startTime + ", endTime=" + endTime + ", turn=" + turn + ", attacker=" + attacker
 				+ ", defender=" + defender + ", moves=" + Arrays.toString(moves) + ", result=" + result + ", cells="
 				+ "this actually breaks it sorry" + "]";
+	} 
+	
+	
+	public String dump()
+	{
+		//['0:0:__', '0:1:__', '0:2:__', '0:3:bR', 
+		String dump = "[";
+		
+		for (Cell cell : this.cells)
+		{
+			dump += cell.dump() + ",";			
+		}		
+		dump = dump.substring(0,dump.length() - 1) + "]";
+				return dump;
 	}
 
 }// End Class

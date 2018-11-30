@@ -115,7 +115,12 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Account update = sql.getAccount(requestUser);
 						System.out.println("ACC: " + update.getUsername());
 						List<Game> games = sql.getGames(update);
-
+						
+						for(Game g : games)
+						{
+							System.out.println(g.toString());
+						}
+						
 						send(new RecordsRequestResponse(games, update), buffer, channel, debug);
 						break;
 					}

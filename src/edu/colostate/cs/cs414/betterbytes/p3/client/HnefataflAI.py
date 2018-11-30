@@ -14,9 +14,14 @@ startingState =    [['__', '__', '__', 'bR', 'bR', 'bR', 'bR', 'bR', '__', '__',
                     ['__', '__', '__', '__', '__', 'bR', '__', '__', '__', '__', '__'],
                     ['__', '__', '__', 'bR', 'bR', 'bR', 'bR', 'bR', '__', '__', '__']]
 
-     
+def useSavedQ():
+    Q = loadQ()
+    board,player = readFile(os.path.dirname(__file__) + "/incomingGame.txt")
+    moves = validMoves(board,player)
+    nextMove = pickMove(0,moves,board,Q,player)
+    newBoard,_ = makeMove(board,nextMove)
+    output(newBoard)
          
-
 def saveQ(Q):
     dir = os.path.dirname(__file__)
     with open(dir + '/savedQ.pkl','wb') as f:
@@ -29,7 +34,7 @@ def loadQ():
  
 def output(board):
     dir = os.path.dirname(__file__)
-    f = open(dir + "/incomingGame.txt","w+")
+    f = open(dir + "/outgoingGame.txt","w+")
     res = []
     for x in range(11):
         for y in range(11):
@@ -54,6 +59,7 @@ def pickMove(epsilon,validMoves,currentBoard,Q,color):
         return minMove
 
 def makeMove(oldBoard,move):
+    pieceCaptured = 0
     board = copyBoard(oldBoard)
     startingLoc = move[0]
     endingLoc = move[1]
@@ -75,25 +81,29 @@ def makeMove(oldBoard,move):
         checkY = endingLoc[1]+2
         if board[checkX][checkY][0] == board[endX][endY][0] and not board[captureX][captureY][0] == board[endX][endY][0]:
             board[captureX][captureY] = "__"
+            pieceCaptured += 1
     #check up
     if(endingLoc[1] >= 2):
         captureLoc = (endingLoc[0],endingLoc[1]-1)
         checkLoc   = (endingLoc[0],endingLoc[1]-2)
         if board[checkLoc[0]][checkLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0] and not board[captureLoc[0]][captureLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0]:
             board[captureLoc[0]][captureLoc[1]] = "__"
+            pieceCaptured += 1
     #check left
     if(endingLoc[0] <= 8):
         captureLoc = (endingLoc[0]+1,endingLoc[1])
         checkLoc = (endingLoc[0]+2,endingLoc[1])
         if board[checkLoc[0]][checkLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0] and not board[captureLoc[0]][captureLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0]:
             board[captureLoc[0]][captureLoc[1]] = "__"
+            pieceCaptured += 1
     #check right
     if(endingLoc[0] >= 2):
         captureLoc = (endingLoc[0]-1,endingLoc[1])
         checkLoc = (endingLoc[0]-2,endingLoc[1])
         if board[checkLoc[0]][checkLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0] and not board[captureLoc[0]][captureLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0]:
             board[captureLoc[0]][captureLoc[1]] = "__"
-    return board
+            pieceCaptured += 1
+    return board, pieceCaptured
 
 #done
 def copyBoard(oldBoard):
@@ -122,7 +132,7 @@ def createBoard(stateString):
     res = []
     for i in range(11):
         res.append([])
-        for j in range(11):
+        for _ in range(11):
             res[i].append("__")
     #strips brackets
     stateString = stateString[1:-2]
@@ -216,9 +226,8 @@ def result(board):
         return "continue"
 
 
-def trainQ(nRepitions,learningRate,eplsilonDecayFactor):
-    # Q maps (str(board),move,color) -> score
-    Q = {}
+def trainQ(nRepitions,learningRate,eplsilonDecayFactor,Q = {}):
+    #pp.pprint(Q)
     rho = .01
     epsilon = 1
     for _ in range(nRepitions):
@@ -233,23 +242,24 @@ def trainQ(nRepitions,learningRate,eplsilonDecayFactor):
                 break
             pickedMove = pickMove(epsilon,moves,currentState,Q,turn)
             oldState = currentState
-            currentState = makeMove(oldState,pickedMove)
-            Q[boardMoveTuple(oldState,oldMove,turn)] = Q.get(boardMoveTuple(oldState,oldMove,turn),0) + rho * (Q.get(boardMoveTuple(currentState,pickedMove,turn),0) -  Q.get((boardMoveTuple(oldState,oldMove,turn)),0))
+            currentState, captures = makeMove(oldState,pickedMove)
+            if(captures > 0):
+                Q[boardMoveTuple(oldState,oldMove,turn)] = Q.get(boardMoveTuple(oldState,oldMove,turn),0) + (captures * 0.15) * (Q.get(boardMoveTuple(currentState,pickedMove,turn),0) -  Q.get((boardMoveTuple(oldState,oldMove,turn)),0))
+            else:
+                Q[boardMoveTuple(oldState,oldMove,turn)] = Q.get(boardMoveTuple(oldState,oldMove,turn),0) + rho * (Q.get(boardMoveTuple(currentState,pickedMove,turn),0) -  Q.get((boardMoveTuple(oldState,oldMove,turn)),0))
             oldMove = pickedMove
+            if(result(currentState) == turn):
+                Q[boardMoveTuple(oldState,pickedMove,turn)] = 1 
             if(turn == "white"):
                 turn = "black"
             else:
                 turn = "white"
-   
-        Q[boardMoveTuple(oldState,pickedMove,turn)] = 1 
-        pp.pprint(currentState)
-        print("\n\n\n")
-
     return Q
 
    
 
 if __name__ == '__main__':
-    #Q = trainQ(10,.05,.01)
-    output(startingState)
-    #pp.pprint(Q)
+    #saveQ(trainQ(1000,.05,.01))
+    #saveQ(trainQ(1000,.05,.01,loadQ()))
+    useSavedQ()
+    #output(startingState)

@@ -18,7 +18,7 @@ public class SQLDriver {
 
 	// Code to add the cases needed for the testing to work
 	public static void main(String[] args) {
-		 //setPlayersinDB();
+		 // setPlayersinDB();
 		// setGamesinDB();
 		//SQLDriver.getInstance().getGames("ctunnell");
 	}
@@ -28,9 +28,11 @@ public class SQLDriver {
 		Account testAcc1 = new Account("ctunnell", "TestPassword");
 		Account testAcc2 = new Account("Jhpokorski", "TestPassword2");
 		Account testAcc3 = new Account("ctunnell@rams.colostate.edu", "TestPassword");
+		Account testAcc4 = new Account("AIUSER", "AILOGON");
 		sql.addUser(testAcc1);
 		sql.addUser(testAcc2);
 		sql.addUser(testAcc3);
+		sql.addUser(testAcc4);
 	}
 
 	private static void setGamesinDB() {
@@ -41,6 +43,14 @@ public class SQLDriver {
 		Player p2 = new Player(testAcc2);
 		Game g1 = new Game("0:0", p1, p2);
 		sql.addGame(p1, p2, g1);
+		
+		Account testAcc3 = sql.getAccount("AIUSER");
+		Player p3 = new Player(testAcc3);
+		Game g2 = new Game("0:0", p1, p3);
+		sql.addGame(p1, p3, g2);
+		
+		
+		
 	}
 
 	private Connection database;

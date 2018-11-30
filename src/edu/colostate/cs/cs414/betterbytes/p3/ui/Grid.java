@@ -27,10 +27,10 @@ public class Grid {
 	 */
 	public Grid(int baseX, int baseY, GameFrame game) {
 		this.game = game;
-		this.setBaseX(baseX); 
+		this.setBaseX(baseX);
 		this.setBaseY(baseY);
 		for (int x = 1; x <= 11; x++) {
-			for (int y = 1; y <= 11; y++) { 
+			for (int y = 1; y <= 11; y++) {
 				cells.add(new Cell(x, y, this));
 			}
 		}
@@ -61,12 +61,16 @@ public class Grid {
 	 * move and not wanting to send a move
 	 */
 	public void revertLastMove() {
-		for (int i = 0; i < cells.size(); i++) {
-			cells.get(i).setX(backup.get(i).getX());
-			cells.get(i).setY(backup.get(i).getY());
-			cells.get(i).setPiece(backup.get(i).getPiece());
+		if (cells.size() == backup.size()) {
+			for (int i = 0; i < cells.size(); i++) {
+				cells.get(i).setX(backup.get(i).getX());
+				cells.get(i).setY(backup.get(i).getY());
+				cells.get(i).setPiece(backup.get(i).getPiece());
+			}
+		} else {
+			Tools.log("Could not revert, no backup.");
 		}
-		if(game.moveCount > 0) {
+		if (game.moveCount > 0) {
 			game.moveCount = 0;
 		}
 	}

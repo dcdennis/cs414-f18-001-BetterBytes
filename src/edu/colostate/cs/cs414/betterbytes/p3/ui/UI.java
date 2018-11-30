@@ -16,14 +16,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequestResponse;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogon;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistration;
-import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistrationResponse;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.*;
 
 /**
  *
@@ -379,8 +372,20 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		return "Profile stats!";
 	}
 
-	public void sendInviteTo(String email) {
-
+	public void sendInviteTo(String username) {
+		if(user == null){
+			JOptionPane.showMessageDialog(this, "You need to be logged in to send an invite", "Invitation",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		Message response = connection.send(new CreateInvitation(user.getUsername(), username));
+		boolean status = ((CreateInvitationResponse) response).getStatus();
+		if(status){
+			System.out.println("Invite sent");
+		}
+		else {
+			System.out.println("Invite failed");
+		}
 	}
 
 	@Override

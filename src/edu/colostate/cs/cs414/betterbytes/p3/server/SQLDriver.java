@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
@@ -17,10 +18,11 @@ public class SQLDriver {
 
 	// Code to add the cases needed for the testing to work
 	public static void main(String[] args) {
-		 setPlayersinDB();
-		 setGamesinDB();
+		 //setPlayersinDB();
+		// setGamesinDB();
+		//SQLDriver.getInstance().getGames("ctunnell");
 	}
-
+ 
 	private static void setPlayersinDB() {
 		SQLDriver sql = SQLDriver.getInstance(); 
 		Account testAcc1 = new Account("ctunnell", "TestPassword");
@@ -306,7 +308,7 @@ public class SQLDriver {
 			try {
 				ResultSet result = st.executeQuery(query);
 				try {
-					while (result.next()) {
+					while (result.next()) {				
 						results.add(result.getString(1));
 					}
 				} finally {
@@ -361,18 +363,20 @@ public class SQLDriver {
 	}
 //TODO TEST
 	public List<Game> getGames(String username) {		
-		String query = "Select 'state' from betterbytes.game WHERE `player1` like '" + username + "';";
-		List<String> resultStrings = getGamesQuery(query);
-		
-		query = "Select 'state' from betterbytes.game WHERE `player2` like '" + username + "';";		
+		String query = "Select `state` from betterbytes.game WHERE `player1` like '" + username + "';";
+		List<String> resultStrings = getGamesQuery(query);		
+		query = "Select `state` from betterbytes.game WHERE `player2` like '" + username + "';";		
 		resultStrings.addAll(getGamesQuery(query));
 		
 		List<Game> games = new ArrayList<Game>();
+		
 		
 		for (int i = 0; i < resultStrings.size(); i++)
 		{
 			games.add(Serializer.deserializeGame(resultStrings.get(i).getBytes()));
 		}
+		
+//		System.out.println("Games: " + Arrays.toString(games.toArray(new Game[] {})));
 		return games;
 	}
 

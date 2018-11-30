@@ -63,7 +63,7 @@ public class Tools {
 		if (o instanceof Double) {
 			Double it = (Double) o;
 			DecimalFormat df2 = new DecimalFormat("#.##");
-			System.out.println(df2.format(it));
+			System.out.println(df2.format(it)); 
 		} else {
 			System.out.println(o.toString());
 		}

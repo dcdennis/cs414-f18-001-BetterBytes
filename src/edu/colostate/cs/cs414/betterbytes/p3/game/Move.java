@@ -15,7 +15,7 @@ public class Move implements Serializable{
 	public Move(int startX, int endX, int startY, int endY) {
 		this.startX = startX;
 		this.endX = endX;
-		this.startY = startY;
+		this.startY = startY; 
 		this.endY = endY;
 	}
 

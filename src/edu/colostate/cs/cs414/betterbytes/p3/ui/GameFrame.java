@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMoveResponse;
 
@@ -46,7 +47,6 @@ public class GameFrame extends JFrame implements Serializable {
 	 * Sets up UI
 	 */
 	public void setup() {
-		this.setSize(886, 935);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(width, height);
 		this.back = new BufferPanel(this);
@@ -55,27 +55,11 @@ public class GameFrame extends JFrame implements Serializable {
 		new Thread(back).start();
 		this.setTitle("Tafl V" + 1);
 		this.setResizable(false);
+		this.setupNewGame();
 	}
 
 	public static void main(String[] arg0) {
 		GameFrame gf = new GameFrame(new Game(), null);
-
-		/*
-		 * gf.placePiece(new Piece(PieceType.KING, true), 1, 7); gf.placePiece(new
-		 * Piece(PieceType.KING, true), 2, 5); gf.placePiece(new Piece(PieceType.KING,
-		 * false), 3, 3); gf.placePiece(new Piece(PieceType.KING, true), 5, 8);
-		 * gf.placePiece(new Piece(PieceType.KING, false), 4, 7); gf.placePiece(new
-		 * Piece(PieceType.KING, true), 6, 6); gf.placePiece(new Piece(PieceType.KING,
-		 * false), 7, 3); gf.placePiece(new Piece(PieceType.KING, true), 8, 4);
-		 * 
-		 * Tools.log(gf.getBufferPanel().getGrid().saveToString());
-		 */
-
-		// String it =
-		// "~1:1:75:null:false~1:2:75:null:false~1:3:75:null:false~1:4:75:null:false~1:5:75:null:false~1:6:75:null:false~1:7:75:KING:true~1:8:75:null:false~2:1:75:null:false~2:2:75:null:false~2:3:75:null:false~2:4:75:null:false~2:5:75:KING:true~2:6:75:null:false~2:7:75:null:false~2:8:75:null:false~3:1:75:null:false~3:2:75:null:false~3:3:75:KING:false~3:4:75:null:false~3:5:75:null:false~3:6:75:null:false~3:7:75:null:false~3:8:75:null:false~4:1:75:null:false~4:2:75:null:false~4:3:75:null:false~4:4:75:null:false~4:5:75:null:false~4:6:75:null:false~4:7:75:KING:false~4:8:75:null:false~5:1:75:null:false~5:2:75:null:false~5:3:75:null:false~5:4:75:null:false~5:5:75:null:false~5:6:75:null:false~5:7:75:null:false~5:8:75:KING:true~6:1:75:null:false~6:2:75:null:false~6:3:75:null:false~6:4:75:null:false~6:5:75:null:false~6:6:75:KING:true~6:7:75:null:false~6:8:75:null:false~7:1:75:null:false~7:2:75:null:false~7:3:75:KING:false~7:4:75:null:false~7:5:75:null:false~7:6:75:null:false~7:7:75:null:false~7:8:75:null:false~8:1:75:null:false~8:2:75:null:false~8:3:75:null:false~8:4:75:KING:true~8:5:75:null:false~8:6:75:null:false~8:7:75:null:false~8:8:75:null:false";
-		// gf.getBufferPanel().getGrid().setBoardFromString(it);
-
-		// Tools.log(gf.getGrid().saveToString());
 
 	}
 
@@ -264,11 +248,11 @@ public class GameFrame extends JFrame implements Serializable {
 		if (game.cells != null && game.cells.length > 0) {
 			for (edu.colostate.cs.cs414.betterbytes.p3.game.Cell c : game.cells) {
 				if (c != null) {
-					Cell nu = new Cell(c.getX(), c.getY(), this.getGrid());
+					Cell nu = new Cell(c.getX() + 1, c.getY() + 1, this.getGrid());
 					edu.colostate.cs.cs414.betterbytes.p3.game.Piece p = c.getPiece();
 					if (p != null) {
-						Piece nup = new Piece(p.getType() == "king" ? PieceType.KING : PieceType.ROOK,
-								p.getColor() == "white" ? true : false);
+						Piece nup = new Piece(p.getType().equals("king") ? PieceType.KING : PieceType.ROOK,
+								p.getColor().equals("white") ? true : false);
 						nu.setPiece(nup);
 					}
 					cs.add(nu);
@@ -277,6 +261,7 @@ public class GameFrame extends JFrame implements Serializable {
 			this.getGrid().setBoard(cs);
 		}
 		this.turn = game.getTurn();
+		this.game = game;
 	}
 
 	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {
@@ -296,14 +281,27 @@ public class GameFrame extends JFrame implements Serializable {
 		ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell> gamecells = new ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell>();
 		for (Cell c : this.getGrid().getCells()) {
 			edu.colostate.cs.cs414.betterbytes.p3.game.Cell nu = new edu.colostate.cs.cs414.betterbytes.p3.game.Cell(
-					c.getX(), c.getY(), null, null);
+					c.getX() - 1, c.getY() - 1, null, null);
 			if (c.hasPiece()) {
 				edu.colostate.cs.cs414.betterbytes.p3.game.Piece nup = new edu.colostate.cs.cs414.betterbytes.p3.game.Piece(
 						c.getPiece().getType().equals(PieceType.ROOK), c.getPiece().isWhite() ? "white" : "black");
 				nu.setPiece(nup);
 			}
+			
+			if((nu.getX() == 0 || nu.getX()==10) && (nu.getY() == 0 || nu.getY() == 10))
+				nu.setType("C");			
+			else if(nu.getX() == 5 && nu.getY() == 5)
+				nu.setType("T");
+			else
+				nu.setType("S");
+			
 			gamecells.add(nu);
 		}
+		if (game == null) {
+			Tools.log("Game object is null");
+			return false;
+		}
+		game.cells = gamecells.toArray(new edu.colostate.cs.cs414.betterbytes.p3.game.Cell[] {});
 		return ((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus();
 	}
 

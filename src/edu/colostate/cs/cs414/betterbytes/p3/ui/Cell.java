@@ -13,9 +13,9 @@ import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
  */
 public class Cell {
 
-	private String absPath = System.getProperty("user.dir") + "/src/";
+	private String absPath = "";
 	private int x, y;
-	private int size = 75;
+	private int size = 75; 
 	private Piece holding = null;
 	private Grid grid = null;
 	private boolean selected = false;

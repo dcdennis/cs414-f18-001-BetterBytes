@@ -3,7 +3,7 @@ package edu.colostate.cs.cs414.betterbytes.p3.game;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cell implements Serializable{
+public class Cell implements Serializable {
 	/**
 	 * 
 	 */
@@ -21,7 +21,7 @@ public class Cell implements Serializable{
 
 	// CTOR
 	public Cell() {
-	}
+	} 
 
 	public Cell(String type) {
 		this.type = type;
@@ -31,14 +31,14 @@ public class Cell implements Serializable{
 		this.piece = piece;
 		this.type = type;
 	}
-	
-	public Cell(int x, int y, String type, Piece piece)
-	{
+
+	public Cell(int x, int y, String type, Piece piece) {
 		this.x = x;
 		this.y = y;
 		this.type = type;
 		this.piece = piece;
 	}
+
 	// ACCESSORS
 	public boolean isCorner() {
 		return this.type.equals(CORNER);
@@ -66,7 +66,7 @@ public class Cell implements Serializable{
 		if (isOccupied == false) {
 			this.isOccupied = true;
 		}
-	} 
+	}
 
 	public void removePiece() {
 		this.piece = null;
@@ -92,8 +92,11 @@ public class Cell implements Serializable{
 	public boolean hasPiece() {
 		return this.getPiece() != null;
 	}
-	
-	
+
+	public void setType(String s) {
+		this.type = s;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

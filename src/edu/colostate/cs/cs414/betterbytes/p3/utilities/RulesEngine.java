@@ -117,11 +117,11 @@ public class RulesEngine {
 				{
 					oldLoc = gameUpdate.getCell(x, y);
 				}
-			}
+			} 
 		}
 		//TODO check it works
 		List<Move> moveHistory = (Arrays.asList(gameUpdate.getMoves()));		
-		moveHistory.add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY()));
+		moveHistory.add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY())); 
 		
 		//check above
 		if(newLoc.getY() <= 8)

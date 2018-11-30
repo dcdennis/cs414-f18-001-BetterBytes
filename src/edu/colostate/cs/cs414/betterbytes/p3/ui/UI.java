@@ -22,6 +22,8 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequestResponse;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogon;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistration;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistrationResponse;
 
 /**
  *
@@ -51,12 +53,16 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private DefaultListModel<String> gamesListModel = new DefaultListModel<String>();
-	private DefaultListModel<?> invitesListModel = new DefaultListModel<Object>(); 
+	private DefaultListModel<?> invitesListModel = new DefaultListModel<Object>();
 	private ArrayList<String> loadedGames = new ArrayList<String>();
 	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
+	private JButton SIGNUPBUTTON = new JButton("Create Account");
 
 	private ClientConnection connection;
 	private Account user;
+	private List<Game> gameObjects = null;
+
+	public String title = "Tafl Control Panel    |    Profile: ";
 
 	/**
 	 * Creates new form UI
@@ -69,8 +75,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public UI(ClientConnection connection) throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
 		initComponents();
-		this.setTitle("Tafl Control Panel    |    Profile: ");
-		//this.refreshData();
+		this.setTitle(title);
+		// this.refreshData();
 		this.connection = connection;
 		start();
 		this.setVisible(true);
@@ -103,6 +109,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		PROFILESTATSBUTTON = new javax.swing.JButton();
 
 		LOGINBUTTON.addActionListener(this);
+		SIGNUPBUTTON.addActionListener(this);
 		REFRESHBUTTON.addActionListener(this);
 		ACCEPTBUTTON.addActionListener(this);
 		DECLINEBUTTON.addActionListener(this);
@@ -128,8 +135,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
 						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-								.addComponent(PASSWORD).addComponent(USERNAME).addComponent(LOGINBUTTON,
-										javax.swing.GroupLayout.PREFERRED_SIZE, 111,
+								.addComponent(PASSWORD).addComponent(USERNAME).addComponent(LOGINBUTTON)
+								.addComponent(SIGNUPBUTTON, javax.swing.GroupLayout.PREFERRED_SIZE, 111,
 										javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,6 +147,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 						.addComponent(PASSWORD, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(LOGINBUTTON)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(SIGNUPBUTTON)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jLabel1.setText("Current Games:");
@@ -165,6 +173,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		VIEWGAMEMANUALBUTTON.setText("View Game Manual");
 
 		PROFILESTATSBUTTON.setText("Profile Stats");
+
+		USERNAME.setText("ctunnell");
+		PASSWORD.setText("TestPassword");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -282,45 +293,65 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void refreshData() {
 		String absPath = System.getProperty("user.dir") + "/src/";
 		this.gamesListModel.clear();
-		Message reply = ClientConnection.getInstance().send(new RecordsRequest(user.getUsername()));
+		Message reply = connection.send(new RecordsRequest(user.getUsername()));
 		if (reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {
 			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
 			if (rr != null) {
-				 List<Game> games = rr.getGames();
-				 for(Game g : games) {
-					 String currGame = "";
-					 if(g.getAttacker().getAccount().equals(user))
-					 {
-						 currGame = g.getDefender().getAccount().getUsername();
-					 }
-					 else
-						 currGame = g.getAttacker().getAccount().getUsername();	
+				gameObjects = rr.getGames();
+				Tools.log("Rec Games: " + gameObjects.size());
+				for (Game g : gameObjects) {
+					String currGame = "";
+					if (g.getAttacker().getAccount().equals(user)) {
+						currGame = g.getDefender().getAccount().getUsername();
+					} else
+						currGame = g.getAttacker().getAccount().getUsername();
 					currGame = user.getUsername() + " vs " + currGame;
 					this.gamesListModel.addElement(currGame);
 					CURRENTGAMESLIST.setModel(gamesListModel);
-				 }
+				}
 			}
 		}
-		for (File f : new File("edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
-			Tools.log(f.getName());
-			this.gamesListModel.addElement(f.getName());
-			CURRENTGAMESLIST.setModel(gamesListModel);
-			this.loadedGames.add(Tools.getFileData(f));
+//		for (File f : new File("edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
+//			Tools.log(f.getName());
+//			this.gamesListModel.addElement(f.getName());
+//			CURRENTGAMESLIST.setModel(gamesListModel);
+//			this.loadedGames.add(Tools.getFileData(f));
+//		}
+	}
+
+	public void createAccount() {
+
+		System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
+		Message response = connection.send(new UserRegistration(USERNAME.getText(), PASSWORD.getText()));
+		boolean created = ((UserRegistrationResponse) response).getStatus();
+		if (created) {
+			login();
+		} else {
+			this.setTitle("FAILED TO CREATE ACCOUNT");
 		}
 	}
 
 	public void login() {
-		//TODO Handle invalid Login
+		// TODO Handle invalid Login
 		System.out.println("USERNAME: " + USERNAME.getText() + ", PASSWORD: " + PASSWORD.getText());
 		Message response = connection.send(new UserLogon(USERNAME.getText(), PASSWORD.getText()));
 		user = ((UserLogonResponse) response).getAcc();
+		if (user != null) {
+			this.setTitle(title + user.getUsername());
+			this.refreshData();
+		} else {
+			this.setTitle("FAILED TO LOGIN!");
+		}
 		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
+//		System.out.println(user.getPassword());
+		
 
 	}
 
 	public void resumeGame() {
-
+		if (this.CURRENTGAMESLIST.getSelectedValue() != null && gameObjects != null) {
+			new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()),this.connection);
+		}
 	}
 
 	public void forfeitGame() {
@@ -356,6 +387,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Tools.log(e.getActionCommand());
 		switch (e.getActionCommand()) {
+		case "Create Account":
+			this.createAccount();
+			break;
 		case "Login":
 			login();
 			break;
@@ -363,6 +397,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			this.refreshData();
 			break;
 		case "Resume":
+			this.resumeGame();
 			break;
 		case "View Game Manual":
 			this.gameManual();

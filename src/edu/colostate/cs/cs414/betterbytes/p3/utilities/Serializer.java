@@ -58,7 +58,7 @@ public abstract class Serializer {
 		}
 		return message;
 	}
-
+ 
 	public static Account deserializeAccount(byte[] bytes) {
 		// System.out.println("DESERIALIZE(): '" + new String(bytes) + "'");
 

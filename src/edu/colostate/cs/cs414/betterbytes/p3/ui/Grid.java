@@ -30,7 +30,7 @@ public class Grid {
 		this.setBaseX(baseX);
 		this.setBaseY(baseY);
 		for (int x = 1; x <= 11; x++) {
-			for (int y = 1; y <= 11; y++) {
+			for (int y = 1; y <= 11; y++) { 
 				cells.add(new Cell(x, y, this));
 			}
 		}

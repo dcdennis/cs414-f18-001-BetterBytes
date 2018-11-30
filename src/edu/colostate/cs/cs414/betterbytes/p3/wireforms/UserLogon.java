@@ -25,7 +25,7 @@ public class UserLogon implements Message, Protocol, Serializable {
 	public UserLogon(String stringRep) {
 		String[] data = stringRep.split(", ");
 		if (!data[0].equals(USER_LOGON))
-			System.out.println("Something is wrong");
+			System.out.println("Something is wrong"); 
 		this.username = data[1];
 		this.passwordHash = data[2];
 	}

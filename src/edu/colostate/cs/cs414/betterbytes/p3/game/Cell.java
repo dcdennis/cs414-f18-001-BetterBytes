@@ -23,9 +23,9 @@ public class Cell implements Serializable {
 	public Cell() {
 	} 
 
-	public Cell(String type) {
-		this.type = type;
-	}
+	//public Cell(String type) {
+	//	this.type = type;
+	//}
 
 	public Cell(String type, Piece piece) {
 		this.piece = piece;
@@ -37,6 +37,44 @@ public class Cell implements Serializable {
 		this.y = y;
 		this.type = type;
 		this.piece = piece;
+	}
+
+	public Cell(String stringCell) {
+		System.out.println(stringCell);
+		stringCell = stringCell.replace(" ", "");
+		stringCell = stringCell.substring(1,stringCell.length()-1);
+		System.out.println(stringCell);
+		String[] cellData = stringCell.split(":");
+		//Coords
+		x = Integer.parseInt(cellData[0]);
+		y = Integer.parseInt(cellData[1]);
+		
+		//Piece and isOccupied
+		if(cellData[2].equals("__"))
+		{
+			piece = null;
+			this.isOccupied = false;
+		}
+		else
+		{
+			piece = new Piece(cellData[2]);
+			this.isOccupied = true;
+		}
+		//Type
+		if((x == 0 || x == 10) && (y == 0 || y == 10))
+			this.type = CORNER;
+		else if (x == 5 && y == 5)
+			this.type = THRONE;
+		else
+			this.type = SQUARE;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Cell [x=" + x + ", y=" + y + ", type=" + type + ", piece=" + piece + "]";
 	}
 
 	// ACCESSORS

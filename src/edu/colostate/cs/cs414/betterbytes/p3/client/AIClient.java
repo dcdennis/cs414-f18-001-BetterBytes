@@ -24,7 +24,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
 
 
 public class AIClient {
-	private static final String AIScriptPath = null;
+	private static final String AIScriptPath = "./python src/edu/colostate/cs/cs414/betterbytes/p3/client/HnefataflAI.py";
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 	IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException 
@@ -65,19 +65,19 @@ public class AIClient {
 						else
 							color = "white";
 							//Write the input strings to a file
-						BufferedWriter writer = new BufferedWriter(new FileWriter("outgoingGame.txt"));
+						BufferedWriter writer = new BufferedWriter(new FileWriter("src/edu/colostate/cs/cs414/betterbytes/p3/client/outgoingGame.txt"));
 						writer.write(board + "\n" + color);
 						writer.close();
 						//Run the AI Script, wait for it to complete
 						Process AIScript = Runtime.getRuntime().exec(AIScriptPath);AIScript.waitFor();
 						String scriptOutput = "";
 						try{
-							scriptOutput = new String(Files.readAllBytes(Paths.get("incomingGame.txt")));
+							scriptOutput = new String(Files.readAllBytes(Paths.get("src/edu/colostate/cs/cs414/betterbytes/p3/client/incomingGame.txt")));
 							Game gameUpdate = new Game(game,scriptOutput);
 							connection.send(new SubmitMove(gameUpdate));
 							}catch(IOException e){
 								e.printStackTrace();
-								}
+						}
 					}
 				}
 			}

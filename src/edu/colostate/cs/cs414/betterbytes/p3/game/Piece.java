@@ -59,6 +59,27 @@ public class Piece implements Serializable{
 		this.color = color;
 		this.type = initPieceType();
 	}
+	
+	
+
+	public Piece(String stringPiece) {
+		System.out.println(stringPiece);
+		this.isRook = stringPiece.charAt(1) == 'R';
+		if(stringPiece.charAt(0) == 'w')
+			this.color = "white";
+		else
+			this.color = "black";
+		this.isKing = !this.isRook;
+		this.type = initPieceType();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Piece [type=" + type + ", color=" + color + "]";
+	}
 
 	public String initPieceType() {
 		if (isRook == true) {

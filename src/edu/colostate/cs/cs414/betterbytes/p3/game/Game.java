@@ -115,9 +115,18 @@ public class Game implements Serializable {
 		this.startTime = game.startTime;
 		this.moves = game.getMoves();
 		this.result = game.getResult();
-		//Rebuild cells from the scriptOutput TODO
+		
+		scriptOutput = scriptOutput.substring(1, scriptOutput.length()-1);
+		System.out.println(scriptOutput);
+		String[] stringCells = scriptOutput.split(",");
+		int counter = 0;
+		for(String stringCell : stringCells)
+		{
+			cells[counter] = new Cell(stringCell);
+			counter++;
+		}
+			
 	}
-
 	// SETTERS
 	public void changeTurns() {
 		if (turn == attacker) {
@@ -244,6 +253,16 @@ public class Game implements Serializable {
 
 	public Cell[] getCells() {
 		return cells;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Game [startTime=" + startTime + ", endTime=" + endTime + ", turn=" + turn + ", attacker=" + attacker
+				+ ", defender=" + defender + ", moves=" + Arrays.toString(moves) + ", result=" + result + ", cells="
+				+ "this actually breaks it sorry" + "]";
 	}
 
 }// End Class

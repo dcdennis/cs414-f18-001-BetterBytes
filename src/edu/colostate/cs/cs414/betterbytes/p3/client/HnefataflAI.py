@@ -1,5 +1,5 @@
 import pprint as pp
-import random, sys
+import random, sys, pickle, os
 
 
 startingState =    [['__', '__', '__', 'bR', 'bR', 'bR', 'bR', 'bR', '__', '__', '__'],
@@ -16,6 +16,28 @@ startingState =    [['__', '__', '__', 'bR', 'bR', 'bR', 'bR', 'bR', '__', '__',
 
      
          
+
+def saveQ(Q):
+    dir = os.path.dirname(__file__)
+    with open(dir + '/savedQ.pkl','wb') as f:
+        pickle.dump(Q,f)
+
+def loadQ():
+    dir = os.path.dirname(__file__)
+    with open(dir + '/savedQ.pkl','rb') as f:
+        return pickle.load(f)
+ 
+def output(board):
+    dir = os.path.dirname(__file__)
+    f = open(dir + "/incomingGame.txt","w+")
+    res = []
+    for x in range(11):
+        for y in range(11):
+            res.append(str(x) + ":" + str(y) + ":" + board[x][y])
+    print(str(res))
+    f.write(str(res))
+    f.close()
+
 
 #DONE
 def pickMove(epsilon,validMoves,currentBoard,Q,color):
@@ -228,5 +250,6 @@ def trainQ(nRepitions,learningRate,eplsilonDecayFactor):
    
 
 if __name__ == '__main__':
-    Q = trainQ(10,.05,.01)
+    #Q = trainQ(10,.05,.01)
+    output(startingState)
     #pp.pprint(Q)

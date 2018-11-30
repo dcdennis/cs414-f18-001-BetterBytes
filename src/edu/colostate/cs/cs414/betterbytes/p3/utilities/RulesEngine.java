@@ -78,9 +78,9 @@ public class RulesEngine {
 				return GameResult.BLACK;
 		}
 		// CASE: Move pattern repetition
-		List<Move> moveHistory = new ArrayList<Move>((Arrays.asList(game.getMoves())));
+		ArrayList<Move> moveHistory = new ArrayList<Move>((Arrays.asList(game.getMoves())));
 		if (moveHistory.size() > 12) {
-			List<Move> movePattern = moveHistory.subList(moveHistory.size() - 3, moveHistory.size());
+			ArrayList<Move> movePattern = (ArrayList<Move>) moveHistory.subList(moveHistory.size() - 3, moveHistory.size());
 			if (moveHistory.subList(moveHistory.size() - 7, moveHistory.size() - 4).equals(movePattern)
 					&& moveHistory.subList(moveHistory.size() - 11, moveHistory.size() - 8).equals(movePattern))
 				return GameResult.DRAW;
@@ -120,7 +120,7 @@ public class RulesEngine {
 			} 
 		}
 		//TODO check it works
-		List<Move> moveHistory = (Arrays.asList(gameUpdate.getMoves()));		
+		ArrayList<Move> moveHistory = (ArrayList<Move>) (Arrays.asList(gameUpdate.getMoves()));		
 		moveHistory.add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY())); 
 		
 		//check above

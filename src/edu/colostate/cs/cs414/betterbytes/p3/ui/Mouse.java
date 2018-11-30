@@ -21,7 +21,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 		setLocation(new Point(e.getX(), e.getY()));
 
 	}
-
+ 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		setLocation(new Point(e.getX(), e.getY()));

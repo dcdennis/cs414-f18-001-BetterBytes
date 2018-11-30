@@ -35,6 +35,7 @@ public class GameFrame extends JFrame implements Serializable {
 	private Player turn = null;
 	private Game game = null;
 	private ClientConnection connection = null;
+	public int moveCount = 0;
 
 	public GameFrame(Game game, ClientConnection connection) {
 		this.connection = connection;
@@ -129,8 +130,9 @@ public class GameFrame extends JFrame implements Serializable {
 	}
 
 	public boolean movePiece(Piece p, Cell old, Cell nu) {
-		if (this.canMove(old, nu.getX(), nu.getY())) {
+		if (this.canMove(old, nu.getX(), nu.getY()) && moveCount == 0) {
 			this.getGrid().movePiece(p, old, nu);
+			moveCount++;
 			return true;
 		}
 		return false;
@@ -167,11 +169,7 @@ public class GameFrame extends JFrame implements Serializable {
 	}
 
 	public boolean isOurTurn() {
-		return isOurTurn;
-	}
-
-	public void setOurTurn(boolean isOurTurn) {
-		this.isOurTurn = isOurTurn;
+		return UI.user != null && turn != null && turn.getAccount().equals(UI.user);
 	}
 
 	public boolean isSecondCheck() {
@@ -198,10 +196,14 @@ public class GameFrame extends JFrame implements Serializable {
 	 * @param c Cell that contains the piece to move
 	 * @param x destination x
 	 * @param y destination y
-	 * @return whether the piece can move to destination
+	 * @return whether the piece can move to destination 
 	 */
 	public boolean canMove(Cell c, int x, int y) {
-		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))))
+		if(turn != null && turn.getColor() != null)
+		Tools.log("Our Color: "+turn.getColor());
+		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || !isOurTurn() 
+				|| ((turn.getColor().equals("white") && (c.hasPiece() && !c.getPiece().isWhite()))
+				|| (turn.getColor().equals("black") && (c.hasPiece() && c.getPiece().isWhite()))))
 			return false;
 		if (c.getPiece() != null) {
 			if (((x == c.getX() && y != c.getY()) || (y == c.getY() && x != c.getX()))
@@ -260,8 +262,14 @@ public class GameFrame extends JFrame implements Serializable {
 			}
 			this.getGrid().setBoard(cs);
 		}
-		this.turn = game.getTurn();
+		
+		moveCount = 0;
 		this.game = game;
+		this.turn = game.getTurn();
+		if(this.turn.getAccount().getUsername().equals("ctunnell"))
+			this.turn.color = "white";
+		else
+			this.turn.color = "black";
 	}
 
 	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {
@@ -302,7 +310,12 @@ public class GameFrame extends JFrame implements Serializable {
 			return false;
 		}
 		game.cells = gamecells.toArray(new edu.colostate.cs.cs414.betterbytes.p3.game.Cell[] {});
-		return ((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus();
+		if(((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus()) {
+			turn = null;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

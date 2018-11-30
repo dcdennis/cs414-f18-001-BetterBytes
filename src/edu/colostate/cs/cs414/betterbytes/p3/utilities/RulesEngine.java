@@ -120,7 +120,7 @@ public class RulesEngine {
 			} 
 		}
 		//TODO check it works
-		ArrayList<Move> moveHistory = (ArrayList<Move>) (Arrays.asList(gameUpdate.getMoves()));		
+		ArrayList<Move> moveHistory = new ArrayList<Move> (Arrays.asList(gameUpdate.getMoves()));		
 		moveHistory.add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY())); 
 		
 		//check above

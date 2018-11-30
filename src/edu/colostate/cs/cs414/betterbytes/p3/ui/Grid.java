@@ -27,7 +27,7 @@ public class Grid {
 	 */
 	public Grid(int baseX, int baseY, GameFrame game) {
 		this.game = game;
-		this.setBaseX(baseX);
+		this.setBaseX(baseX); 
 		this.setBaseY(baseY);
 		for (int x = 1; x <= 11; x++) {
 			for (int y = 1; y <= 11; y++) { 
@@ -65,6 +65,9 @@ public class Grid {
 			cells.get(i).setX(backup.get(i).getX());
 			cells.get(i).setY(backup.get(i).getY());
 			cells.get(i).setPiece(backup.get(i).getPiece());
+		}
+		if(game.moveCount > 0) {
+			game.moveCount = 0;
 		}
 	}
 

@@ -361,7 +361,16 @@ public class SQLDriver {
 		}
 		return results;
 	}
-//TODO TEST
+	
+	
+	public void updateGame(Player p1, Player p2 , Game g1) 
+	{
+		String query = "UPDATE game SET `state` = '" + new String(Serializer.serialize(g1)) + "' WHERE `player1` = '" + p1.getAccount().getUsername() +
+					   "' AND `player2` = '" + p2.getAccount().getUsername() + "';";		
+		//System.out.println("Query: " + query);
+		runQuery(query);
+	}
+
 	public List<Game> getGames(String username) {		
 		String query = "Select `state` from betterbytes.game WHERE `player1` like '" + username + "';";
 		List<String> resultStrings = getGamesQuery(query);		

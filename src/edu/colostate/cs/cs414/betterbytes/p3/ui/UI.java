@@ -59,7 +59,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private JButton SIGNUPBUTTON = new JButton("Create Account");
 
 	private ClientConnection connection;
-	private Account user;
+	public static Account user;
 	private List<Game> gameObjects = null;
 
 	public String title = "Tafl Control Panel    |    Profile: ";

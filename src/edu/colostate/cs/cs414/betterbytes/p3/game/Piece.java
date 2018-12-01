@@ -68,7 +68,7 @@ public class Piece implements Serializable{
 	
 
 	public Piece(String stringPiece) {
-		System.out.println(stringPiece);
+		//System.out.println(stringPiece);
 		this.isRook = stringPiece.charAt(1) == 'R';
 		if(stringPiece.charAt(0) == 'w')
 			this.color = "white";

@@ -40,10 +40,10 @@ public class Cell implements Serializable {
 	}
 
 	public Cell(String stringCell) {
-		System.out.println(stringCell);
+		//System.out.println(stringCell);
 		stringCell = stringCell.replace(" ", "");
 		stringCell = stringCell.substring(1,stringCell.length()-1);
-		System.out.println(stringCell);
+		//System.out.println(stringCell);
 		String[] cellData = stringCell.split(":");
 		//Coords
 		x = Integer.parseInt(cellData[0]);

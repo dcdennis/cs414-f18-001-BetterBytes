@@ -117,7 +117,7 @@ public class Game implements Serializable {
 		this.result = game.getResult();
 		
 		scriptOutput = scriptOutput.substring(1, scriptOutput.length()-1);
-		System.out.println(scriptOutput);
+		//System.out.println(scriptOutput);
 		String[] stringCells = scriptOutput.split(",");
 		int counter = 0;
 		for(String stringCell : stringCells)
@@ -276,7 +276,7 @@ public class Game implements Serializable {
 			dump += cell.dump() + ",";			
 		}		
 		dump = dump.substring(0,dump.length() - 1) + "]";
-				return dump;
+		return dump;
 	}
 
 }// End Class

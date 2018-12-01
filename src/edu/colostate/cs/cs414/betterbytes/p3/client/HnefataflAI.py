@@ -18,7 +18,7 @@ def useSavedQ():
     Q = loadQ()
     board,player = readFile(os.path.dirname(__file__) + "/incomingGame.txt")
     moves = validMoves(board,player)
-    nextMove = pickMove(0,moves,board,Q,player)
+    nextMove = pickMove(0.001,moves,board,Q,player)
     newBoard,_ = makeMove(board,nextMove)
     output(newBoard)
          
@@ -160,55 +160,64 @@ def validMoves(board,player):
                         if(board[x][ymove] == "__"):
                             if not(((x == 0 or x == 10) and (ymove == 0 or ymove == 10)) or (x==5 and ymove == 5)):
                                 res.append(((x,y),(x,ymove)))
+                            else:
+                                continue
                         else:
-                            continue
+                            break
                     #down
                     for ymove in reversed(range(0,y)):
                         if(board[x][ymove] == "__"):
                             if not(((x == 0 or x == 10) and (ymove == 0 or ymove == 10)) or (x==5 and ymove == 5)):
                                 res.append(((x,y),(x,ymove)))
+                            else:
+                                continue
                         else:
-                            continue
+                            break
                     #right
                     for xmove in range(x,11):
                         if(board[xmove][y] == "__"):
                             if not(((xmove == 0 or xmove == 10) and (y == 0 or y == 10)) or (xmove==5 and y == 5)):
                                 res.append(((x,y),(xmove,y)))
+                            else:
+                                continue
                         else:
-                            continue
+                            break
                     #left
                     for xmove in reversed(range(0,x)):
                         if(board[xmove][y] == "__"):
                             if not(((xmove == 0 or xmove == 10) and (y == 0 or y == 10)) or (xmove ==5 and y == 5)):
                                 res.append(((x,y),(xmove,y)))
+                            else:
+                                continue
                         else:
-                            continue
+                            break
                 #if it is a king
                 if(piece[1] == "K"):
                     #up
                     for ymove in range(y,11):
                         if(board[x][ymove] == "__"):
                             res.append(((x,y),(x,ymove)))
+                            
                         else:
-                            continue
+                            break
                     #down
                     for ymove in reversed(range(0,y)):
                         if(board[x][ymove] == "__"):
                             res.append(((x,y),(x,ymove)))
                         else:
-                            continue
+                            break
                     #right
                     for xmove in range(x,11):
                         if(board[xmove][y] == "__"):
                             res.append(((x,y),(xmove,y)))
                         else:
-                            continue
+                            break
                     #left
                     for xmove in reversed(range(0,x)):
                         if(board[xmove][y] == "__"):
                             res.append(((x,y),(xmove,y)))
                         else:
-                            continue
+                            break
     return res
 
 #DONE
@@ -260,6 +269,7 @@ def trainQ(nRepitions,learningRate,eplsilonDecayFactor,Q = {}):
 
 if __name__ == '__main__':
     #saveQ(trainQ(1000,.05,.01))
-    #saveQ(trainQ(1000,.05,.01,loadQ()))
+    #saveQ(trainQ(300,.05,.01,loadQ()))
     useSavedQ()
     #output(startingState)
+    #print("complete")

@@ -146,8 +146,8 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Account updateRecipient = sql.getAccount(recipient);
 						updateRecipient.getInvites().remove(acceptedInvite);
 
-						Player attacker = new Player(sql.getAccount(sender));
-						Player defender = new Player(updateRecipient);
+						Player attacker = new Player(sql.getAccount(sender),"white");
+						Player defender = new Player(updateRecipient,"black");
 
 						Game g1 = new Game(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString(), attacker, defender);
 						sql.addGame(sender, recipient, g1);

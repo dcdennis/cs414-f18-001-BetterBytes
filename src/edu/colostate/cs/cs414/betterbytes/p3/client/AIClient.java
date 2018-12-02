@@ -60,15 +60,15 @@ public class AIClient {
 				List<Invitation> invites = aiAccount.getInvites();
 				if (invites != null)
 					for (Invitation invite : invites) {
-						connection.send(new RespondToInvitation(invite));
+						connection.send(new RespondToInvitation(invite,true));
 						Thread.sleep(100);
 					}
-
+				
 				// Act on all games
 				if (games != null) {
 					for (Game game : games) {
 						if (game.getResult() == GameResult.CONTINUE
-								&& game.getTurn().getAccount().getUsername().equals("AIUSER"));
+								&& game.getTurn().getAccount().getUsername().equals("AIUSER"))
 						{
 							// Build the input strings for the python script
 							String board = game.dump();

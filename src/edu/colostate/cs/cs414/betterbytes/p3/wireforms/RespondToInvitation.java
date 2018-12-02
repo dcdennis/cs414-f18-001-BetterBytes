@@ -10,8 +10,10 @@ public class RespondToInvitation implements Message, Protocol, Serializable {
 	private final String type = Protocol.RESPOND_TO_INVITATION;
 
 	private Invitation invite;
+	private boolean accept = false;
 
-	public RespondToInvitation(Invitation invite) {
+	public RespondToInvitation(Invitation invite, boolean accept) {
+		this.accept = accept;
 		this.invite = invite;
 	}
 
@@ -52,6 +54,10 @@ public class RespondToInvitation implements Message, Protocol, Serializable {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+
+	public boolean isAccept() {
+		return accept;
 	}
 
 }

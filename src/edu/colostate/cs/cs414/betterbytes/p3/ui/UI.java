@@ -20,6 +20,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequestResponse;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RespondToInvitation;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogon;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserLogonResponse;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.UserRegistration;
@@ -363,7 +364,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	}
 
 	public void declineGame() {
-
+		if(this.INVITESLIST.getSelectedValue() != null && user != null) {
+			int ind = INVITESLIST.getSelectedIndex();
+			ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind),false));
+		}
 	}
 
 	public void gameManual() {

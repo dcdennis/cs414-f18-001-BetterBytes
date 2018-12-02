@@ -22,6 +22,11 @@ public class Tools {
 		try {
 			File pathToFile = new File(iFile);
 			if (!pathToFile.exists()) {
+				String absPath = System.getProperty("user.dir") + "/src/";
+				pathToFile = new File(absPath+iFile);
+				if(pathToFile.exists()) {
+					return ImageIO.read(pathToFile);
+				}
 				Tools.log("File doesn't Exist: " + pathToFile.getAbsolutePath());
 				return null;
 			}
@@ -30,6 +35,7 @@ public class Tools {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		
 		return null;
 	}
 

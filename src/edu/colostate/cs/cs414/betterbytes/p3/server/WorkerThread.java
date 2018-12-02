@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,19 +149,22 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Player attacker = new Player(sql.getAccount(sender));
 						Player defender = new Player(updateRecipient);
 
-						Game g1 = new Game("0.0", attacker, defender);
+						Game g1 = new Game(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString(), attacker, defender);
 						sql.addGame(sender, recipient, g1);
 
 						send(new RespondToInvitationResponse(true, "Game Added to Account"), buffer, channel, debug);
 						break;
-					}
+					}    
 					case (SUBMIT_MOVE): {
 						SubmitMove moveMessage = (SubmitMove) message;
 						Game gameUpdate = moveMessage.getGameUpdate();
 						Game oldGame = sql.getGame(gameUpdate.getAttacker(), gameUpdate.getDefender());
 						
 						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
-						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
+						GameResult status = rules.gameHasEnded(gameUpdate);
+						gameUpdate.setResult(status);
+						if(status != GameResult.CONTINUE)
+							gameUpdate.setEndTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString());
 						gameUpdate.changeTurns();
 						sql.updateGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 						send(new SubmitMoveResponse(true, "Move Submitted"), buffer, channel, debug);

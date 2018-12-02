@@ -146,77 +146,164 @@ def createBoard(stateString):
 
 #DONE
 def validMoves(board,player):
-    #res is a list of tuples, ((startx,starty),(endx,endy))
+    #Due to the absolutely insane number of prints, dont turn this on unless you are doing single runs
+    debug = False
+    #res is a list of tuples, ((startx,starty),(endx,endy)) 
     res = []
+    if debug:
+        print("AI is playing: " + player)
     for x in range(11):
         for y in range(11):
+            if debug:
+                print("Checking for friendly piece at (" + str(x) + ", " + str(y) + ")")
             piece = board[x][y]
+            if debug:
+                print("Piece raw is: " + piece)
             #if it is the AIs piece
             if(piece[0] == player[0]):
                 #if it is a rook
                 if(piece[1] == "R"):
+                    if debug:
+                        print("\tPiece is a rook")
                     #up
-                    for ymove in range(y,11):
+                    for ymove in range(y+1,11):
+                        if debug:
+                            print("\t\tChecking if " + str(x) + ", " + str(ymove) + " is occupied")
+                            print("\t\tContains: " + board[x][ymove])
                         if(board[x][ymove] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             if not(((x == 0 or x == 10) and (ymove == 0 or ymove == 10)) or (x==5 and ymove == 5)):
+                                if debug:
+                                    print("\t\t\tLocation is not forbiden")
                                 res.append(((x,y),(x,ymove)))
                             else:
+                                if debug:
+                                    print("\t\t\tLocation is forbiden")
                                 continue
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                     #down
                     for ymove in reversed(range(0,y)):
+                        if debug:
+                            print("\t\tChecking if " + str(x) + ", " + str(ymove) + " is occupied")
+                            print("\t\tContains: " + board[x][ymove])
                         if(board[x][ymove] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             if not(((x == 0 or x == 10) and (ymove == 0 or ymove == 10)) or (x==5 and ymove == 5)):
+                                
+                                if debug:
+                                    print("\t\t\tLocation is not forbiden")
                                 res.append(((x,y),(x,ymove)))
                             else:
+                                if debug:
+                                    print("\t\t\tLocation is forbiden")
                                 continue
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                     #right
-                    for xmove in range(x,11):
+                    for xmove in range(x+1,11):
+                        if debug:
+                            print("\t\tChecking if " + str(xmove) + ", " + str(y) + " is occupied")
+                            print("\t\tContains: " + board[xmove][y])
                         if(board[xmove][y] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             if not(((xmove == 0 or xmove == 10) and (y == 0 or y == 10)) or (xmove==5 and y == 5)):
+                                if debug:
+                                    print("\t\t\tLocation is not forbiden")
                                 res.append(((x,y),(xmove,y)))
                             else:
+                                if debug:
+                                    print("\t\t\tLocation is forbiden")
                                 continue
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                     #left
                     for xmove in reversed(range(0,x)):
+                        if debug:
+                            print("\t\tChecking if " + str(xmove) + ", " + str(y) + " is occupied")
+                            print("\t\tContains: " + board[xmove][y])
                         if(board[xmove][y] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             if not(((xmove == 0 or xmove == 10) and (y == 0 or y == 10)) or (xmove ==5 and y == 5)):
+                                if debug:
+                                    print("\t\t\tLocation is not forbiden")
                                 res.append(((x,y),(xmove,y)))
                             else:
+                                if debug:
+                                    print("\t\t\tLocation is forbiden")
                                 continue
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                 #if it is a king
                 if(piece[1] == "K"):
+                    if debug:
+                        print("\tPiece is a king")
                     #up
-                    for ymove in range(y,11):
+                    for ymove in range(y+1,11):
+                        if debug:
+                            print("\t\tChecking if " + str(x) + ", " + str(ymove) + " is occupied")
+                        if debug:
+                            print("\t\tContains: " + board[x][ymove])
                         if(board[x][ymove] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             res.append(((x,y),(x,ymove)))
                             
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                     #down
                     for ymove in reversed(range(0,y)):
+                        if debug:
+                            print("\t\tChecking if " + str(x) + ", " + str(ymove) + " is occupied")
+                        if debug:
+                            print("\t\tContains: " + board[x][ymove])
                         if(board[x][ymove] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             res.append(((x,y),(x,ymove)))
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                     #right
-                    for xmove in range(x,11):
+                    for xmove in range(x+1,11):
+                        if debug:
+                            print("\t\tChecking if " + str(xmove) + ", " + str(y) + " is occupied")
+                            print("\t\tContains: " + board[xmove][y])
                         if(board[xmove][y] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             res.append(((x,y),(xmove,y)))
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
                     #left
                     for xmove in reversed(range(0,x)):
+                        if debug:
+                            print("\t\tChecking if " + str(xmove) + ", " + str(y) + " is occupied")
+                            print("\t\tContains: " + board[xmove][y])
                         if(board[xmove][y] == "__"):
+                            if debug:
+                                print("\t\tLocation is empty")
                             res.append(((x,y),(xmove,y)))
                         else:
+                            if debug:
+                                print("\t\tLocation is occupied")
                             break
     return res
 

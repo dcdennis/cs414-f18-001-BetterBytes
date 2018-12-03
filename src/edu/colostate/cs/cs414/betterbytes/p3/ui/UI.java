@@ -416,6 +416,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			break;
 		}
 	}
+	
 
 	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {

@@ -196,15 +196,15 @@ public class GameFrame extends JFrame implements Serializable {
 	 * @param c Cell that contains the piece to move
 	 * @param x destination x
 	 * @param y destination y
-	 * @return whether the piece can move to destination 
+	 * @return whether the piece can move to destination
 	 */
 	public boolean canMove(Cell c, int x, int y) {
-		if(turn != null && turn.getColor() != null)
-		//ools.log("Our Color: "+turn.getColor());
-		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || !isOurTurn() 
-				|| ((turn.getColor().equals("white") && (c.hasPiece() && !c.getPiece().isWhite()))
-				|| (turn.getColor().equals("black") && (c.hasPiece() && c.getPiece().isWhite()))))
-			return false;
+		if (turn != null && turn.getColor() != null)
+			// ools.log("Our Color: "+turn.getColor());
+			if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || !isOurTurn()
+					|| ((turn.getColor().equals("white") && (c.hasPiece() && !c.getPiece().isWhite()))
+							|| (turn.getColor().equals("black") && (c.hasPiece() && c.getPiece().isWhite()))))
+				return false;
 		if (c.getPiece() != null) {
 			if (((x == c.getX() && y != c.getY()) || (y == c.getY() && x != c.getX()))
 					&& !this.getCell(x, y).hasPiece()) {
@@ -237,6 +237,13 @@ public class GameFrame extends JFrame implements Serializable {
 						}
 					}
 				}
+				if (c.getPiece().equals(PieceType.ROOK)) {
+					if(c.getIcon() != null) {
+						return false;
+					} else if(x == 6 && y == 6) {
+						return false;
+					}
+				}
 				return true;
 			} else {
 				return false;
@@ -262,11 +269,11 @@ public class GameFrame extends JFrame implements Serializable {
 			}
 			this.getGrid().setBoard(cs);
 		}
-		
+
 		moveCount = 0;
 		this.game = game;
 		this.turn = game.getTurn();
-		if(this.turn.getAccount().getUsername().equals("ctunnell"))
+		if (this.turn.getAccount().getUsername().equals("ctunnell"))
 			this.turn.color = "white";
 		else
 			this.turn.color = "black";
@@ -295,14 +302,14 @@ public class GameFrame extends JFrame implements Serializable {
 						c.getPiece().getType().equals(PieceType.ROOK), c.getPiece().isWhite() ? "white" : "black");
 				nu.setPiece(nup);
 			}
-			
-			if((nu.getX() == 0 || nu.getX()==10) && (nu.getY() == 0 || nu.getY() == 10))
-				nu.setType("C");			
-			else if(nu.getX() == 5 && nu.getY() == 5)
+
+			if ((nu.getX() == 0 || nu.getX() == 10) && (nu.getY() == 0 || nu.getY() == 10))
+				nu.setType("C");
+			else if (nu.getX() == 5 && nu.getY() == 5)
 				nu.setType("T");
 			else
 				nu.setType("S");
-			
+
 			gamecells.add(nu);
 		}
 		if (game == null) {
@@ -310,7 +317,7 @@ public class GameFrame extends JFrame implements Serializable {
 			return false;
 		}
 		game.cells = gamecells.toArray(new edu.colostate.cs.cs414.betterbytes.p3.game.Cell[] {});
-		if(((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus()) {
+		if (((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus()) {
 			turn = null;
 			return true;
 		} else {

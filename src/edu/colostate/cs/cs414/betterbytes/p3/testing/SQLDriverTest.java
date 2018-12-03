@@ -2,6 +2,8 @@ package edu.colostate.cs.cs414.betterbytes.p3.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Base64;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +64,7 @@ class SQLDriverTest {
 		sql.setAccount(testAcc.getUsername(), testAcc.getPassword(), testAcc);
 		String[] results = sql.loginQuery(testAcc.getUsername(), testAcc.getPassword());
 
-		Account received = Serializer.deserializeAccount(results[2].getBytes());
+		Account received = Serializer.deserializeAccount(Base64.getDecoder().decode(results[2]));
 		assertTrue(testAcc.equals(received));
 	}
 

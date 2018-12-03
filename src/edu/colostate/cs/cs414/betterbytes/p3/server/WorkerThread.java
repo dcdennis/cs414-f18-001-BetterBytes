@@ -176,7 +176,29 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						GameResult status = rules.gameHasEnded(gameUpdate);
 						gameUpdate.setResult(status);
 						if (status != GameResult.CONTINUE)
+						{
 							gameUpdate.setEndTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString());
+							Account defender = gameUpdate.getDefender().getAccount();
+							Account attacker = gameUpdate.getAttacker().getAccount();
+							if(status == GameResult.WHITE)
+							{
+								attacker.getStats().addLoss();
+								defender.getStats().addWin();
+							}
+							else if ( status == GameResult.BLACK)
+							{
+								attacker.getStats().addWin();
+								defender.getStats().addLoss();
+							}
+							else
+							{
+								attacker.getStats().addLoss();
+								defender.getStats().addLoss();
+							}
+							sql.setAccount(defender);
+							sql.setAccount(attacker);
+						
+						}
 						gameUpdate.changeTurns();
 						sql.updateGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 						send(new SubmitMoveResponse(true, "Move Submitted"), buffer, channel, debug);

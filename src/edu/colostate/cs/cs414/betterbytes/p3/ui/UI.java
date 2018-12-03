@@ -121,6 +121,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		PROFILESTATSBUTTON.addActionListener(this);
 		SENDINVITEBUTTON.addActionListener(this);
 
+		REFRESHBUTTON.setEnabled(false);
+		PROFILESTATSBUTTON.setEnabled(false);
+
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Login"));
@@ -286,10 +289,27 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		// </editor-fold>
 
 		/* Create and display the form */
-		/*
-		 * java.awt.EventQueue.invokeLater(new Runnable() { public void run() { new
-		 * UI().setVisible(true); } });
-		 */
+
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new UI(null).setVisible(true);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
 	}
 
 	public void refreshData() {
@@ -348,6 +368,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		Message response = connection.send(new UserLogon(USERNAME.getText(), PASSWORD.getText()));
 		user = ((UserLogonResponse) response).getAcc();
 		if (user != null) {
+			REFRESHBUTTON.setEnabled(true);
+			PROFILESTATSBUTTON.setEnabled(true);
 			this.setTitle(title + user.getUsername());
 			this.refreshData();
 		} else {

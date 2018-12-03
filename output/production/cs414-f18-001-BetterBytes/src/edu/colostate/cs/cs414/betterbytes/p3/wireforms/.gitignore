@@ -1,0 +1,14 @@
+/Message.class
+/Protocol.class
+/UserLogon.class
+/UserLogonResponse.class
+/UserRegistration.class
+/UserRegistrationResponse.class
+/RecordsRequest.class
+/RecordsRequestResponse.class
+/CreateInvitation.class
+/CreateInvitationResponse.class
+/RespondToInvitation.class
+/RespondToInvitationResponse.class
+/SubmitMove.class
+/SubmitMoveResponse.class

@@ -8,6 +8,8 @@ import edu.colostate.cs.cs414.betterbytes.p3.game.Cell;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Move;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
 
 public class RulesEngine {
 	private static RulesEngine instance = new RulesEngine();
@@ -102,7 +104,8 @@ public class RulesEngine {
 		return nonKingFound;
 	}
 
-	public Game processCaptures(Game oldGame, Game gameUpdate) {
+	public Game processCaptures(Game oldGame, Game newGame) {
+		Game gameUpdate = newGame;
 		Cell newLoc = null;
 		Cell oldLoc = null;
 		for(int x = 0; x < 11; x++)
@@ -117,8 +120,10 @@ public class RulesEngine {
 				{
 					oldLoc = gameUpdate.getCell(x, y);
 				}
-			} 
+			}
 		}
+		System.out.println(oldLoc.getX() + " " + oldLoc.getY());
+		System.out.println(newLoc.getX() + " " + newLoc.getY());
 		//TODO check it works
 		ArrayList<Move> moveHistory = new ArrayList<Move> (Arrays.asList(gameUpdate.getMoves()));		
 		moveHistory.add(new Move(oldLoc.getX(),oldLoc.getY(),newLoc.getX(),newLoc.getY())); 
@@ -127,9 +132,13 @@ public class RulesEngine {
 		if(newLoc.getY() <= 8)
 		{
 			Cell captureLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1);
-			Cell checkLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()+2);		
+			Cell checkLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()+2);
 			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).setPiece(null);
+				//captureLoc.setPiece(null);
+				{
+					System.out.println("Test1");
+					gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+				}
 		}
 		//check below
 		if(newLoc.getY() >= 2)
@@ -137,7 +146,11 @@ public class RulesEngine {
 			Cell captureLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()-1);
 			Cell checkLoc = gameUpdate.getCell(newLoc.getX(), newLoc.getY()-2);
 			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-				captureLoc.setPiece(null);
+				//captureLoc.setPiece(null);
+			{
+				System.out.println("Test2");
+				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+			}
 		}
 		//check left
 		if(newLoc.getX() <= 8)
@@ -145,15 +158,25 @@ public class RulesEngine {
 			Cell captureLoc = gameUpdate.getCell(newLoc.getX()+1, newLoc.getY());
 			Cell checkLoc = gameUpdate.getCell(newLoc.getX()+2, newLoc.getY());
 			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-				captureLoc.setPiece(null);
+				//captureLoc.setPiece(null);
+			{
+				System.out.println("Test3");
+				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+			}
 		}
 		//check right
 		if(newLoc.getX() >= 2)
 		{
 			Cell captureLoc = gameUpdate.getCell(newLoc.getX()-1, newLoc.getY());
 			Cell checkLoc = gameUpdate.getCell(newLoc.getX()-2, newLoc.getY());
+
+
 			if(checkLoc.hasPiece() && checkLoc.getPiece().isWhite() == newLoc.getPiece().isWhite() && captureLoc.hasPiece() && captureLoc.getPiece().isWhite() != newLoc.getPiece().isWhite())
-				captureLoc.setPiece(null);
+				//captureLoc.setPiece(null);
+			{
+				System.out.println("Test4");
+				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+			}
 		}
 					
 		return gameUpdate;

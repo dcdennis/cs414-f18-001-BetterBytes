@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +117,10 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						System.out.println("ACC: " + update.getUsername());
 						List<Game> games = sql.getGames(update);
 
+						for (Game g : games) {
+							System.out.println(g.toString());
+						}
+
 						send(new RecordsRequestResponse(games, update), buffer, channel, debug);
 						break;
 					}
@@ -140,22 +145,32 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Account updateRecipient = sql.getAccount(recipient);
 						updateRecipient.getInvites().remove(acceptedInvite);
 
-						Player attacker = new Player(sql.getAccount(sender));
-						Player defender = new Player(updateRecipient);
+						if (respondMessage.isAccept()) {
+							Player attacker = new Player(sql.getAccount(sender), "white");
+							Player defender = new Player(updateRecipient, "black");
 
-						Game g1 = new Game("0.0", attacker, defender);
-						sql.addGame(sender, recipient, g1);
+							Game g1 = new Game(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString(), attacker,
+									defender);
+							sql.addGame(sender, recipient, g1);
 
-						send(new RespondToInvitationResponse(true, "Game Added to Account"), buffer, channel, debug);
+							send(new RespondToInvitationResponse(true, "Game Added to Account"), buffer, channel,
+									debug);
+						} else {
+							send(new RespondToInvitationResponse(true, "Invited Rejected"), buffer, channel,
+									debug);
+						}
 						break;
 					}
 					case (SUBMIT_MOVE): {
 						SubmitMove moveMessage = (SubmitMove) message;
 						Game gameUpdate = moveMessage.getGameUpdate();
 						Game oldGame = sql.getGame(gameUpdate.getAttacker(), gameUpdate.getDefender());
-						
+
 						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
-						gameUpdate.setResult(rules.gameHasEnded(gameUpdate));
+						GameResult status = rules.gameHasEnded(gameUpdate);
+						gameUpdate.setResult(status);
+						if (status != GameResult.CONTINUE)
+							gameUpdate.setEndTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString());
 						gameUpdate.changeTurns();
 						sql.updateGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
 						send(new SubmitMoveResponse(true, "Move Submitted"), buffer, channel, debug);

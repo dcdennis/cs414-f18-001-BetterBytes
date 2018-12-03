@@ -96,7 +96,7 @@ public class ClientConnection extends Thread {
 		SocketChannel channel = (SocketChannel) key.channel();
 		try {
 			// Create new buffer and read hash into it.
-			ByteBuffer buffer = ByteBuffer.allocate(8000);
+			ByteBuffer buffer = ByteBuffer.allocate(8000000);
 
 			if (buffer.hasRemaining())
 				channel.read(buffer);
@@ -141,7 +141,7 @@ public class ClientConnection extends Thread {
 				if (serverKey.isReadable()) {
 					byte[] responseBytes = read(serverKey);
 					response = Serializer.deserializeMessage(responseBytes);
-					System.out.println("Recieved response: " + response.toString());
+					System.out.println("Recieved response: ");// + response.toString());
 				}
 			}
 		}

@@ -39,7 +39,7 @@ public class Game implements Serializable {
 	}
 
 	public Game(String startTime, Player attacker, Player defender) {
-		this.turn = attacker;
+		this.turn = defender;
 		this.attacker = attacker; 
 		this.defender = defender;
 		this.startTime = startTime;

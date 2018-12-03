@@ -76,6 +76,7 @@ public class Account implements Serializable {
 	private Stats stats;
 
 	public Account() {
+			
 	}
 
 	// CONSTRUCTOR
@@ -84,12 +85,14 @@ public class Account implements Serializable {
 		this.email = email;
 		this.password = password;
 		this.invites = new ArrayList<Invitation>();
+		this.players = new ArrayList<Player>();
 	}
 
 	public Account(String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.invites = new ArrayList<Invitation>();
+		this.players = new ArrayList<Player>();
 	}
 
 	// MUTATORS

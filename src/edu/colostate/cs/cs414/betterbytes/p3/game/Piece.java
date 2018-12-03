@@ -111,7 +111,7 @@ public class Piece implements Serializable{
 	}
 
 	public boolean isWhite() {
-		return this.getType().equals("white");
+		return this.getColor().equals("white");
 	}
 
 }

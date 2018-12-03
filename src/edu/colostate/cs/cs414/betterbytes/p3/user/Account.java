@@ -83,11 +83,13 @@ public class Account implements Serializable {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.invites = new ArrayList<Invitation>();
 	}
 
 	public Account(String username, String password) {
 		this.username = username;
 		this.password = password;
+		this.invites = new ArrayList<Invitation>();
 	}
 
 	// MUTATORS

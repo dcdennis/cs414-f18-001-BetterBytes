@@ -2,7 +2,6 @@ package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
+import edu.colostate.cs.cs414.betterbytes.p3.user.Invitation;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
+import edu.colostate.cs.cs414.betterbytes.p3.wireforms.CreateInvitation;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Protocol;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.RecordsRequest;
@@ -54,7 +55,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private DefaultListModel<String> gamesListModel = new DefaultListModel<String>();
-	private DefaultListModel<?> invitesListModel = new DefaultListModel<Object>();
+	private DefaultListModel<String> invitesListModel = new DefaultListModel<String>();
 	private ArrayList<String> loadedGames = new ArrayList<String>();
 	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
 	private JButton SIGNUPBUTTON = new JButton("Create Account");
@@ -310,6 +311,15 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 					this.gamesListModel.addElement(currGame);
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}
+				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {
+					for (Invitation i : rr.getAccount().getInvites()) {
+						if (i != null) {
+							String s = "Invite from: " + i.getSender();
+							this.invitesListModel.addElement(s);
+						}
+					}
+					this.INVITESLIST.setModel(invitesListModel);
+				}
 			}
 		}
 //		for (File f : new File("edu/colostate/cs/cs414/betterbytes/p3/data/games").listFiles()) {
@@ -345,13 +355,12 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		}
 		System.out.println(user.getUsername());
 //		System.out.println(user.getPassword());
-		
 
 	}
 
 	public void resumeGame() {
 		if (this.CURRENTGAMESLIST.getSelectedValue() != null && gameObjects != null) {
-			new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()),this.connection);
+			new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()), this.connection);
 		}
 	}
 
@@ -360,13 +369,16 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	}
 
 	public void acceptGame() {
-
+		if (this.INVITESLIST.getSelectedValue() != null && user != null) {
+			int ind = INVITESLIST.getSelectedIndex();
+			ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), true));
+		}
 	}
 
 	public void declineGame() {
-		if(this.INVITESLIST.getSelectedValue() != null && user != null) {
+		if (this.INVITESLIST.getSelectedValue() != null && user != null) {
 			int ind = INVITESLIST.getSelectedIndex();
-			ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind),false));
+			ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), false));
 		}
 	}
 
@@ -383,8 +395,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		return "Profile stats!";
 	}
 
-	public void sendInviteTo(String email) {
-
+	public void sendInviteTo(String username) {
+		if (user != null)
+			ClientConnection.getInstance().send(new CreateInvitation(user.getUsername(), username));
 	}
 
 	@Override
@@ -416,7 +429,6 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			break;
 		}
 	}
-	
 
 	public void start() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {

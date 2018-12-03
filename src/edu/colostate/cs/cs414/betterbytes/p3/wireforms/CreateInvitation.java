@@ -7,7 +7,7 @@ public class CreateInvitation implements Message, Protocol, Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7358388651791225247L;
+	private static final long serialVersionUID = 1L;
 	private final String type = Protocol.CREATE_INVITATION;
 
 	private String inviter;

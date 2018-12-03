@@ -278,6 +278,7 @@ public class GameFrame extends JFrame implements Serializable {
 			this.turn.color = "white";
 		else
 			this.turn.color = "black";
+		this.setTitle("Turn: "+this.turn);
 	}
 
 	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {

@@ -237,8 +237,7 @@ public class GameFrame extends JFrame implements Serializable {
 						}
 					}
 				}
-				Tools.log(c.getPiece().getType().equals(PieceType.ROOK));
-				Tools.log(c.getPiece().getType().equals(PieceType.KING));
+				
 				if (c.getPiece().getType().equals(PieceType.ROOK)) {
 					if(this.getCell(x, y).getIcon() != null) {
 						return false;

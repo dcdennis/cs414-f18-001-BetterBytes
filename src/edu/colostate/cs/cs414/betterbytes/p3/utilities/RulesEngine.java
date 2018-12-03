@@ -55,20 +55,22 @@ public class RulesEngine {
 
 //		if (kingLoc.getX() == 0) {
 //			System.out.println("2"); 
-//			if (game.getCell(1, kingLoc.getY()).hasPiece() && !game.getCell(1, kingLoc.getY()).getPiece().isWhite()
-//					&& game.getCell(0, kingLoc.getY() + 1).hasPiece()
+//			if (game.getCell(1, kingLoc.getY()).hasPiece() 
 //					&& !game.getCell(1, kingLoc.getY()).getPiece().isWhite()
+//					&& game.getCell(0, kingLoc.getY() + 1).hasPiece()
+//					&& !game.getCell(0, kingLoc.getY() + 1).getPiece().isWhite()
 //					&& game.getCell(0, kingLoc.getY() - 1).hasPiece()
-//					&& !game.getCell(1, kingLoc.getY()).getPiece().isWhite() && this.kingAlone(game))
+//					&& !game.getCell(0, kingLoc.getY() - 1 ).getPiece().isWhite() && this.kingAlone(game))
 //				return GameResult.BLACK;
 //		}
 //		if (kingLoc.getX() == 10) {
 //			System.out.println("3"); 
-//			if (game.getCell(9, kingLoc.getY()).hasPiece() && !game.getCell(1, kingLoc.getY()).getPiece().isWhite()
+//			if (game.getCell(9, kingLoc.getY()).hasPiece() 
+//					&& !game.getCell(9, kingLoc.getY()).getPiece().isWhite()
 //					&& game.getCell(10, kingLoc.getY() + 1).hasPiece()
-//					&& !game.getCell(1, kingLoc.getY()).getPiece().isWhite()
+//					&& !game.getCell(10, kingLoc.getY() + 1).getPiece().isWhite()
 //					&& game.getCell(10, kingLoc.getY() - 1).hasPiece()
-//					&& !game.getCell(1, kingLoc.getY()).getPiece().isWhite() && this.kingAlone(game))
+//					&& !game.getCell(10, kingLoc.getY() - 1).getPiece().isWhite() && this.kingAlone(game))
 //				return GameResult.BLACK;
 //		}
 //		if (kingLoc.getY() == 0) {

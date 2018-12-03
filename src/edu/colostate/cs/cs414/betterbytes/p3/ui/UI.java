@@ -453,8 +453,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			this.profileStats();
 			break;
 		case "Invite a friend...":
-			String email = JOptionPane.showInputDialog(this, "Enter email: ", "Invitation",
-					JOptionPane.WARNING_MESSAGE);
+			String email = JOptionPane.showInputDialog(this, "Enter username: ", "Invitation",
+					JOptionPane.QUESTION_MESSAGE);
 			this.sendInviteTo(email);
 			break;
 		case "Decline":

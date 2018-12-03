@@ -1,7 +1,6 @@
 package edu.colostate.cs.cs414.betterbytes.p3.ui;
 
 import java.awt.Color;
-
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
  * referenced in the Mouse class
  * 
  */
-public class PaintButton implements Serializable{
+public class PaintButton implements Serializable {
 
 	/**
 	 * 
@@ -25,12 +24,12 @@ public class PaintButton implements Serializable{
 	private int width = 70;
 	private int height = 35;
 	private boolean mo = false;
-	private GameFrame game = null; 
+	private GameFrame game = null;
 
 	/**
 	 * Constructor for button
 	 * 
-	 * @param String text that will be displayed. 
+	 * @param String text that will be displayed.
 	 * @param        int x coordinate
 	 * @param        int y coordinate
 	 * @param Game   class reference needed for executing actions
@@ -109,25 +108,27 @@ public class PaintButton implements Serializable{
 	 * action listener
 	 */
 	public void clicked() {
-		switch (this.getText()) {
-		case "Send Move":
-			if (game.isSecondCheck()) {
-				Tools.log("Sending Move");
-				game.setSecondCheck(false);
-				if (game.sendMoveToServer()) {
-					game.setStatus("Move Sent!");
+		if (!game.gameover()) {
+			switch (this.getText()) {
+			case "Send Move":
+				if (game.isSecondCheck()) {
+					Tools.log("Sending Move");
+					game.setSecondCheck(false);
+					if (game.sendMoveToServer()) {
+						game.setStatus("Move Sent!");
+					} else {
+						game.setStatus("Connection failed, Try again!");
+					}
 				} else {
-					game.setStatus("Connection failed, Try again!");
+					game.setStatus("Are you sure?");
+					game.setSecondCheck(true);
 				}
-			} else {
-				game.setStatus("Are you sure?");
-				game.setSecondCheck(true);
+				break;
+			case "Revert":
+				Tools.log("Reverting last move");
+				game.getGrid().revertLastMove();
+				break;
 			}
-			break;
-		case "Revert":
-			Tools.log("Reverting last move");
-			game.getGrid().revertLastMove();
-			break;
 		}
 	}
 

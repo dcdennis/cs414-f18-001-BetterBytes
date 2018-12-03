@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import edu.colostate.cs.cs414.betterbytes.p3.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p3.game.Game;
+import edu.colostate.cs.cs414.betterbytes.p3.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p3.user.Player;
 import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.SubmitMove;
@@ -35,6 +36,7 @@ public class GameFrame extends JFrame implements Serializable {
 	private Player turn = null;
 	private Game game = null;
 	public int moveCount = 0;
+	private boolean gameover = false;
 
 	public GameFrame(Game game) {
 		this.game = game;
@@ -193,7 +195,7 @@ public class GameFrame extends JFrame implements Serializable {
 	 * @return whether the piece can move to destination
 	 */
 	public boolean canMove(Cell c, int x, int y) {
-		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || turn == null) {
+		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || turn == null || this.gameover) {
 			return false;
 		}
 		if(c.hasPiece() && c.getPiece().isWhite()) {
@@ -280,6 +282,19 @@ public class GameFrame extends JFrame implements Serializable {
 //		else
 //			this.turn.color = "black";		
 		this.setTitle("Turn: "+this.turn.color + "    for account: " + turn.getAccount().getUsername());
+		
+		if(this.game.getResult().equals(GameResult.BLACK)) {
+			this.gameover = true;
+		} else if(this.game.getResult().equals(GameResult.WHITE)) {
+			this.gameover = true;
+		} else if(this.game.getResult().equals(GameResult.DRAW)) {
+			this.gameover = true;
+		}
+		
+		if(this.gameover) {
+			this.setTitle("GAME OVER!!!!!! WINNER: "+(this.game.getResult().equals(GameResult.WHITE) ? "white" : "black"));
+		}
+		
 	}
 
 	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {
@@ -328,4 +343,8 @@ public class GameFrame extends JFrame implements Serializable {
 		}
 	}
 
+	public boolean gameover() {
+		return this.gameover;
+	}
+	
 }

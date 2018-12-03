@@ -137,7 +137,7 @@ public class RulesEngine {
 				//captureLoc.setPiece(null);
 				{
 					System.out.println("Test1");
-					gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+					captureLoc.removePiece();
 				}
 		}
 		//check below
@@ -149,7 +149,7 @@ public class RulesEngine {
 				//captureLoc.setPiece(null);
 			{
 				System.out.println("Test2");
-				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+				captureLoc.removePiece();
 			}
 		}
 		//check left
@@ -161,7 +161,7 @@ public class RulesEngine {
 				//captureLoc.setPiece(null);
 			{
 				System.out.println("Test3");
-				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+				captureLoc.removePiece();
 			}
 		}
 		//check right
@@ -175,7 +175,7 @@ public class RulesEngine {
 				//captureLoc.setPiece(null);
 			{
 				System.out.println("Test4");
-				gameUpdate.getCell(newLoc.getX(), newLoc.getY()+1).removePiece();
+				captureLoc.removePiece();
 			}
 		}
 					

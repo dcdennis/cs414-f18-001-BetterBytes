@@ -167,11 +167,7 @@ public class GameFrame extends JFrame implements Serializable {
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
-
-	public boolean isOurTurn() {
-		return UI.user != null && turn != null && turn.getAccount().equals(UI.user);
-	}
-
+	
 	public boolean isSecondCheck() {
 		return secondCheck;
 	}
@@ -199,12 +195,18 @@ public class GameFrame extends JFrame implements Serializable {
 	 * @return whether the piece can move to destination
 	 */
 	public boolean canMove(Cell c, int x, int y) {
-		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || !isOurTurn()) {
+		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid())))) {
 			return false;
 		}
-		if(c.getPiece().isWhite()) {
+		if(c.hasPiece() && c.getPiece().isWhite()) {
 			if(turn.getColor().equals("black"))
 				return false;
+		} else if(c.hasPiece() && !c.getPiece().isWhite()) {
+			if(turn.getColor().equals("white"))
+				return false;
+		}
+		if(!turn.getAccount().getUsername().equals(UI.user.getUsername())) {
+			return false;
 		}
 		if (c.getPiece() != null) {
 			if (((x == c.getX() && y != c.getY()) || (y == c.getY() && x != c.getX()))

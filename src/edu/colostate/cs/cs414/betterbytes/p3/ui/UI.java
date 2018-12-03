@@ -319,6 +319,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		if (reply != null && reply.getType() != null && reply.getType().equals(Protocol.RECORDS_REQUEST_RESPONSE)) {
 			RecordsRequestResponse rr = (RecordsRequestResponse) reply;
 			if (rr != null) {
+				this.user = rr.getAccount();
 				gameObjects = rr.getGames();
 				Tools.log("Rec Games: " + gameObjects.size());
 				for (Game g : gameObjects) {

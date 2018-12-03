@@ -145,7 +145,7 @@ public class Grid {
 	 * @param nu  Destination Cell
 	 */
 	public void movePiece(Piece p, Cell old, Cell nu) {
-		if (p != null && old != null && nu != null && game.isOurTurn()) {
+		if (p != null && old != null && nu != null) {
 			backup.clear();
 			for (Cell c : cells) {
 				Cell nc = new Cell(c.getX(), c.getY(), this);

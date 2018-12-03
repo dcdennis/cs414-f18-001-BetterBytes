@@ -384,7 +384,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 
 	public void resumeGame() {
 		if (this.CURRENTGAMESLIST.getSelectedValue() != null && gameObjects != null) {
-			new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()), this.connection);
+			new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()));
 		}
 	}
 

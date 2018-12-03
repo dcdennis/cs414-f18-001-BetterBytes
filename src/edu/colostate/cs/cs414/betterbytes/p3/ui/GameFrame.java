@@ -34,11 +34,9 @@ public class GameFrame extends JFrame implements Serializable {
 	private int height = 935;
 	private Player turn = null;
 	private Game game = null;
-	private ClientConnection connection = null;
 	public int moveCount = 0;
 
-	public GameFrame(Game game, ClientConnection connection) {
-		this.connection = connection;
+	public GameFrame(Game game) {
 		this.game = game;
 		this.setup();
 		this.display(game);
@@ -60,7 +58,7 @@ public class GameFrame extends JFrame implements Serializable {
 	}
 
 	public static void main(String[] arg0) {
-		GameFrame gf = new GameFrame(new Game(), null);
+		GameFrame gf = new GameFrame(new Game());
 
 	}
 
@@ -322,7 +320,7 @@ public class GameFrame extends JFrame implements Serializable {
 			return false;
 		}
 		game.cells = gamecells.toArray(new edu.colostate.cs.cs414.betterbytes.p3.game.Cell[] {});
-		if (((SubmitMoveResponse) connection.send(new SubmitMove(game))).getStatus()) {
+		if (((SubmitMoveResponse) ClientConnection.getInstance().send(new SubmitMove(game))).getStatus()) {
 			turn = null;
 			return true;
 		} else {

@@ -167,7 +167,7 @@ public class GameFrame extends JFrame implements Serializable {
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
-	
+
 	public boolean isSecondCheck() {
 		return secondCheck;
 	}
@@ -198,14 +198,14 @@ public class GameFrame extends JFrame implements Serializable {
 		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || turn == null || this.gameover) {
 			return false;
 		}
-		if(c.hasPiece() && c.getPiece().isWhite()) {
-			if(turn != null && turn.getColor().equals("black"))
+		if (c.hasPiece() && c.getPiece().isWhite()) {
+			if (turn != null && turn.getColor().equals("black"))
 				return false;
-		} else if(c.hasPiece() && !c.getPiece().isWhite()) {
-			if(turn != null && turn.getColor().equals("white"))
+		} else if (c.hasPiece() && !c.getPiece().isWhite()) {
+			if (turn != null && turn.getColor().equals("white"))
 				return false;
 		}
-		if(!turn.getAccount().getUsername().equals(UI.user.getUsername())) {
+		if (!turn.getAccount().getUsername().equals(UI.user.getUsername())) {
 			return false;
 		}
 		if (c.getPiece() != null) {
@@ -240,11 +240,11 @@ public class GameFrame extends JFrame implements Serializable {
 						}
 					}
 				}
-				
+
 				if (c.getPiece().getType().equals(PieceType.ROOK)) {
-					if(this.getCell(x, y).getIcon() != null) {
+					if (this.getCell(x, y).getIcon() != null) {
 						return false;
-					} else if(x == 6 && y == 6) {
+					} else if (x == 6 && y == 6) {
 						return false;
 					}
 				}
@@ -259,6 +259,7 @@ public class GameFrame extends JFrame implements Serializable {
 	public void display(Game game) {
 		ArrayList<Cell> cs = new ArrayList<Cell>();
 		if (game.cells != null && game.cells.length > 0) {
+
 			for (edu.colostate.cs.cs414.betterbytes.p3.game.Cell c : game.cells) {
 				if (c != null) {
 					Cell nu = new Cell(c.getX() + 1, c.getY() + 1, this.getGrid());
@@ -277,24 +278,23 @@ public class GameFrame extends JFrame implements Serializable {
 		moveCount = 0;
 		this.game = game;
 		this.turn = game.getTurn();
-//		if (this.turn.getAccount().getUsername().equals("ctunnell"))
-//			this.turn.color = "white";
-//		else
-//			this.turn.color = "black";		
-		this.setTitle("Turn: "+this.turn.color + "    for account: " + turn.getAccount().getUsername());
-		
-		if(this.game.getResult().equals(GameResult.BLACK)) {
+
+		this.setTitle("Turn: " + this.turn.color + "    for account: " + turn.getAccount().getUsername());
+		Tools.log("GR: " + this.game.getResult());
+
+		if (this.game.getResult().equals(GameResult.BLACK)) {
 			this.gameover = true;
-		} else if(this.game.getResult().equals(GameResult.WHITE)) {
+		} else if (this.game.getResult().equals(GameResult.WHITE)) {
 			this.gameover = true;
-		} else if(this.game.getResult().equals(GameResult.DRAW)) {
+		} else if (this.game.getResult().equals(GameResult.DRAW)) {
 			this.gameover = true;
 		}
-		
-		if(this.gameover) {
-			this.setTitle("GAME OVER!!!!!! WINNER: "+(this.game.getResult().equals(GameResult.WHITE) ? "white" : "black"));
+
+		if (this.gameover) {
+			this.setTitle(
+					"GAME OVER!!!!!! WINNER: " + (this.game.getResult().equals(GameResult.WHITE) ? "white" : "black"));
 		}
-		
+
 	}
 
 	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {
@@ -313,11 +313,17 @@ public class GameFrame extends JFrame implements Serializable {
 	public boolean sendMoveToServer() {
 		ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell> gamecells = new ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Cell>();
 		for (Cell c : this.getGrid().getCells()) {
+
 			edu.colostate.cs.cs414.betterbytes.p3.game.Cell nu = new edu.colostate.cs.cs414.betterbytes.p3.game.Cell(
 					c.getX() - 1, c.getY() - 1, null, null);
+
 			if (c.hasPiece()) {
 				edu.colostate.cs.cs414.betterbytes.p3.game.Piece nup = new edu.colostate.cs.cs414.betterbytes.p3.game.Piece(
 						c.getPiece().getType().equals(PieceType.ROOK), c.getPiece().isWhite() ? "white" : "black");
+				if (c.getPiece().getType().equals(PieceType.ROOK) == false) {
+					Tools.log("SENDING A KING TO SERVER!");
+					Tools.log(c.getPiece().isWhite() ? "white" : "black");
+				}
 				nu.setPiece(nup);
 			}
 
@@ -346,5 +352,5 @@ public class GameFrame extends JFrame implements Serializable {
 	public boolean gameover() {
 		return this.gameover;
 	}
-	
+
 }

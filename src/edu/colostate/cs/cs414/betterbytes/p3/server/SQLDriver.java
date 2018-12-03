@@ -19,13 +19,14 @@ public class SQLDriver {
 
 	// Code to add the cases needed for the testing to work
 	public static void main(String[] args) {
-		//setPlayersinDB();
+		setPlayersinDB();
 		setGamesinDB();
 		//SQLDriver.getInstance().getGames("ctunnell");
 	}
  
 	private static void setPlayersinDB() {
-		SQLDriver sql = SQLDriver.getInstance(); 
+		SQLDriver sql = SQLDriver.getInstance();
+		sql.runQuery("Delete from users");
 		Account testAcc1 = new Account("ctunnell", "TestPassword");
 		Account testAcc2 = new Account("Jhpokorski", "TestPassword2");
 		Account testAcc3 = new Account("ctunnell@rams.colostate.edu", "TestPassword");
@@ -34,11 +35,18 @@ public class SQLDriver {
 		sql.addUser(testAcc2);
 		sql.addUser(testAcc3);
 		sql.addUser(testAcc4);
+		
+		
+		for(int i = 0; i < 10; i++)
+		{
+			sql.addUser( new Account("" + i, "TestPassword"));
+		}	
 	}
 
-	private static void setGamesinDB() {
-
+	private static void setGamesinDB() {		
 		SQLDriver sql = SQLDriver.getInstance();
+		sql.runQuery("Delete from game");
+		
 		Account testAcc1 = sql.getAccount("ctunnell");
 		Player p1 = new Player(testAcc1);
 		Account testAcc2 = sql.getAccount("Jhpokorski");

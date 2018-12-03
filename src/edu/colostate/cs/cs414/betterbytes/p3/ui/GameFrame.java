@@ -274,11 +274,11 @@ public class GameFrame extends JFrame implements Serializable {
 		moveCount = 0;
 		this.game = game;
 		this.turn = game.getTurn();
-		if (this.turn.getAccount().getUsername().equals("ctunnell"))
-			this.turn.color = "white";
-		else
-			this.turn.color = "black";
-		this.setTitle("Turn: "+this.turn);
+//		if (this.turn.getAccount().getUsername().equals("ctunnell"))
+//			this.turn.color = "white";
+//		else
+//			this.turn.color = "black";		
+		this.setTitle("Turn: "+this.turn.color + "    for account: " + turn.getAccount().getUsername());
 	}
 
 	public ArrayList<edu.colostate.cs.cs414.betterbytes.p3.game.Piece> convertGridForGame() {

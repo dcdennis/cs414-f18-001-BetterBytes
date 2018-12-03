@@ -332,6 +332,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}
 				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {
+					this.invitesListModel.clear();
 					for (Invitation i : rr.getAccount().getInvites()) {
 						if (i != null) {
 							String s = "Invite from: " + i.getSender();
@@ -393,7 +394,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void acceptGame() {
 		if (this.INVITESLIST.getSelectedValue() != null && user != null) {
 			int ind = INVITESLIST.getSelectedIndex();
-			ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), true));
+			if(user.getInvites().size() > ind) {
+				ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), true));
+			}
 		}
 	}
 
@@ -448,6 +451,12 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			String email = JOptionPane.showInputDialog(this, "Enter email: ", "Invitation",
 					JOptionPane.WARNING_MESSAGE);
 			this.sendInviteTo(email);
+			break;
+		case "Decline":
+			this.declineGame();
+			break;
+		case "Accept":
+			this.acceptGame();
 			break;
 		}
 	}

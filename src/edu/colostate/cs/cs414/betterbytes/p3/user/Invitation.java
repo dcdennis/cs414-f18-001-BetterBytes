@@ -20,6 +20,18 @@ public class Invitation implements Serializable{
 		return this.sender;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(this == null || obj == null)
+			return false;
+		if(this.sender.equals(((Invitation)obj).getSender()) &&
+		   this.recipient.equals(((Invitation)obj).getRecipient()))
+				return true;
+		else
+			return false;
+	}
+
 	public String getRecipient() {
 		return this.recipient;
 	}

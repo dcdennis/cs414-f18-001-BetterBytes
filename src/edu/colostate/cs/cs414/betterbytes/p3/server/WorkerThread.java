@@ -137,7 +137,6 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						break;
 					}
 					case (RESPOND_TO_INVITATION): {
-
 						RespondToInvitation respondMessage = (RespondToInvitation) message;
 						Invitation acceptedInvite = respondMessage.getInvitation();
 						String recipient = acceptedInvite.getRecipient();

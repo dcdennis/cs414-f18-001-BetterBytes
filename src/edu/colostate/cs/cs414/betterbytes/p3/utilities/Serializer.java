@@ -14,6 +14,7 @@ import edu.colostate.cs.cs414.betterbytes.p3.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p3.wireforms.Message;
 
 public abstract class Serializer {
+
 	public static byte[] serialize(Object o) {
 		byte[] res = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();

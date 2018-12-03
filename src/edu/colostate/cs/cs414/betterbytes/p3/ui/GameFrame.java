@@ -195,14 +195,14 @@ public class GameFrame extends JFrame implements Serializable {
 	 * @return whether the piece can move to destination
 	 */
 	public boolean canMove(Cell c, int x, int y) {
-		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid())))) {
+		if (!c.hasPiece() || (c.equals(new Cell(x, y, this.getGrid()))) || turn == null) {
 			return false;
 		}
 		if(c.hasPiece() && c.getPiece().isWhite()) {
-			if(turn.getColor().equals("black"))
+			if(turn != null && turn.getColor().equals("black"))
 				return false;
 		} else if(c.hasPiece() && !c.getPiece().isWhite()) {
-			if(turn.getColor().equals("white"))
+			if(turn != null && turn.getColor().equals("white"))
 				return false;
 		}
 		if(!turn.getAccount().getUsername().equals(UI.user.getUsername())) {

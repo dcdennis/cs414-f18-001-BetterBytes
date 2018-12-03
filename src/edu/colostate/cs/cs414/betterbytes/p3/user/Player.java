@@ -20,24 +20,8 @@ public class Player implements Serializable{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Player other = (Player) obj;
-		if (account == null) {
-			if (other.account != null)
-				return false;
-		} else if (!account.equals(other.account))
-			return false;
-		if (color == null) {
-			if (other.color != null)
-				return false;
-		} else if (!color.equals(other.color))
-			return false;
-		return true;
+		return this.getAccount().getUsername().equals(((Player)obj).getAccount().getUsername()) && 
+				this.getAccount().getPassword().equals(((Player)obj).getAccount().getPassword());
 	}
 
 	// GLOBAL FIELDS

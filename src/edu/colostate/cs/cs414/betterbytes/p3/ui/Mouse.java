@@ -51,6 +51,9 @@ public class Mouse implements MouseListener, MouseMotionListener {
 					} else {
 						c.setSelected(true);
 						Tools.log("Selected: " + c.getX() + "," + c.getY() + "," + c.hasPiece());
+						if(c.hasPiece()) {
+							Tools.log("Selected Piece: COLOR: "+c.getPiece().isWhite()+" , ROOK: "+c.getPiece().getType().equals(PieceType.ROOK));
+						}
 					}
 					break;
 				} else {

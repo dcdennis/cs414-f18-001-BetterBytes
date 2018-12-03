@@ -395,7 +395,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		if (this.INVITESLIST.getSelectedValue() != null && user != null) {
 			int ind = INVITESLIST.getSelectedIndex();
 			if(user.getInvites().size() > ind) {
+				Tools.log("Accepting.....");
 				ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), true));
+			} else {
+				Tools.log(ind +" in list length of: "+user.getInvites().size());
 			}
 		}
 	}

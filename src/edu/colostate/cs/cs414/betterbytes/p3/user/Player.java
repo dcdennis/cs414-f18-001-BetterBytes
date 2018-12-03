@@ -13,7 +13,7 @@ public class Player implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
+		result = prime * result + ((account == null) ? 0 : 3);
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		return result;
 	}

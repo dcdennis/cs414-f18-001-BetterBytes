@@ -42,6 +42,9 @@ public class RulesEngine {
 			
 			return GameResult.BLACK;
 		}
+		if(kingFound)
+			System.out.println(kingLoc.toString());
+		
 		// CASE: King has escaped
 		if (game.getCell(0, 0).hasPiece() || game.getCell(0, 10).hasPiece() || game.getCell(10, 0).hasPiece()
 				|| game.getCell(10, 10).hasPiece())

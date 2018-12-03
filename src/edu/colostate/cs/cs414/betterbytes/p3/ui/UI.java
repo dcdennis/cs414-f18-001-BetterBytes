@@ -323,13 +323,14 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 				gameObjects = rr.getGames();
 				Tools.log("Rec Games: " + gameObjects.size());
 				for (Game g : gameObjects) {
-					String currGame = "";
-					if (g.getAttacker().getAccount().equals(user)) {
-						currGame = g.getDefender().getAccount().getUsername();
-					} else
-						currGame = g.getAttacker().getAccount().getUsername();
-					currGame = user.getUsername() + " vs " + currGame;
-					this.gamesListModel.addElement(currGame);
+					String enemy = "";
+					if(g.getAttacker().getAccount().getUsername().equals(user.getUsername())) {
+						enemy = g.getDefender().getAccount().getUsername();
+					} else if(g.getDefender().getAccount().getUsername().equals(user.getUsername())) {
+						enemy = g.getAttacker().getAccount().getUsername();
+					}
+					enemy = user.getUsername() + " vs " + enemy;
+					this.gamesListModel.addElement(enemy);
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}
 				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {

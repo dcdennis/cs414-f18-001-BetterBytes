@@ -375,12 +375,11 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			REFRESHBUTTON.setEnabled(true);
 			PROFILESTATSBUTTON.setEnabled(true);
 			this.setTitle(title + user.getUsername());
+			System.out.println(user.getUsername());
 			this.refreshData();
 		} else {
 			this.setTitle("FAILED TO LOGIN!");
 		}
-		System.out.println(user.getUsername());
-//		System.out.println(user.getPassword());
 
 	}
 

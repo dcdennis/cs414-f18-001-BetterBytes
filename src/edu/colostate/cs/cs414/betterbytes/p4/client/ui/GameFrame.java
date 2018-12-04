@@ -374,7 +374,7 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	public void run() {
 		while (true) {
 			Tools.sleep(500);
-			if (game != null && !sending) {
+			if (game != null && !sending && !ourTurn()) {
 				try {
 					UI.REFRESHBUTTON.doClick();
 				} catch (Exception e) {

@@ -295,6 +295,8 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 			this.gameover = true;
 		} else if (this.game.getResult().equals(GameResult.DRAW)) {
 			this.gameover = true;
+		} else {
+			this.gameover = false;
 		}
 
 		if (this.gameover) {

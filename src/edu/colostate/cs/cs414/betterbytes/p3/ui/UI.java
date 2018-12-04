@@ -324,9 +324,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 				Tools.log("Rec Games: " + gameObjects.size());
 				for (Game g : gameObjects) {
 					String enemy = "";
-					if(g.getAttacker().getAccount().getUsername().equals(user.getUsername())) {
+					if (g.getAttacker().getAccount().getUsername().equals(user.getUsername())) {
 						enemy = g.getDefender().getAccount().getUsername();
-					} else if(g.getDefender().getAccount().getUsername().equals(user.getUsername())) {
+					} else if (g.getDefender().getAccount().getUsername().equals(user.getUsername())) {
 						enemy = g.getAttacker().getAccount().getUsername();
 					}
 					enemy = user.getUsername() + " vs " + enemy;
@@ -396,11 +396,11 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void acceptGame() {
 		if (this.INVITESLIST.getSelectedValue() != null && user != null) {
 			int ind = INVITESLIST.getSelectedIndex();
-			if(user.getInvites().size() > ind) {
+			if (user.getInvites().size() > ind) {
 				Tools.log("Accepting.....");
 				ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), true));
 			} else {
-				Tools.log(ind +" in list length of: "+user.getInvites().size());
+				Tools.log(ind + " in list length of: " + user.getInvites().size());
 			}
 		}
 	}
@@ -455,7 +455,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		case "Invite a friend...":
 			String email = JOptionPane.showInputDialog(this, "Enter username: ", "Invitation",
 					JOptionPane.QUESTION_MESSAGE);
-			this.sendInviteTo(email);
+			if (email != null)
+				this.sendInviteTo(email);
 			break;
 		case "Decline":
 			this.declineGame();

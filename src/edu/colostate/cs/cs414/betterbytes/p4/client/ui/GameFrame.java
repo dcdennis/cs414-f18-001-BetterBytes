@@ -258,6 +258,7 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	}
 
 	public void display(Game game) {
+		this.setVisible(true);
 		ArrayList<Cell> cs = new ArrayList<Cell>();
 		if (game.cells != null && game.cells.length > 0) {
 
@@ -374,7 +375,7 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	public void run() {
 		while (true) {
 			Tools.sleep(500);
-			if (game != null && !sending && !ourTurn()) {
+			if (game != null && !sending && !ourTurn() && this.isVisible()) {
 				try {
 					UI.REFRESHBUTTON.doClick();
 				} catch (Exception e) {

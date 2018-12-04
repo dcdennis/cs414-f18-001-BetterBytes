@@ -143,18 +143,21 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						String sender = acceptedInvite.getSender();
 						Account updateRecipient = sql.getAccount(recipient);
 						Account updateSender = sql.getAccount(sender);
-						updateRecipient.getInvites().remove(acceptedInvite);
+
+						if (updateRecipient.getInvites().remove(acceptedInvite)) {
+							System.out.print("Removed invite successfully");
+						}
 
 						if (respondMessage.isAccept()) {
 							Player attacker = new Player(updateSender, "black");
 							Player defender = new Player(updateRecipient, "white");
-							
+
 							updateSender.addPlayer(attacker);
 							updateRecipient.addPlayer(defender);
-							
+
 							sql.setAccount(updateSender);
 							sql.setAccount(updateRecipient);
-							
+
 							Game g1 = new Game(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString(), attacker,
 									defender);
 							sql.addGame(sender, recipient, g1);
@@ -162,8 +165,7 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							send(new RespondToInvitationResponse(true, "Game Added to Account"), buffer, channel,
 									debug);
 						} else {
-							send(new RespondToInvitationResponse(true, "Invited Rejected"), buffer, channel,
-									debug);
+							send(new RespondToInvitationResponse(true, "Invited Rejected"), buffer, channel, debug);
 						}
 						break;
 					}
@@ -175,29 +177,23 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
 						GameResult status = rules.gameHasEnded(gameUpdate);
 						gameUpdate.setResult(status);
-						if (status != GameResult.CONTINUE)
-						{
+						if (status != GameResult.CONTINUE) {
 							gameUpdate.setEndTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").toString());
 							Account defender = gameUpdate.getDefender().getAccount();
 							Account attacker = gameUpdate.getAttacker().getAccount();
-							if(status == GameResult.WHITE)
-							{
+							if (status == GameResult.WHITE) {
 								attacker.getStats().addLoss();
 								defender.getStats().addWin();
-							}
-							else if ( status == GameResult.BLACK)
-							{
+							} else if (status == GameResult.BLACK) {
 								attacker.getStats().addWin();
 								defender.getStats().addLoss();
-							}
-							else
-							{
+							} else {
 								attacker.getStats().addLoss();
 								defender.getStats().addLoss();
 							}
 							sql.setAccount(defender);
 							sql.setAccount(attacker);
-						
+
 						}
 						gameUpdate.changeTurns();
 						sql.updateGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);

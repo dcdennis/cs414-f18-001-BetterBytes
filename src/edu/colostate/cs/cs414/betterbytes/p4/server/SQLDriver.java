@@ -21,9 +21,9 @@ public class SQLDriver {
 	public static void main(String[] args) {
 		setPlayersinDB();
 		setGamesinDB();
-		//SQLDriver.getInstance().getGames("ctunnell");
+		// SQLDriver.getInstance().getGames("ctunnell");
 	}
- 
+
 	private static void setPlayersinDB() {
 		SQLDriver sql = SQLDriver.getInstance();
 		sql.runQuery("Delete from users");
@@ -35,18 +35,16 @@ public class SQLDriver {
 		sql.addUser(testAcc2);
 		sql.addUser(testAcc3);
 		sql.addUser(testAcc4);
-		
-		
-		for(int i = 0; i < 10; i++)
-		{
-			sql.addUser( new Account("" + i, "TestPassword"));
-		}	
+
+		for (int i = 0; i < 10; i++) {
+			sql.addUser(new Account("" + i, "TestPassword"));
+		}
 	}
 
-	private static void setGamesinDB() {		
+	private static void setGamesinDB() {
 		SQLDriver sql = SQLDriver.getInstance();
 		sql.runQuery("Delete from game");
-		
+
 		Account testAcc1 = sql.getAccount("ctunnell");
 		Player p1 = new Player(testAcc1);
 		Account testAcc2 = sql.getAccount("Jhpokorski");
@@ -58,9 +56,7 @@ public class SQLDriver {
 		Player p3 = new Player(testAcc3);
 		Game g2 = new Game("0:0", p1, p3);
 		sql.addGame(p3, p3, g2);
-		
-		
-		
+
 	}
 
 	private Connection database;
@@ -102,7 +98,8 @@ public class SQLDriver {
 
 	public void setAccount(Account acc) {
 		String query = "UPDATE betterbytes.users SET `username`=\"" + acc.getUsername() + "\", " + "`password`=\""
-				+ acc.getPassword() + "\",`account`=\"" + Base64.getEncoder().encodeToString(Serializer.serialize(acc)) + "\" ";
+				+ acc.getPassword() + "\",`account`=\"" + Base64.getEncoder().encodeToString(Serializer.serialize(acc))
+				+ "\" ";
 
 		query += "WHERE `username`=\"" + acc.getUsername() + "\" AND `password`=\"" + acc.getPassword() + "\";";
 		runQuery(query);
@@ -122,11 +119,15 @@ public class SQLDriver {
 		String query = "Select * FROM betterbytes.users";
 		query += " WHERE `username`=\"" + username + "\";";
 		String[] results = runQueryRes(query);
-		for(String i : results)
+		for (String i : results)
 			System.out.println(i);
-		Account received = Serializer.deserializeAccount(Base64.getDecoder().decode(results[2]));
+		if (results[2] != null) {
+			Account received = Serializer.deserializeAccount(Base64.getDecoder().decode(results[2]));
 
-		return received;
+			return received;
+		} else {
+			return new Account("null","null");//Cause theres literally no null checks anywhere. 
+		}
 	}
 
 	// Checks if a user already exists
@@ -151,7 +152,8 @@ public class SQLDriver {
 			return false;
 		} else {
 			String query = "INSERT INTO betterbytes.users (username, password, account) VALUES ('" + acc.getUsername()
-					+ "' , '" + acc.getPassword() + "' , '" + Base64.getEncoder().encodeToString(Serializer.serialize(acc)) + "' );";
+					+ "' , '" + acc.getPassword() + "' , '"
+					+ Base64.getEncoder().encodeToString(Serializer.serialize(acc)) + "' );";
 			runQuery(query);
 			return true;
 		}
@@ -224,7 +226,7 @@ public class SQLDriver {
 			Statement st = database.createStatement();
 			try {
 				ResultSet result = st.executeQuery(query);
-				try {									
+				try {
 					while (result.next()) {
 						results[0] = result.getString(1);
 						results[1] = result.getString(2);
@@ -254,7 +256,7 @@ public class SQLDriver {
 					+ "\";";
 			results = queryGame(query);
 		}
-		
+
 		return Serializer.deserializeGame(Base64.getDecoder().decode(results[2]));
 	}
 
@@ -331,7 +333,7 @@ public class SQLDriver {
 			try {
 				ResultSet result = st.executeQuery(query);
 				try {
-					while (result.next()) {				
+					while (result.next()) {
 						results.add(result.getString(1));
 					}
 				} finally {
@@ -384,30 +386,27 @@ public class SQLDriver {
 		}
 		return results;
 	}
-	
-	
-	public void updateGame(Player p1, Player p2 , Game g1) 
-	{
-		String query = "UPDATE game SET `state` = '" + Base64.getEncoder().encodeToString(Serializer.serialize(g1)) + "' WHERE `player1` = '" + p1.getAccount().getUsername() +
-					   "' AND `player2` = '" + p2.getAccount().getUsername() + "';";		
-		//System.out.println("Query: " + query);
+
+	public void updateGame(Player p1, Player p2, Game g1) {
+		String query = "UPDATE game SET `state` = '" + Base64.getEncoder().encodeToString(Serializer.serialize(g1))
+				+ "' WHERE `player1` = '" + p1.getAccount().getUsername() + "' AND `player2` = '"
+				+ p2.getAccount().getUsername() + "';";
+		// System.out.println("Query: " + query);
 		runQuery(query);
 	}
 
-	public List<Game> getGames(String username) {		
+	public List<Game> getGames(String username) {
 		String query = "Select `state` from betterbytes.game WHERE `player1` like '" + username + "';";
-		List<String> resultStrings = getGamesQuery(query);		
-		query = "Select `state` from betterbytes.game WHERE `player2` like '" + username + "';";		
+		List<String> resultStrings = getGamesQuery(query);
+		query = "Select `state` from betterbytes.game WHERE `player2` like '" + username + "';";
 		resultStrings.addAll(getGamesQuery(query));
-		
+
 		List<Game> games = new ArrayList<Game>();
-		
-		
-		for (int i = 0; i < resultStrings.size(); i++)
-		{
+
+		for (int i = 0; i < resultStrings.size(); i++) {
 			games.add(Serializer.deserializeGame(Base64.getDecoder().decode(resultStrings.get(i))));
 		}
-		
+
 //		System.out.println("Games: " + Arrays.toString(games.toArray(new Game[] {})));
 		return games;
 	}

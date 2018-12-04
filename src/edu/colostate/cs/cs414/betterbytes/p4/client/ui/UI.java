@@ -330,7 +330,11 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 					} else if (g.getDefender().getAccount().getUsername().equals(user.getUsername())) {
 						enemy = g.getAttacker().getAccount().getUsername();
 					}
-					enemy = user.getUsername() + " vs " + enemy;
+					String whosTurn = "N/A";
+					if(g.getTurn() != null) {
+						whosTurn = g.getTurn().getAccount().getUsername();
+					}
+					enemy = user.getUsername() + " vs " + enemy + "    |     Player's Turn: "+whosTurn;
 					this.gamesListModel.addElement(enemy);
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}

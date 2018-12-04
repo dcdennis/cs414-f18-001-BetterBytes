@@ -22,7 +22,7 @@ import edu.colostate.cs.cs414.betterbytes.p4.user.Player;
  * @author Daniel McClure - 830437441
  *
  */
-public class GameFrame extends JFrame implements Serializable {
+public class GameFrame extends JFrame implements Serializable, Runnable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,10 @@ public class GameFrame extends JFrame implements Serializable {
 	private Player turn = null;
 	private Game game = null;
 	public int moveCount = 0;
+	public boolean moveSent = false;
 	private boolean gameover = false;
+	private boolean sending = false;
+	
 
 	public GameFrame(Game game) {
 		this.game = game;
@@ -57,6 +60,7 @@ public class GameFrame extends JFrame implements Serializable {
 		this.setTitle("Tafl V" + 1);
 		this.setResizable(false);
 		this.setupNewGame();
+		new Thread(this).start();
 	}
 
 	public static void main(String[] arg0) {
@@ -276,8 +280,15 @@ public class GameFrame extends JFrame implements Serializable {
 		}
 
 		moveCount = 0;
+		moveSent = false;
 		this.game = game;
 		this.turn = game.getTurn();
+
+		if (turn.getAccount().getUsername().equals(UI.user.getUsername())) {
+			for (PaintButton pb : this.back.getButtons()) {
+				pb.setDisabled(false);
+			}
+		}
 
 		this.setTitle("Turn: " + this.turn.color + "    for account: " + turn.getAccount().getUsername());
 		Tools.log("GR: " + this.game.getResult());
@@ -311,6 +322,7 @@ public class GameFrame extends JFrame implements Serializable {
 	}
 
 	public boolean sendMoveToServer() {
+		this.sending = true;
 		ArrayList<edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Cell> gamecells = new ArrayList<edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Cell>();
 		for (Cell c : this.getGrid().getCells()) {
 
@@ -343,14 +355,41 @@ public class GameFrame extends JFrame implements Serializable {
 		game.cells = gamecells.toArray(new edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Cell[] {});
 		if (((SubmitMoveResponse) ClientConnection.getInstance().send(new SubmitMove(game))).getStatus()) {
 			turn = null;
+			this.sending = false;
 			return true;
 		} else {
+			this.sending = false;
 			return false;
 		}
 	}
 
 	public boolean gameover() {
 		return this.gameover;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			Tools.sleep(500);
+			if (game != null && !sending && moveSent) {
+				UI.REFRESHBUTTON.doClick();
+				Tools.sleep(500);
+				if (!sending) {
+					for (Game g : UI.gameObjects) {
+						if (g.getAttacker().getAccount().getUsername()
+								.equals(game.getAttacker().getAccount().getUsername())
+								&& g.getDefender().getAccount().getUsername()
+										.equals(game.getDefender().getAccount().getUsername())) {
+							Tools.log("[AUTO] Updating Game");
+							this.display(g);
+							break;
+						}
+					}
+				} else {
+					Tools.sleep(500);
+				}
+			}
+		}
 	}
 
 }

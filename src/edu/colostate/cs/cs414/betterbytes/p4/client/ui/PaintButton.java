@@ -58,10 +58,11 @@ public class PaintButton implements Serializable {
 		}
 		g.setColor(new Color(255, 255, 255, 150));
 		g.drawRect(getX(), getY(), width - 1, height - 1);
-		if (!this.disabled)
+		if (!this.disabled) {
 			Tools.drawSharpText(getText(), x + (this.width / 7), y + 22, Color.white, Color.BLACK, g);
-		else
+		} else {
 			Tools.drawSharpText(getText(), x + (this.width / 7), y + 22, Color.BLACK, Color.BLACK, g);
+		}
 	}
 
 	/**
@@ -121,6 +122,7 @@ public class PaintButton implements Serializable {
 					game.setSecondCheck(false);
 					if (game != null && game.sendMoveToServer()) {
 						game.setStatus("Move Sent!");
+						game.moveSent = true;
 					} else {
 						game.setStatus("Connection failed, Try again!");
 						disabled = false;
@@ -136,6 +138,14 @@ public class PaintButton implements Serializable {
 				break;
 			}
 		}
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 }

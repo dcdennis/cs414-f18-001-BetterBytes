@@ -45,7 +45,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private javax.swing.JPasswordField PASSWORD;
 	private javax.swing.JButton PROFILESTATSBUTTON;
 	private javax.swing.JButton QUITGAMEBUTTON;
-	private javax.swing.JButton REFRESHBUTTON;
+	public static javax.swing.JButton REFRESHBUTTON;
 	private javax.swing.JButton RESUMEGAMEBUTTON;
 	private javax.swing.JTextField USERNAME;
 	private javax.swing.JButton VIEWGAMEMANUALBUTTON;
@@ -62,7 +62,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 
 	private ClientConnection connection;
 	public static Account user;
-	private List<Game> gameObjects = null;
+	public static List<Game> gameObjects = null;
 
 	public String title = "Tafl Control Panel    |    Profile: ";
 

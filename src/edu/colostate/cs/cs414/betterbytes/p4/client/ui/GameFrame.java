@@ -258,7 +258,6 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	}
 
 	public void display(Game game) {
-		this.setVisible(true);
 		ArrayList<Cell> cs = new ArrayList<Cell>();
 		if (game.cells != null && game.cells.length > 0) {
 

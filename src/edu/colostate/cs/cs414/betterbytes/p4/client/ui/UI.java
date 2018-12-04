@@ -394,6 +394,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			} else {
 				this.gameframe.display(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()));
 			}
+			this.gameframe.setVisible(true);
 		}
 	}
 

@@ -86,6 +86,7 @@ public class Account implements Serializable {
 		this.password = password;
 		this.invites = new ArrayList<Invitation>();
 		this.players = new ArrayList<Player>();
+		this.stats = new Stats();
 	}
 
 	public Account(String username, String password) {
@@ -93,6 +94,7 @@ public class Account implements Serializable {
 		this.password = password;
 		this.invites = new ArrayList<Invitation>();
 		this.players = new ArrayList<Player>();
+		this.stats = new Stats();
 	}
 
 	// MUTATORS

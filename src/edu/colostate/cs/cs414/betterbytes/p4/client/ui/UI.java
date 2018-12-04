@@ -59,6 +59,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	private ArrayList<String> loadedGames = new ArrayList<String>();
 	private JButton SENDINVITEBUTTON = new JButton("Invite a friend...");
 	private JButton SIGNUPBUTTON = new JButton("Create Account");
+	private GameFrame gameframe = null;
 
 	private ClientConnection connection;
 	public static Account user;
@@ -385,7 +386,11 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 
 	public void resumeGame() {
 		if (this.CURRENTGAMESLIST.getSelectedValue() != null && gameObjects != null) {
-			new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()));
+			if (gameframe == null) {
+				this.gameframe = new GameFrame(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()));
+			} else {
+				this.gameframe.display(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()));
+			}
 		}
 	}
 

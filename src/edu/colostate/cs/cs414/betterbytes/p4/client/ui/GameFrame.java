@@ -29,17 +29,14 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	private BufferPanel back = null;
 	private String status = "Welcome";
 	private Grid grid = new Grid(-50, -50, this);
-	private boolean isOurTurn = true;
 	private boolean secondCheck = false;
 	private int width = 886;
 	private int height = 935;
 	private Player turn = null;
 	private Game game = null;
 	public int moveCount = 0;
-	public boolean moveSent = false;
 	private boolean gameover = false;
 	private boolean sending = false;
-	
 
 	public GameFrame(Game game) {
 		this.game = game;
@@ -280,7 +277,6 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 		}
 
 		moveCount = 0;
-		moveSent = false;
 		this.game = game;
 		this.turn = game.getTurn();
 
@@ -367,14 +363,25 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 		return this.gameover;
 	}
 
+	public boolean ourTurn() {
+		if (turn != null && game != null && UI.user != null) {
+			return turn.getAccount().getUsername().equals(UI.user.getUsername());
+		}
+		return false;
+	}
+
 	@Override
 	public void run() {
 		while (true) {
 			Tools.sleep(500);
-			if (game != null && !sending && moveSent) {
-				UI.REFRESHBUTTON.doClick();
+			if (game != null && !sending) {
+				try {
+					UI.REFRESHBUTTON.doClick();
+				} catch (Exception e) {
+
+				}
 				Tools.sleep(500);
-				if (!sending) {
+				if (!sending && !ourTurn()) {
 					for (Game g : UI.gameObjects) {
 						if (g.getAttacker().getAccount().getUsername()
 								.equals(game.getAttacker().getAccount().getUsername())

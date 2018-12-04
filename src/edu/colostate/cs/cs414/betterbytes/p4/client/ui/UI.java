@@ -427,7 +427,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	}
 
 	public String getStats() {
-		return "Profile stats!";
+		if (user != null && user.getStats() != null)
+			return "Wins: " + user.getStats().getWins() + "   Losses: " + user.getStats().getLosses();
+		return "N/A";
 	}
 
 	public void sendInviteTo(String username) {

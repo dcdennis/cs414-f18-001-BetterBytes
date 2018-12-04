@@ -25,6 +25,7 @@ public class PaintButton implements Serializable {
 	private int height = 35;
 	private boolean mo = false;
 	private GameFrame game = null;
+	private boolean disabled = false;
 
 	/**
 	 * Constructor for button
@@ -57,7 +58,10 @@ public class PaintButton implements Serializable {
 		}
 		g.setColor(new Color(255, 255, 255, 150));
 		g.drawRect(getX(), getY(), width - 1, height - 1);
-		Tools.drawSharpText(getText(), x + (this.width / 7), y + 22, Color.white, Color.BLACK, g);
+		if (!this.disabled)
+			Tools.drawSharpText(getText(), x + (this.width / 7), y + 22, Color.white, Color.BLACK, g);
+		else
+			Tools.drawSharpText(getText(), x + (this.width / 7), y + 22, Color.BLACK, Color.BLACK, g);
 	}
 
 	/**
@@ -111,13 +115,15 @@ public class PaintButton implements Serializable {
 		if (!game.gameover()) {
 			switch (this.getText()) {
 			case "Send Move":
-				if (game.isSecondCheck()) {
+				if (game.isSecondCheck() && !disabled) {
 					Tools.log("Sending Move");
+					disabled = true;
 					game.setSecondCheck(false);
-					if (game.sendMoveToServer()) {
+					if (game != null && game.sendMoveToServer()) {
 						game.setStatus("Move Sent!");
 					} else {
 						game.setStatus("Connection failed, Try again!");
+						disabled = false;
 					}
 				} else {
 					game.setStatus("Are you sure?");

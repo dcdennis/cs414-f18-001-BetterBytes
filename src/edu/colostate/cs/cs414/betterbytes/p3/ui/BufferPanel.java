@@ -143,6 +143,7 @@ public class BufferPanel extends JPanel implements Runnable {
 				if (this.getGraphics() != null && img != null)
 					this.getGraphics().drawImage(img, 0, 0, null);
 			}
+			Tools.sleep(65);
 		}
 	}
 

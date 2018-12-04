@@ -7,6 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p3.server.Server;
 import edu.colostate.cs.cs414.betterbytes.p3.ui.UI;
+import edu.colostate.cs.cs414.betterbytes.p3.utilities.Tools;
 
 public class DemoClient {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
@@ -16,7 +17,7 @@ public class DemoClient {
 		Thread thread = new Thread() {
 			public void run() {
 				try {
-					new Server(8080,4).serve();
+					new Server(8080,1).serve();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -24,15 +25,16 @@ public class DemoClient {
 			}
 		};
 		thread.start();
+		Tools.sleep(1000);
 
 		System.out.println("Getting client connection");
 		ClientConnection connection = ClientConnection.getInstance();
 		System.out.println("Setting up connection");
-		String in = JOptionPane.showInputDialog(null, "Enter Connection (Ex. localhost:8080): ", "Connection",
-				JOptionPane.WARNING_MESSAGE);
-		String addr = in.split(":")[0];
-		int port = Integer.parseInt(in.split(":")[1]);
-		connection.setUp(addr, port);
+//		String in = JOptionPane.showInputDialog(null, "Enter Connection (Ex. localhost:8080): ", "Connection",
+//				JOptionPane.WARNING_MESSAGE);
+//		String addr = in.split(":")[0];
+//		int port = Integer.parseInt(in.split(":")[1]);
+		connection.setUp("localhost", 8080);
 		connection.start();
 		System.out.println("connection started");
 

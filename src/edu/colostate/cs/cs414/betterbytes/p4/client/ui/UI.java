@@ -331,10 +331,10 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 						enemy = g.getAttacker().getAccount().getUsername();
 					}
 					String whosTurn = "N/A";
-					if(g.getTurn() != null) {
+					if (g.getTurn() != null) {
 						whosTurn = g.getTurn().getAccount().getUsername();
 					}
-					enemy = user.getUsername() + " vs " + enemy + "    |     Player's Turn: "+whosTurn;
+					enemy = user.getUsername() + " vs " + enemy + "    |     Player's Turn: " + whosTurn;
 					this.gamesListModel.addElement(enemy);
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}
@@ -394,7 +394,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			} else {
 				this.gameframe.display(gameObjects.get(CURRENTGAMESLIST.getSelectedIndex()));
 			}
-			this.gameframe.setVisible(true);
+			if (this.gameframe != null)
+				this.gameframe.setVisible(true);
 		}
 	}
 

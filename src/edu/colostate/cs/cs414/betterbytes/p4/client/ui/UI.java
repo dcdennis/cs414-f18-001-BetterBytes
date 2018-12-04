@@ -416,7 +416,12 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	public void declineGame() {
 		if (this.INVITESLIST.getSelectedValue() != null && user != null) {
 			int ind = INVITESLIST.getSelectedIndex();
-			ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), false));
+			if (user.getInvites().size() > ind) {
+				Tools.log("Accepting.....");
+				ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), false));
+			} else {
+				Tools.log(ind + " in list length of: " + user.getInvites().size());
+			}
 		}
 	}
 

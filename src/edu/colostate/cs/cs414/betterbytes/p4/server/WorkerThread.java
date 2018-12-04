@@ -14,6 +14,7 @@ import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p4.server.utilities.RulesEngine;
 import edu.colostate.cs.cs414.betterbytes.p4.server.utilities.Serializer;
+import edu.colostate.cs.cs414.betterbytes.p4.server.utilities.Tools;
 import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.*;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Invitation;
@@ -144,10 +145,11 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Account updateRecipient = sql.getAccount(recipient);
 						Account updateSender = sql.getAccount(sender);
 
+
 						if (updateRecipient.getInvites().remove(acceptedInvite)) {
 							System.out.print("Removed invite successfully");
 						}
-
+						
 						if (respondMessage.isAccept()) {
 							Player attacker = new Player(updateSender, "black");
 							Player defender = new Player(updateRecipient, "white");

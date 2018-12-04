@@ -299,6 +299,11 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 			this.gameover = false;
 		}
 
+		if (this.ourTurn()) {
+			this.setTitle("Your turn to move!");
+			this.setStatus("Your turn to move!");
+		}
+
 		if (this.gameover) {
 			this.setTitle(
 					"GAME OVER!!!!!! WINNER: " + (this.game.getResult().equals(GameResult.WHITE) ? "white" : "black"));

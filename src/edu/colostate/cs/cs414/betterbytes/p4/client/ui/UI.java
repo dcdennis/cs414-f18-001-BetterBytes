@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -83,6 +84,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 		this.connection = connection;
 		start();
 		this.setVisible(true);
+		this.setIconImage(Tools.getLocalImg("edu/colostate/cs/cs414/betterbytes/p4/client/data/icon.png"));
 	}
 
 	/**

@@ -51,6 +51,7 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	 * Sets up UI
 	 */
 	public void setup() {
+		this.setIconImage(Tools.getLocalImg("edu/colostate/cs/cs414/betterbytes/p4/client/data/icon.png"));
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(width, height);
 		this.back = new BufferPanel(this);

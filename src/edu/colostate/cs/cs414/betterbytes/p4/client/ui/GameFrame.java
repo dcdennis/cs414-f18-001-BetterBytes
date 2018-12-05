@@ -37,10 +37,12 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	public int moveCount = 0;
 	private boolean gameover = false;
 	private boolean sending = false;
+	private UI ui = null;
 
-	public GameFrame(Game game) {
+	public GameFrame(Game game, UI ui) {
 		this.game = game;
 		this.setup();
+		this.ui = ui;
 		this.display(game);
 	}
 
@@ -58,63 +60,14 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 		this.setResizable(false);
 		this.setupNewGame();
 		new Thread(this).start();
-	}
-
-	public static void main(String[] arg0) {
-		GameFrame gf = new GameFrame(new Game());
-
-	}
+	}	
 
 	public void setupNewGame() {
 
 		this.getGrid().setBoardFromString(
 				"~1:1:null:false~1:2:null:false~1:3:null:false~1:4:ROOK:false~1:5:ROOK:false~1:6:ROOK:false~1:7:ROOK:false~1:8:ROOK:false~1:9:null:false~1:10:null:false~1:11:null:false~2:1:null:false~2:2:null:false~2:3:null:false~2:4:null:false~2:5:null:false~2:6:ROOK:false~2:7:null:false~2:8:null:false~2:9:null:false~2:10:null:false~2:11:null:false~3:1:null:false~3:2:null:false~3:3:null:false~3:4:null:false~3:5:null:false~3:6:null:false~3:7:null:false~3:8:null:false~3:9:null:false~3:10:null:false~3:11:null:false~4:1:ROOK:false~4:2:null:false~4:3:null:false~4:4:null:false~4:5:null:false~4:6:ROOK:true~4:7:null:false~4:8:null:false~4:9:null:false~4:10:null:false~4:11:ROOK:false~5:1:ROOK:false~5:2:null:false~5:3:null:false~5:4:null:false~5:5:ROOK:true~5:6:ROOK:true~5:7:ROOK:true~5:8:null:false~5:9:null:false~5:10:null:false~5:11:ROOK:false~6:1:ROOK:false~6:2:ROOK:false~6:3:null:false~6:4:ROOK:true~6:5:ROOK:true~6:6:KING:true~6:7:ROOK:true~6:8:ROOK:true~6:9:null:false~6:10:ROOK:false~6:11:ROOK:false~7:1:ROOK:false~7:2:null:false~7:3:null:false~7:4:null:false~7:5:ROOK:true~7:6:ROOK:true~7:7:ROOK:true~7:8:null:false~7:9:null:false~7:10:null:false~7:11:ROOK:false~8:1:ROOK:false~8:2:null:false~8:3:null:false~8:4:null:false~8:5:null:false~8:6:ROOK:true~8:7:null:false~8:8:null:false~8:9:null:false~8:10:null:false~8:11:ROOK:false~9:1:null:false~9:2:null:false~9:3:null:false~9:4:null:false~9:5:null:false~9:6:null:false~9:7:null:false~9:8:null:false~9:9:null:false~9:10:null:false~9:11:null:false~10:1:null:false~10:2:null:false~10:3:null:false~10:4:null:false~10:5:null:false~10:6:ROOK:false~10:7:null:false~10:8:null:false~10:9:null:false~10:10:null:false~10:11:null:false~11:1:null:false~11:2:null:false~11:3:null:false~11:4:ROOK:false~11:5:ROOK:false~11:6:ROOK:false~11:7:ROOK:false~11:8:ROOK:false~11:9:null:false~11:10:null:false~11:11:null:false");
 
-	}
-
-	public void defaultSetup() {
-		this.placePiece(new Piece(PieceType.ROOK, false), 4, 1);
-		this.placePiece(new Piece(PieceType.ROOK, false), 5, 1);
-		this.placePiece(new Piece(PieceType.ROOK, false), 6, 1);
-		this.placePiece(new Piece(PieceType.ROOK, false), 7, 1);
-		this.placePiece(new Piece(PieceType.ROOK, false), 8, 1);
-		this.placePiece(new Piece(PieceType.ROOK, false), 6, 2);
-
-		this.placePiece(new Piece(PieceType.ROOK, false), 1, 4);
-		this.placePiece(new Piece(PieceType.ROOK, false), 1, 5);
-		this.placePiece(new Piece(PieceType.ROOK, false), 1, 6);
-		this.placePiece(new Piece(PieceType.ROOK, false), 1, 7);
-		this.placePiece(new Piece(PieceType.ROOK, false), 1, 8);
-		this.placePiece(new Piece(PieceType.ROOK, false), 2, 6);
-
-		this.placePiece(new Piece(PieceType.ROOK, false), 11, 4);
-		this.placePiece(new Piece(PieceType.ROOK, false), 11, 5);
-		this.placePiece(new Piece(PieceType.ROOK, false), 11, 6);
-		this.placePiece(new Piece(PieceType.ROOK, false), 11, 7);
-		this.placePiece(new Piece(PieceType.ROOK, false), 11, 8);
-		this.placePiece(new Piece(PieceType.ROOK, false), 10, 6);
-
-		this.placePiece(new Piece(PieceType.ROOK, false), 4, 11);
-		this.placePiece(new Piece(PieceType.ROOK, false), 5, 11);
-		this.placePiece(new Piece(PieceType.ROOK, false), 6, 11);
-		this.placePiece(new Piece(PieceType.ROOK, false), 7, 11);
-		this.placePiece(new Piece(PieceType.ROOK, false), 8, 11);
-		this.placePiece(new Piece(PieceType.ROOK, false), 6, 10);
-
-		this.placePiece(new Piece(PieceType.KING, true), 6, 6);
-		this.placePiece(new Piece(PieceType.ROOK, true), 5, 6);
-		this.placePiece(new Piece(PieceType.ROOK, true), 4, 6);
-		this.placePiece(new Piece(PieceType.ROOK, true), 6, 5);
-		this.placePiece(new Piece(PieceType.ROOK, true), 6, 4);
-		this.placePiece(new Piece(PieceType.ROOK, true), 6, 7);
-		this.placePiece(new Piece(PieceType.ROOK, true), 6, 8);
-		this.placePiece(new Piece(PieceType.ROOK, true), 7, 6);
-		this.placePiece(new Piece(PieceType.ROOK, true), 8, 6);
-		this.placePiece(new Piece(PieceType.ROOK, true), 5, 5);
-		this.placePiece(new Piece(PieceType.ROOK, true), 7, 7);
-		this.placePiece(new Piece(PieceType.ROOK, true), 5, 7);
-		this.placePiece(new Piece(PieceType.ROOK, true), 7, 5);
-	}
+	}	
 
 	public BufferPanel getBufferPanel() {
 		return this.back;
@@ -382,11 +335,12 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 		while (true) {
 			Tools.sleep(500);
 			if (game != null && !sending && !ourTurn() && this.isVisible()) {
-				try {
-					UI.REFRESHBUTTON.doClick();
-				} catch (Exception e) {
-
-				}
+//				try {
+//					UI.REFRESHBUTTON.doClick();
+//				} catch (Exception e) {
+//
+//				}
+				ui.refreshData();
 				Tools.sleep(500);
 				if (!sending && !ourTurn()) {
 					for (Game g : UI.gameObjects) {

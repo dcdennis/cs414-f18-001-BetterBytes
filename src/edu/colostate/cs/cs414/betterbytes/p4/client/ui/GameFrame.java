@@ -38,6 +38,7 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 	private boolean gameover = false;
 	private boolean sending = false;
 	private UI ui = null;
+	private String winner = null;
 
 	public GameFrame(Game game, UI ui) {
 		this.game = game;
@@ -244,8 +245,18 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 
 		if (this.game.getResult().equals(GameResult.BLACK)) {
 			this.gameover = true;
+			if(game.getAttacker().getColor().equals("black")) {
+				this.setWinner(game.getAttacker().getAccount().getUsername());
+			} else if(game.getDefender().getColor().equals("black")) {
+				this.setWinner(game.getDefender().getAccount().getUsername());
+			}
 		} else if (this.game.getResult().equals(GameResult.WHITE)) {
 			this.gameover = true;
+			if(game.getAttacker().getColor().equals("white")) {
+				this.setWinner(game.getAttacker().getAccount().getUsername());
+			} else if(game.getDefender().getColor().equals("white")) {
+				this.setWinner(game.getDefender().getAccount().getUsername());
+			}
 		} else if (this.game.getResult().equals(GameResult.DRAW)) {
 			this.gameover = true;
 		} else {
@@ -358,6 +369,14 @@ public class GameFrame extends JFrame implements Serializable, Runnable {
 				}
 			}
 		}
+	}
+
+	public String getWinner() {
+		return winner;
+	}
+
+	public void setWinner(String winner) {
+		this.winner = winner;
 	}
 
 }

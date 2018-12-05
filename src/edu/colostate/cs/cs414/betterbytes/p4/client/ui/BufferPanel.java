@@ -21,7 +21,10 @@ public class BufferPanel extends JPanel implements Runnable {
 	private Image img = null;
 	private Mouse mouse = new Mouse(this);
 	private GameFrame game = null;
-	private Image background = Tools.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p4/client/data/background.png");
+	private Image background = Tools
+			.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p4/client/data/background.png");
+	private Image gameover = Tools
+			.getLocalImg(absPath + "edu/colostate/cs/cs414/betterbytes/p4/client/data/gameover.png");
 	private ArrayList<PaintButton> buttons = new ArrayList<PaintButton>();
 
 	public BufferPanel(GameFrame game) {
@@ -35,14 +38,23 @@ public class BufferPanel extends JPanel implements Runnable {
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		this.paintBackGround(g);
 		this.paintCells(g);
-		this.paintPieces(g); 
+		this.paintPieces(g);
 		this.paintButtons(g);
 		this.paintStatus(g);
 		// Tools.drawSharpText("" + mouse.getLocation(), 15, 15, Color.red,
 		// Color.black, g);
-		if(!game.ourTurn()) {
-			g.setColor(new Color(0,0,0,150));
+		if (!game.ourTurn()) {
+			g.setColor(new Color(0, 0, 0, 100));
 			g.fillRect(0, 0, game.getWidth(), game.getHeight());
+		}
+		if (game.gameover() && game.getWinner() != null) {
+			g.setColor(new Color(0, 0, 0, 120));
+			g.fillRect(0, 0, game.getWidth(), game.getHeight());
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 35));
+			g.setColor(Color.RED);
+			// 305,862
+			g.drawImage(gameover, 25, 44, game);
+			Tools.drawSharpText("Winner: " + game.getWinner(), 240, 370, Color.RED, Color.BLACK, g);
 		}
 	}
 

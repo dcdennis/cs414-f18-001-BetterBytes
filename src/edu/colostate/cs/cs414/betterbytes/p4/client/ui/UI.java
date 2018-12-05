@@ -515,7 +515,6 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			this.acceptGame();
 			break;
 		case "Forfeit Game":
-			this.forfeitGame();
 			break;
 		}
 	}

@@ -338,8 +338,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 					this.gamesListModel.addElement(enemy);
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}
-				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {
-					this.invitesListModel.clear();
+				this.invitesListModel.clear();
+				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {					
 					for (Invitation i : rr.getAccount().getInvites()) {
 						if (i != null) {
 							String s = "Invite from: " + i.getSender();
@@ -409,6 +409,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			if (user.getInvites().size() > ind) {
 				Tools.log("Accepting.....");
 				ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), true));
+				Tools.sleep(700);
+				this.refreshData();
 			} else {
 				Tools.log(ind + " in list length of: " + user.getInvites().size());
 			}
@@ -421,6 +423,8 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			if (user.getInvites().size() > ind) {
 				Tools.log("Declining.....");
 				ClientConnection.getInstance().send(new RespondToInvitation(user.getInvites().get(ind), false));
+				Tools.sleep(700);
+				this.refreshData();
 			} else {
 				Tools.log(ind + " in list length of: " + user.getInvites().size());
 			}

@@ -145,11 +145,11 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Account updateRecipient = sql.getAccount(recipient);
 						Account updateSender = sql.getAccount(sender);
 
-
 						if (updateRecipient.getInvites().remove(acceptedInvite)) {
-							System.out.print("Removed invite successfully");
+							System.out.println("-----------------------------    Removed invite from account: " + updateRecipient.getUsername());
+							sql.setAccount(updateRecipient);
 						}
-						
+
 						if (respondMessage.isAccept()) {
 							Player attacker = new Player(updateSender, "black");
 							Player defender = new Player(updateRecipient, "white");

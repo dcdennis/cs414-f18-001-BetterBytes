@@ -341,7 +341,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 					CURRENTGAMESLIST.setModel(gamesListModel);
 				}
 				this.invitesListModel.clear();
-				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {					
+				if (rr.getAccount() != null && rr.getAccount().getInvites() != null) {
 					for (Invitation i : rr.getAccount().getInvites()) {
 						if (i != null) {
 							String s = "Invite from: " + i.getSender();
@@ -402,7 +402,34 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 	}
 
 	public void forfeitGame() {
-
+		if (this.CURRENTGAMESLIST.getSelectedValue() != null && user != null) {
+			int ind = CURRENTGAMESLIST.getSelectedIndex();
+			if (gameObjects.size() > ind) {
+				Tools.log("Forfeiting game.....");
+				// Losers turn is now
+				if (gameObjects.get(ind).getTurn().color.equals("black")) {
+					// Black needs to win
+					for (int i = 0; i < gameObjects.get(ind).cells.length; i++) {
+						if (gameObjects.get(ind).cells[i].hasPiece()
+								&& gameObjects.get(ind).cells[i].getPiece().isKing()) {
+							gameObjects.get(ind).cells[i].setPiece(null);// KILL THE KING!!
+						}
+					}
+				} else {
+					// White needs to win
+					// Put the white king in the corner
+					gameObjects.get(ind).cells[0]
+							.setPiece(new edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Piece(false, "white"));
+				}
+				if (this.gameframe != null) {
+					this.gameframe.display(gameObjects.get(ind));
+				} else {
+					this.gameframe = new GameFrame(gameObjects.get(ind), this);
+				}
+				gameframe.setVisible(true);
+				gameObjects.get(ind).sendGameToServer();// send the move to server
+			}
+		}
 	}
 
 	public void acceptGame() {
@@ -486,6 +513,9 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			break;
 		case "Accept":
 			this.acceptGame();
+			break;
+		case "Forfeit Game":
+			this.forfeitGame();
 			break;
 		}
 	}

@@ -40,6 +40,10 @@ public class BufferPanel extends JPanel implements Runnable {
 		this.paintStatus(g);
 		// Tools.drawSharpText("" + mouse.getLocation(), 15, 15, Color.red,
 		// Color.black, g);
+		if(!game.ourTurn()) {
+			g.setColor(new Color(0,0,0,150));
+			g.fillRect(0, 0, game.getWidth(), game.getHeight());
+		}
 	}
 
 	/**

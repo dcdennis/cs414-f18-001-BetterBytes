@@ -29,8 +29,8 @@ public class AIClient {
 
 	static Path currentRelativePath = Paths.get("");
 	static String path = currentRelativePath.toAbsolutePath().toString()
-			+ "/edu/colostate/cs/cs414/betterbytes/p3/client/";
-	private static final String AIScriptPath = "Python " + path + "HnefataflAI.py";
+			+ "/src/edu/colostate/cs/cs414/betterbytes/p4/client/";
+	private static final String AIScriptPath = "Python " + path + "HnefataflAI2.py";
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException {

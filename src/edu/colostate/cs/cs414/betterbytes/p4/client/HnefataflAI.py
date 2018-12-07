@@ -74,36 +74,29 @@ def makeMove(oldBoard,move):
     # [0] = X Val
     # [1] = Y Val
     if(endingLoc[1] <= 8):
-        captureX = endingLoc[0]
-        captureY = endingLoc[1]+1
-
-        checkX = endingLoc[0]
-        checkY = endingLoc[1]+2
-        if board[checkX][checkY][0] == board[endX][endY][0] and not board[captureX][captureY][0] == board[endX][endY][0]:
-            board[captureX][captureY] = "__"
-            pieceCaptured += 1
+        pieceCaptured =+ CheckCapture(board, endX, endY, 0,1,  endingLoc)
     #check up
     if(endingLoc[1] >= 2):
-        captureLoc = (endingLoc[0],endingLoc[1]-1)
-        checkLoc   = (endingLoc[0],endingLoc[1]-2)
-        if board[checkLoc[0]][checkLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0] and not board[captureLoc[0]][captureLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0]:
-            board[captureLoc[0]][captureLoc[1]] = "__"
-            pieceCaptured += 1
+        pieceCaptured = + CheckCapture(board, endX, endY, 0, -1, endingLoc)
     #check left
     if(endingLoc[0] <= 8):
-        captureLoc = (endingLoc[0]+1,endingLoc[1])
-        checkLoc = (endingLoc[0]+2,endingLoc[1])
-        if board[checkLoc[0]][checkLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0] and not board[captureLoc[0]][captureLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0]:
-            board[captureLoc[0]][captureLoc[1]] = "__"
-            pieceCaptured += 1
+        pieceCaptured = + CheckCapture(board, endX, endY, 1, 0, endingLoc)
     #check right
     if(endingLoc[0] >= 2):
-        captureLoc = (endingLoc[0]-1,endingLoc[1])
-        checkLoc = (endingLoc[0]-2,endingLoc[1])
-        if board[checkLoc[0]][checkLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0] and not board[captureLoc[0]][captureLoc[1]][0] == board[endingLoc[0]][endingLoc[1]][0]:
-            board[captureLoc[0]][captureLoc[1]] = "__"
-            pieceCaptured += 1
+        pieceCaptured = + CheckCapture(board, endX, endY, -1, 0, endingLoc)
     return board, pieceCaptured
+
+
+def CheckCapture(board, endX, endY, difX, difY, endingLoc):
+    captureX = endingLoc[0] + difX
+    captureY = endingLoc[1] + difY
+    checkX = endingLoc[0] + difX * 2
+    checkY = endingLoc[1] +difY * 2
+    if board[checkX][checkY][0] == board[endX][endY][0] and not board[captureX][captureY][0] == board[endX][endY][0]:
+        board[captureX][captureY] = "__"
+        return 1
+    return 0
+
 
 #done
 def copyBoard(oldBoard):

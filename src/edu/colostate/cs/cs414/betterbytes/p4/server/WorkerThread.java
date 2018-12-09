@@ -189,10 +189,10 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 						Game gameUpdate = moveMessage.getGameUpdate();
 						Game oldGame = sql.getGame(gameUpdate.getAttacker(), gameUpdate.getDefender());
 
-						gameUpdate = rules.processCaptures(oldGame, gameUpdate);
 						GameResult status;
 						if(gameUpdate.getResult() ==GameResult.CONTINUE)
 						{
+							gameUpdate = rules.processCaptures(oldGame, gameUpdate);
 							status = rules.gameHasEnded(gameUpdate);
 							gameUpdate.setResult(status);
 						}

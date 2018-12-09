@@ -174,8 +174,6 @@ public class SQLDriver {
 
 	// Checks if a user already exists
 	// if they do not then we add them to the database
-	// needs work to determine if name already exists.
-	// will work with GUI team to determine return values
 	/**
 	 * Checks if a user already exists. If they do not then are added to the database.
 	 * @param username Username to add
@@ -287,11 +285,7 @@ public class SQLDriver {
 		query = "DELETE FROM betterbytes.game WHERE `player1` LIKE '" + p2 + "' and `player2` LIKE '" + p1 + "';";
 		runQuery(query);
 
-		Game result = getGame(p1, p2);
-
-		if (result == null)
-			return true;
-		return false;
+		return true;
 	}
 
 	/**

@@ -94,7 +94,8 @@ def pickMove(epsilon,validMoves,currentBoard,Q,color):
         #print("Move Val: "+ str(maxVal))
         return maxMove
 
-def makeMove(oldBoard,move):
+
+def makeMove(oldBoard, move):
     pieceCaptured = 0
     board = copyBoard(oldBoard)
     startingLoc = move[0]
@@ -102,67 +103,38 @@ def makeMove(oldBoard,move):
 
     board[endingLoc[0]][endingLoc[1]] = board[startingLoc[0]][startingLoc[1]]
     board[startingLoc[0]][startingLoc[1]] = "__"
-    
+
     endX = endingLoc[0]
     endY = endingLoc[1]
-    #Check and process captures
-    #check right?
+    # Check and process captures
+    # check down
     # [0] = X Val
     # [1] = Y Val
-    if(endingLoc[1] <= 8):
-        captureX = endingLoc[0]
-        captureY = endingLoc[1]+1
-
-        checkX = endingLoc[0]
-        checkY = endingLoc[1]+2
-        if board[checkX][checkY][0] == board[endX][endY][0] \
-            and board[captureX][captureY][0] != board[endX][endY][0] \
-            and board[captureX][captureY] != '__':
-
-            board[captureX][captureY] = "__"
-            pieceCaptured += 1
-    #check left?
-    #[0] = X
-    #[1] = Y
-    if(endingLoc[1] >= 2):
-        captureX = endingLoc[0]
-        captureY = endingLoc[1]-1
-    
-        checkX = endingLoc[0]
-        checkY = endingLoc[1]-2
-        if board[checkX][checkY][0] == board[endX][endY][0] \
-            and board[captureX][captureY][0] != board[endX][endY][0] \
-            and board[captureX][captureY] != '__':
-
-            board[captureX][captureY] = "__"
-            pieceCaptured += 1
-    #check down
-    if(endingLoc[0] <= 8):
-        captureX = endingLoc[0]+1
-        captureY = endingLoc[1]
-
-        checkX = endingLoc[0]+2
-        checkY = endingLoc[1]
-        if board[checkX][checkY][0] == board[endX][endY][0] \
-            and board[captureX][captureY][0] != board[endX][endY][0] \
-            and board[captureX][captureY] != '__':
-
-            board[captureX][captureY] = "__"
-            pieceCaptured += 1
-    #check up
-    if(endingLoc[0] >= 2):
-        captureX = endingLoc[0]-1
-        captureY = endingLoc[1]
-
-        checkX = endingLoc[0]-2
-        checkY = endingLoc[1]
-        if board[checkX][checkY][0] == board[endX][endY][0] \
-            and board[captureX][captureY][0] != board[endX][endY][0] \
-            and board[captureX][captureY] != '__':
-
-            board[captureX][captureY] = "__"
-            pieceCaptured += 1
+    if (endingLoc[1] <= 8):
+        pieceCaptured = + CheckCapture(board, endX, endY, 0, 1, endingLoc)
+    # check up
+    if (endingLoc[1] >= 2):
+        pieceCaptured = + CheckCapture(board, endX, endY, 0, -1, endingLoc)
+    # check left
+    if (endingLoc[0] <= 8):
+        pieceCaptured = + CheckCapture(board, endX, endY, 1, 0, endingLoc)
+    # check right
+    if (endingLoc[0] >= 2):
+        pieceCaptured = + CheckCapture(board, endX, endY, -1, 0, endingLoc)
     return board, pieceCaptured
+
+
+def CheckCapture(board, difX, difY, endingLoc):
+    endX = endingLoc[0]
+    endY = endingLoc[1]
+    captureX = endingLoc[0] + difX
+    captureY = endingLoc[1] + difY
+    checkX = endingLoc[0] + difX * 2
+    checkY = endingLoc[1] + difY * 2
+    if board[checkX][checkY][0] == board[endX][endY][0] and not board[captureX][captureY][0] == board[endX][endY][0]:
+        board[captureX][captureY] = "__"
+        return 1
+    return 0
 
 #done
 def copyBoard(oldBoard):

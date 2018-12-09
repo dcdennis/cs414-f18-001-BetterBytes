@@ -214,10 +214,12 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 							}
 							sql.setAccount(defender);
 							sql.setAccount(attacker);
-
+							sql.deleteGame(attacker, defender)
 						}
+						else {
 						gameUpdate.changeTurns();
 						sql.updateGame(gameUpdate.getAttacker(), gameUpdate.getDefender(), gameUpdate);
+						}
 						send(new SubmitMoveResponse(true, "Move Submitted"), buffer, channel, debug);
 
 						break;

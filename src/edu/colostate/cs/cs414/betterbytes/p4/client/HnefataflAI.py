@@ -87,7 +87,9 @@ def makeMove(oldBoard,move):
     return board, pieceCaptured
 
 
-def CheckCapture(board, endX, endY, difX, difY, endingLoc):
+def CheckCapture(board, difX, difY, endingLoc):
+    endX = endingLoc[0]
+    endY = endingLoc[1]
     captureX = endingLoc[0] + difX
     captureY = endingLoc[1] + difY
     checkX = endingLoc[0] + difX * 2

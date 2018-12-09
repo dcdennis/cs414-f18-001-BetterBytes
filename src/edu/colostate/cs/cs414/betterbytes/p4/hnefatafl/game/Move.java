@@ -2,6 +2,9 @@ package edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game;
 
 import java.io.Serializable;
 
+/**
+ * Move class. Represents positions of a movement for a game.
+ */
 public class Move implements Serializable{
 	/**
 	 * 
@@ -12,6 +15,13 @@ public class Move implements Serializable{
 	private int startY;
 	private int endY;
 
+	/**
+	 * Move constructor. Sets the start (x,y) positions and the end (x,y) positions
+	 * @param startX start X position
+	 * @param endX end X position
+	 * @param startY start Y position
+	 * @param endY end Y position
+	 */
 	public Move(int startX, int endX, int startY, int endY) {
 		this.startX = startX;
 		this.endX = endX;

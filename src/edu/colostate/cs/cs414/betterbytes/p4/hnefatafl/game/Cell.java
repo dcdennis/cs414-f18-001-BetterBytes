@@ -3,6 +3,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Cell class. Represents a cell on the board.
+ * @version 1.0
+ */
 public class Cell implements Serializable {
 	/**
 	 * 
@@ -27,11 +31,23 @@ public class Cell implements Serializable {
 	//	this.type = type;
 	//}
 
+	/**
+	 * Cell constructor. Sets the cell type and the piece on it.
+	 * @param type Cell type
+	 * @param piece Piece object
+	 */
 	public Cell(String type, Piece piece) {
 		this.piece = piece;
 		this.type = type;
 	}
 
+	/**
+	 * Cell constructor. Sets the (x,y) position, cell type, and the piece on it.
+	 * @param x X position
+	 * @param y Y position
+	 * @param type Cell type
+	 * @param piece Piece object
+	 */
 	public Cell(int x, int y, String type, Piece piece) {
 		this.x = x;
 		this.y = y;
@@ -39,6 +55,10 @@ public class Cell implements Serializable {
 		this.piece = piece;
 	}
 
+	/**
+	 * Cell constructor. Initializes the cell based on string given.
+	 * @param stringCell Cell data
+	 */
 	public Cell(String stringCell) {
 		//System.out.println(stringCell);
 		stringCell = stringCell.replace(" ", "");

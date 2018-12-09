@@ -1,5 +1,9 @@
 package edu.colostate.cs.cs414.betterbytes.p4.user;
 
+/**
+ * GameRecord class. Records game time, attacking and defending players, and the winner of the game.
+ * @version 1.0
+ */
 public class GameRecord {
 
 	// GLOBALS

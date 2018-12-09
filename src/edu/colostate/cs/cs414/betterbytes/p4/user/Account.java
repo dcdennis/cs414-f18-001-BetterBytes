@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Account class. Represents the data and behavior of an account, such as username, password, and email.
+ * @version 1.0
+ */
 public class Account implements Serializable {
 
 	/**

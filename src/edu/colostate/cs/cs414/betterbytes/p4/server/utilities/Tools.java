@@ -16,8 +16,17 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Static Tools class. Used for added functionality.
+ * @version 1.0
+ */
 public class Tools {
 
+	/**
+	 * Gets a local image from the file system.
+	 * @param iFile Name of the image file
+	 * @return image file
+	 */
 	public static BufferedImage getLocalImg(String iFile) {
 		try {
 			File pathToFile = new File(iFile);
@@ -39,16 +48,31 @@ public class Tools {
 		return null;
 	}
 
+	/**
+	 * Sets the Tools object to sleep for a random duration between one and two
+	 * @param one Lower bound on sleep
+	 * @param two Upper bound on sleep
+	 */
 	public static void sleep(int one, int two) {
 		Tools.sleep(Tools.random(one, two));
 	}
 
+	/**
+	 * Return a random int between min and max
+	 * @param min Min value for random number
+	 * @param max Max value for random number
+	 * @return randomly generated int
+	 */
 	public static int random(int min, int max) {
 		Random rand = new Random();
 		int randomNum = rand.nextInt(max - min + 1) + min;
 		return randomNum;
 	}
 
+	/**
+	 * Set Thread to sleep for an amount of time
+	 * @param amt Amount of time to sleep
+	 */
 	public static void sleep(int amt) {
 		try {
 			Thread.sleep(amt);
@@ -58,6 +82,15 @@ public class Tools {
 		}
 	}
 
+	/**
+	 * Draws text at position (x,y) on Graphic g with a given color and shade
+	 * @param text Text to draw
+	 * @param x X position
+	 * @param y Y position
+	 * @param c Color of the text
+	 * @param shade Color of the shading
+	 * @param g Graphic object
+	 */
 	public static void drawSharpText(String text, int x, int y, Color c, Color shade, Graphics g) {
 		g.setColor(shade);
 		g.drawString(text, x + 1, y + 1);
@@ -65,6 +98,10 @@ public class Tools {
 		g.drawString(text, x, y);
 	}
 
+	/**
+	 * Print off Object o. If o is a Double object, it is printed in decimal format. Otherwise, it strings with toString()
+	 * @param o Object to print
+	 */
 	public static void log(Object o) {
 		if (o instanceof Double) {
 			Double it = (Double) o;
@@ -75,6 +112,11 @@ public class Tools {
 		}
 	}
 
+	/**
+	 * Gets the url source of a url as string
+	 * @param url url as a string
+	 * @return url source
+	 */
 	public static String getUrlSource(String url) {
 		try {
 			URL yahoo = new URL(url);
@@ -96,6 +138,11 @@ public class Tools {
 		return "";
 	}
 
+	/**
+	 * Gets the file data of a file as string
+	 * @param file File to read
+	 * @return file text
+	 */
 	public static String getFileData(File file) {
 		String it = "";
 		if (file != null && file.exists()) {
@@ -115,6 +162,12 @@ public class Tools {
 		return it;
 	}
 
+	/**
+	 * Return a random double between min and max
+	 * @param min Min value for random number
+	 * @param max Max value for random number
+	 * @return randomly generated double
+	 */
 	public static double random(double min, double max) {
 		Random r = new Random();
 		double randomValue = min + (max - min) * r.nextDouble();

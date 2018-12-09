@@ -7,18 +7,32 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
+/**
+ * Server Object. Has a ThreadPoolManager for communication among its clients.
+ * @version 1.0
+ */
 public class Server {
 
 	volatile boolean running;
 	int portNum;
 	ThreadPoolManager manager = ThreadPoolManager.getInstance();
 
+
+	/**
+	 * Server constructor. Takes a port number to listen on and the size of thread pool as parameters
+	 * @param portNum Port number
+	 * @param poolSize Size of the thread pool
+	 */
 	public Server(int portNum, int poolSize) {
 		this.portNum = portNum; 
 		manager.initialize(poolSize);
 		running = true;
 	}
 
+	/**
+	 * Primary loop of the server. Waits for events over its channels and handles them based on the key.
+	 * @throws IOException
+	 */
 	public void serve() throws IOException {
 
 		// Create and configure many things
@@ -62,6 +76,11 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Accepts a connection based on the key parameter
+	 * @param key
+	 * @throws IOException
+	 */
 	private void accept(SelectionKey key) throws IOException {
 		// For an accept to be pending the channel must be a server socket channel.
 		ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();

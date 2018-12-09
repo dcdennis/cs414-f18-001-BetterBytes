@@ -20,6 +20,11 @@ import edu.colostate.cs.cs414.betterbytes.p4.user.Account;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Invitation;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Player;
 
+/**
+ * WorkerThread class. Implements the Protocol interface. Checks incoming tasks to a switch statement.
+ * @version 1.0
+ * @see Protocol
+ */
 public class WorkerThread extends Thread implements edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.Protocol {
 	private volatile boolean running = true;
 	private final boolean debug = true;
@@ -29,12 +34,20 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 
 	private int threadID;
 
+	/**
+	 * WorkerThread constructor. Sets the threadID and sets the ThreadPoolManager to the singleton instance object.
+	 * @param threadID ID of the thread
+	 */
 	public WorkerThread(int threadID) {
 		this.threadID = threadID;
 		manager = ThreadPoolManager.getInstance();
 		sql = SQLDriver.getInstance();
 	}
 
+	/**
+	 * Overrides Thread.run. While the Thread isn't terminated, wait for a new task. Execute the switch case based
+	 * on the task given by the ThreadPoolManager when a WorkerThread receives it.
+	 */
 	@Override
 	public void run() {
 		while (running) {
@@ -228,10 +241,21 @@ public class WorkerThread extends Thread implements edu.colostate.cs.cs414.bette
 		System.out.println("THREAD " + threadID + " terminating");
 	}
 
+	/**
+	 * Sets running to false. This stops the main while loop of WorkerThread.run()
+	 */
 	public void terminate() {
 		running = false;
 	}
 
+	/**
+	 * Send an outgoing message with a buffer over a given channel
+	 * @param outgoing Message to send
+	 * @param buffer Buffer to place the message into
+	 * @param channel Channel to send the message over
+	 * @param debug Debug setting. True has the WorkerThread print off when it sends the message.
+	 * @throws IOException
+	 */
 	private void send(Message outgoing, ByteBuffer buffer, SocketChannel channel, boolean debug) throws IOException {
 		if (debug)
 			System.out.println("Worker Thread " + threadID + " sending new message: " + outgoing.toString());

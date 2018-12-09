@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
 import java.io.Serializable;
 
+/**
+ * RecordsRequest class. Message to request GameRecords from server
+ * @version 1.0
+ */
 public class RecordsRequest implements Message, Protocol, Serializable {
 
 	/**

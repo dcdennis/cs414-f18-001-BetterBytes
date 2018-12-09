@@ -13,6 +13,12 @@ import java.util.Set;
 import edu.colostate.cs.cs414.betterbytes.p4.server.utilities.Serializer;
 import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.Message;
 
+/**
+ * Handles the connection to the server
+ * @author jhpok
+ * @version 1.0
+ * @since 1.0
+ */
 public class ClientConnection extends Thread {
 	private String serverHost;
 	private int serverPort;
@@ -23,20 +29,37 @@ public class ClientConnection extends Thread {
 
 	private static final ClientConnection instance = new ClientConnection();
 
+	/**
+	 * Return the singleton instance object
+	 * @return the ClientConnection instance object
+	 * @since 1.0
+	 */
 	public static ClientConnection getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Private constructor to handle singleton behavior
+	 * @since 1.0
+	 */
 	private ClientConnection() {
 		running = true;
 		serverKey = null;
 	}
 
+	/**
+	 * Sets the server host address and port number of the object
+	 * @param serverHost Server's host address
+	 * @param serverPort Server's listing port number
+	 */
 	public void setUp(String serverHost, int serverPort) {
 		this.serverHost = serverHost;
 		this.serverPort = serverPort;
 	}
 
+	/**
+	 * Starts a connection with the server port then runs a thread to handle communication.
+	 */
 	public void run() {
 		try {
 			// Configure Channel and selector and initiate connection
@@ -79,6 +102,10 @@ public class ClientConnection extends Thread {
 		}
 	}
 
+	/**
+	 * Steps up a channel based on the selection key and sets the server key to it.
+	 * @param key SelectionKey
+	 */
 	private void connect(SelectionKey key) {
 		try {
 			// Complete Connection
@@ -91,6 +118,11 @@ public class ClientConnection extends Thread {
 		}
 	}
 
+	/**
+	 * Read from the channel based on the selection key then return it.
+	 * @param key SelectionKey
+	 * @return message read from the key channel
+	 */
 	private byte[] read(SelectionKey key) {
 		byte[] message = null;
 		SocketChannel channel = (SocketChannel) key.channel();
@@ -114,6 +146,12 @@ public class ClientConnection extends Thread {
 		return message;
 	}
 
+	/**
+	 * Send a message over the channel based on the serverKey,
+	 * then waits for a response.
+	 * @param message Message to send
+	 * @return The response to the message
+	 */
 	@SuppressWarnings("static-access")
 	public synchronized Message send(Message message) {
 		Message response = null;
@@ -148,6 +186,11 @@ public class ClientConnection extends Thread {
 		return response;
 	}
 
+	/**
+	 * setUp methodstub
+	 * @param localHost
+	 * @param serverPort2
+	 */
 	public void setUp(InetAddress localHost, int serverPort2) {
 		// TODO Auto-generated method stub
 

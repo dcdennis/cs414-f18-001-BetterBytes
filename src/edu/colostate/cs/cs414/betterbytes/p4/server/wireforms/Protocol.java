@@ -1,5 +1,9 @@
 package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
+/**
+ * Protocol interface. Contains fields of the protocol cases.
+ * @version 1.0
+ */
 public interface Protocol {
 	public final String USER_REGISTRATION = "00";
 	public final String USER_LOGON = "01";

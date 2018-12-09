@@ -2,6 +2,9 @@ package edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game;
 
 import java.io.Serializable;
 
+/**
+ * Piece class. Represents a piece on a cell.
+ */
 public class Piece implements Serializable{
 
 	/**
@@ -58,15 +61,23 @@ public class Piece implements Serializable{
 		return true;
 	}
 
+	/**
+	 * Piece constructor. Sets the isRook/isKing fields and the color of the piece. Type of the piece is determined by isRook.
+	 * @param isRook Whether the piece is a rook or not
+	 * @param color Color of the piece
+	 */
 	public Piece(boolean isRook, String color) {
 		this.isRook = isRook;
 		this.isKing = !isRook;
 		this.color = color;
 		this.type = initPieceType();
 	}
-	
-	
 
+
+	/**
+	 * Piece Constructor. Initialize the piece based on the piece string.
+	 * @param stringPiece Piece as a string
+	 */
 	public Piece(String stringPiece) {
 		//System.out.println(stringPiece);
 		this.isRook = stringPiece.charAt(1) == 'R';

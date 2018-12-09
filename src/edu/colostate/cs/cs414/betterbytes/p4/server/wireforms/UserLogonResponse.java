@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import edu.colostate.cs.cs414.betterbytes.p4.user.Account;
 
+/**
+ * UserLogonResponse class. Response to logon to the server.
+ * @version 1.0
+ */
 public class UserLogonResponse implements Message, Protocol, Serializable {
 	/**
 	 * 

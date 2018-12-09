@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 
 /**
  * Static Tools class. Used for added functionality.
+ * @version 1.0
  */
 public class Tools {
 

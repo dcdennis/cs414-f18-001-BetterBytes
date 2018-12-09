@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.user;
 
 import java.io.Serializable;
 
+/**
+ * Invitation class. Records sender and recipient.
+ * @version 1.0
+ */
 public class Invitation implements Serializable{
 
 	/**

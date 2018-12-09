@@ -16,6 +16,7 @@ import edu.colostate.cs.cs414.betterbytes.p4.user.Account;
 /**
  * Serializer class. Serializes objects to byte arrays and deserialize byte arrays into either a Message,
  * an Account, a Cell, or a Game object.
+ * @version 1.0
  */
 public abstract class Serializer {
 

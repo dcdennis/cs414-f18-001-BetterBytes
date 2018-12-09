@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
 import java.io.Serializable;
 
+/**
+ * CreateInvitationResponse class. Response from an invitation from a player.
+ * @version 1.0
+ */
 public class CreateInvitationResponse implements Message, Protocol, Serializable {
 
 	/**

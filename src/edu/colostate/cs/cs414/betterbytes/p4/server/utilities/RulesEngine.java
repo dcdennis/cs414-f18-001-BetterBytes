@@ -15,7 +15,7 @@ import edu.colostate.cs.cs414.betterbytes.p4.user.Player;
  * RulesEngine class. Handles turn by turn game logic.
  * Note: Some variables have the full import path, but this doesn't appear necessary since we already imported.
  * As to not break the code on the last day, I'm not going to change it -Hayden.
- * @version 1.1
+ * @version 1.0
  */
 public class RulesEngine {
 	private static RulesEngine instance = new RulesEngine();

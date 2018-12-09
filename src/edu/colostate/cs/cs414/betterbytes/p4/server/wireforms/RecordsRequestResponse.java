@@ -6,6 +6,10 @@ import java.util.List;
 import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Account;
 
+/**
+ * RecordsRequestResponse class. Response from a RecordsRequest message
+ * @version 1.0
+ */
 public class RecordsRequestResponse implements Message, Protocol, Serializable {
 
 	/**

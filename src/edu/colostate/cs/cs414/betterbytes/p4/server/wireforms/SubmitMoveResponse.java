@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
 import java.io.Serializable;
 
+/**
+ * SubmitMoveResponse class. Response to submitting a move message.
+ * @version 1.0
+ */
 public class SubmitMoveResponse implements Message, Protocol, Serializable {
 
 	/**

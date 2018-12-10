@@ -30,7 +30,7 @@ public class Board implements Serializable{
 		// TODO: add Corner and Throne Cells
 		// Create new Cell("C") and new Cell("T") based off index of board
 		for (int i = 0; i < 121; i++) {
-			cells[i] = new Cell("S");
+			cells[i] = new Cell("S", new Piece());
 		}
 		return cells;
 

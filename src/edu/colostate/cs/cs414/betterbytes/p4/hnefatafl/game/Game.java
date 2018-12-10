@@ -193,6 +193,10 @@ public class Game implements Serializable {
 		this.result = result;
 	}
 
+	public void setMovesHistory(Move moves[]) {
+		this.moves = moves;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

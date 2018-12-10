@@ -142,4 +142,9 @@ public class Account implements Serializable {
 	public void addInvite(Invitation invitation) {
 		this.invites.add(invitation);
 	}
+	
+	public ArrayList<Player> getPlayers() {
+		return this.players;
+		
+	}
 }

@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Game;
 
+/**
+ * SubmitMove class. Message to submit a move.
+ * @version 1.0
+ */
 public class SubmitMove implements Message, Protocol, Serializable {
 
 	/**

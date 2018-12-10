@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.colostate.cs.cs414.betterbytes.p4.client.ClientConnection;
 import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Game;
+import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.GameResult;
 import edu.colostate.cs.cs414.betterbytes.p4.server.utilities.Tools;
 import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.CreateInvitation;
 import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.Message;
@@ -409,17 +410,19 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 				// Losers turn is now
 				if (gameObjects.get(ind).getTurn().color.equals("black")) {
 					// Black needs to win
-					for (int i = 0; i < gameObjects.get(ind).cells.length; i++) {
+					/*for (int i = 0; i < gameObjects.get(ind).cells.length; i++) {
 						if (gameObjects.get(ind).cells[i].hasPiece()
 								&& gameObjects.get(ind).cells[i].getPiece().isKing()) {
 							gameObjects.get(ind).cells[i].setPiece(null);// KILL THE KING!!
-						}
-					}
+						}*/
+						gameObjects.get(ind).setResult(GameResult.BLACK);
+					//}
 				} else {
 					// White needs to win
 					// Put the white king in the corner
-					gameObjects.get(ind).cells[0]
-							.setPiece(new edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Piece(false, "white"));
+					//gameObjects.get(ind).cells[0]
+					//		.setPiece(new edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Piece(false, "white"));
+					gameObjects.get(ind).setResult(GameResult.WHITE);
 				}
 				if (this.gameframe != null) {
 					this.gameframe.display(gameObjects.get(ind));
@@ -515,6 +518,7 @@ public class UI extends javax.swing.JFrame implements ActionListener {
 			this.acceptGame();
 			break;
 		case "Forfeit Game":
+			this.forfeitGame();
 			break;
 		}
 	}

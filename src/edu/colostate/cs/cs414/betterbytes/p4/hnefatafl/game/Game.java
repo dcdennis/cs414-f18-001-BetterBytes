@@ -12,6 +12,9 @@ import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.SubmitMove;
 import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.SubmitMoveResponse;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Player;
 
+/**
+ * Game class. Represents the game state.
+ */
 public class Game implements Serializable {
 
 	/**
@@ -38,6 +41,13 @@ public class Game implements Serializable {
 
 	}
 
+	/**
+	 * Game constructor. Sets the start time, attacking player, and defending player.
+	 * Initializes the board cells to the correct types and places the correct pieces on the cells.
+	 * @param startTime Game start time
+	 * @param attacker Attacking player
+	 * @param defender Defending player
+	 */
 	public Game(String startTime, Player attacker, Player defender) {
 		this.turn = defender;
 		this.attacker = attacker; 
@@ -107,7 +117,11 @@ public class Game implements Serializable {
 		this.getCell(5,3).setPiece(new Piece(true,"white"));
 	}
 
-	//FOR AI CLIENT ONLY
+	/**
+	 * Game constructor. Used for AI client only
+	 * @param game Game object
+	 * @param scriptOutput Cells split on "," as strings.
+	 */
 	public Game(Game game, String scriptOutput) {
 		this.turn = game.getTurn();
 		this.attacker = game.attacker;
@@ -128,6 +142,7 @@ public class Game implements Serializable {
 			
 	}
 	// SETTERS
+
 	public void changeTurns() {
 		if (turn == attacker) {
 			this.turn = defender;
@@ -140,6 +155,10 @@ public class Game implements Serializable {
 		this.endTime = end;
 	}
 
+	/**
+	 * Sends the game to the server.
+	 * @return Response status if you get a reply, false otherwise
+	 */
 	public boolean sendGameToServer() {
 		SubmitMove move = new SubmitMove(this);
 		Message reply = ClientConnection.getInstance().send(move);

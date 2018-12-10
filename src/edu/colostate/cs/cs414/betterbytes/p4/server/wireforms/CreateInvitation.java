@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
 import java.io.Serializable;
 
+/**
+ * CreateInvitation class. Message to create an invitation between players.
+ * @version 1.0
+ */
 public class CreateInvitation implements Message, Protocol, Serializable {
 
 	/**

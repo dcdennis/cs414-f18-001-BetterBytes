@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.user;
 
 import java.io.Serializable;
 
+/**
+ * Player class. Holds an account field and color field.
+ * @version 1.0
+ */
 public class Player implements Serializable{
 
 	/**

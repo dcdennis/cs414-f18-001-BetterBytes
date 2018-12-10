@@ -5,6 +5,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
 import java.io.Serializable;
 
+/**
+ * UserRegistration class. Message to register with the server.
+ * @version 1.0
+ */
 public class UserRegistration implements Message, Protocol, Serializable {
 	/**
 	 * 

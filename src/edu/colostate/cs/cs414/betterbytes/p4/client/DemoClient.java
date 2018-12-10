@@ -9,6 +9,12 @@ import edu.colostate.cs.cs414.betterbytes.p4.client.ui.UI;
 import edu.colostate.cs.cs414.betterbytes.p4.server.Server;
 import edu.colostate.cs.cs414.betterbytes.p4.server.utilities.Tools;
 
+/**
+ * DemoClient to show off
+ * @author jhpok
+ * @version 1.0
+ * @since 1.0
+ */
 public class DemoClient {
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException, IOException, InterruptedException {

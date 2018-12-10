@@ -13,8 +13,18 @@ import edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game.Game;
 import edu.colostate.cs.cs414.betterbytes.p4.server.wireforms.Message;
 import edu.colostate.cs.cs414.betterbytes.p4.user.Account;
 
+/**
+ * Serializer class. Serializes objects to byte arrays and deserialize byte arrays into either a Message,
+ * an Account, a Cell, or a Game object.
+ * @version 1.0
+ */
 public abstract class Serializer {
 
+	/**
+	 * Serialize an Object into a byte array
+	 * @param o Object to serialize
+	 * @return Serialized byte array
+	 */
 	public static byte[] serialize(Object o) {
 		byte[] res = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -36,6 +46,11 @@ public abstract class Serializer {
 		return res;
 	}
 
+	/**
+	 * Deserialize a byte array into a Message object. Don't expect anything good using a non-message.
+	 * @param bytes Serialized byte array
+	 * @return Deserialized message object
+	 */
 	public static Message deserializeMessage(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in = null;
@@ -59,7 +74,12 @@ public abstract class Serializer {
 		}
 		return message;
 	}
- 
+
+	/**
+	 * Deserialize a byte array into an Account object
+	 * @param bytes Serialized byte array
+	 * @return Deserialized Account object
+	 */
 	public static Account deserializeAccount(byte[] bytes) {
 		// System.out.println("DESERIALIZE(): '" + new String(bytes) + "'");
 
@@ -84,7 +104,12 @@ public abstract class Serializer {
 		}
 		return account;
 	}
-	
+
+	/**
+	 * Deserialize a byte array into a Cell object
+	 * @param bytes Serialized byte array
+	 * @return Deserialized Cell object
+	 */
 	public static Cell deserializeCell(byte[] bytes) {
 		// System.out.println("DESERIALIZE(): '" + new String(bytes) + "'");
 
@@ -110,6 +135,11 @@ public abstract class Serializer {
 		return cell;
 	}
 
+	/**
+	 * Deserialize a byte array into a Game object
+	 * @param bytes Serialized byte array
+	 * @return Deserialized Game object
+	 */
 	public static Game deserializeGame(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		ObjectInput in = null;

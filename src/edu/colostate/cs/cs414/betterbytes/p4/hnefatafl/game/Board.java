@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.hnefatafl.game;
 
 import java.io.Serializable;
 
+/**
+ * Board class. Represents the board of a game.
+ * @version 1.0
+ */
 public class Board implements Serializable{
 
 	/**
@@ -24,6 +28,10 @@ public class Board implements Serializable{
 		return this.cells;
 	}
 
+	/**
+	 * Sets up the cells on the board, setting the cells to the default type
+	 * @return array of cells
+	 */
 	public Cell[] initializeBoard() {
 
 		Cell cells[] = new Cell[121];
@@ -36,6 +44,13 @@ public class Board implements Serializable{
 
 	}
 
+	/**
+	 * Gets the cell at position (x,y). No bound checking
+	 * precondition: 11*y + x < 121
+	 * @param x X position
+	 * @param y Y position
+	 * @return Cell at position (x,y)
+	 */
 	public Cell getCell(int x, int y) {
 		// CHECK INDEX LOGIC
 		return cells[11 * y + x];

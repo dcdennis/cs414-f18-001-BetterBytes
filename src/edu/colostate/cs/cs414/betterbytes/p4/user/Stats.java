@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.user;
 
 import java.io.Serializable;
 
+/**
+ * Stats class. Records wins and losses.
+ * @version 1.0
+ */
 public class Stats implements Serializable{
 
 	/**

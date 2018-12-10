@@ -2,6 +2,10 @@ package edu.colostate.cs.cs414.betterbytes.p4.server.wireforms;
 
 import java.io.Serializable;
 
+/**
+ * UserLogon class. Message to logon to the server.
+ * @version 1.0
+ */
 public class UserLogon implements Message, Protocol, Serializable {
 
 	@Override
